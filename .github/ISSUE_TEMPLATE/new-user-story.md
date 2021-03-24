@@ -8,21 +8,20 @@ assignees: ''
 ---
 
 # user story
-**Als ein**
+
+**As a** user
+
+**I want** 
 
 
-**will ich**
-
-
-**, sodass**
+**and that** 
 
 
 
 # Acceptance criteria
-- [ ] 
-- [ ] 
-- [ ] läuft local ohne Fehler
-- [ ] commit message beinhaltet Issue Kürzel
-- [ ] commits sind gesquased
-- [ ] tests dafür geschrieben
+- [ ] runs local without errors
+- [ ] commit message contains issue abbreviations
+- [ ] commits are squased
+- [ ] tests written for it
+
 
