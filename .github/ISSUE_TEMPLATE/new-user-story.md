@@ -20,4 +20,9 @@ assignees: ''
 
 # Acceptance criteria
 - [ ] 
-- [ ]
+- [ ] 
+- [ ] läuft local ohne Fehler
+- [ ] commit message beinhaltet Issue Kürzel
+- [ ] commits sind gesquased
+- [ ] tests dafür geschrieben
+
