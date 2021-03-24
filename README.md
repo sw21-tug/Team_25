@@ -12,15 +12,15 @@
 | Role |  Name|
 |--|--|
 | Product Owner | Fabio Gandolfi |
-| Scrum Master | |
-| Developer | |
-| Developer | |
-| Developer | |
-| Developer | |
-| Developer | |
-| Developer | |
-| Developer | |
-| Developer | |
+| Scrum Master | Benedikt |
+| Developer |  Benjamin G |
+| Developer | Benjamin W |
+| Developer | Christopher |
+| Developer | Esther |
+| Developer | Florian |
+| Developer | Matthias |
+| Developer | Nico |
+| Developer | Stefan |
 
 
 ## Implemented features
