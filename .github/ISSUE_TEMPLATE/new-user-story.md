@@ -14,7 +14,7 @@ assignees: ''
 **I want** 
 
 
-**and that** 
+**so that** 
 
 
 
