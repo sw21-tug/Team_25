@@ -1,4 +1,4 @@
-package at.sw21_tug.team_25.expirydates.ui.dashboard
+package at.sw21_tug.team_25.expirydates.ui.add
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import at.sw21_tug.team_25.expirydates.R
 
-class DashboardFragment : Fragment() {
+class AddFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var addViewModel: AddViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-                ViewModelProvider(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        addViewModel =
+                ViewModelProvider(this).get(AddViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_add, container, false)
+        val textView: TextView = root.findViewById(R.id.text_add)
+        addViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
