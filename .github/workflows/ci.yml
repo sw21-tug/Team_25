@@ -21,3 +21,5 @@ jobs:
         uses: android-actions/setup-android@v2
       - name: Build the app
         run: ./gradlew --no-daemon build
+      - name: Test the app
+        run: ./gradlew --no-daemon test
