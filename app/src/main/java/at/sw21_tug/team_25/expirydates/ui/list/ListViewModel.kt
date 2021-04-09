@@ -1,13 +1,13 @@
-package at.sw21_tug.team_25.expirydates.ui.notifications
+package at.sw21_tug.team_25.expirydates.ui.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class ListViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = ""
     }
     val text: LiveData<String> = _text
 }

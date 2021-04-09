@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_add" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="at.sw21_tug.team_25.expirydates.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_list"
+        android:name="at.sw21_tug.team_25.expirydates.ui.list.ListFragment"
+        android:label="@string/title_list"
+        tools:layout="@layout/fragment_list" />
 </navigation>
