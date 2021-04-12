@@ -8,17 +8,11 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-20.04
-
+    container:
+      image: androidsdk/android-30:latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
-      - name: Setup Java Env
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt' # See 'Supported distributions' for available options
-          java-version: '11'
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
       - name: Build the app
         run: ./gradlew --no-daemon build
       - name: Test the app
