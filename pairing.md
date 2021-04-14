@@ -11,7 +11,7 @@
 | Dev 8 | Stefan      | senior | create app and TestSuite
 
 ### time spend
-* time: this team should currently pair up
+time *: this team should currently pair up
 
 | Syntax      | Dev 1       | Dev 2       | Dev 3       | Dev 4       | Dev 5       | Dev 6       | Dev 7       | Dev 8       |
 | :---        |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |
