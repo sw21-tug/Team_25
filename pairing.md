@@ -1,5 +1,5 @@
 ### Pairing Matrix
-| Dev # |  Name       | Level  | Theme 
+| Dev # |  Name       | Level  | Theme Sprint 1
 | :---  |    :----    | :---:  | :----  
 | Dev 1 | Benjamin G  | senior | database insert stuff
 | Dev 2 | Matthias    | junior | database insert stuff
