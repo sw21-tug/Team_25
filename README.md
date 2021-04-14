@@ -27,6 +27,7 @@
 
 | Ticket Nr. | description | additional info | developer 1 | developer 2 |
 |---|---|---|---|---|
-|EXPDAT-001   | example ticket  | -  | -  | -  |
+|EXPDAT-001   | create an App that starts and shows title  | +continuous integration  | Stefan  | Nico  |
+|EXPDAT-009   | tab view  | -  | Stefan  | Nico  |
 |   |   |   |   |   |
 |   |   |   |   |   |
