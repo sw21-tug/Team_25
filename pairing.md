@@ -21,7 +21,7 @@ time *: this team should currently pair up
 | Dev 4       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM       | HH:MM       | HH:MM       | HH:MM       |
 | Dev 5       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM *     | HH:MM       | HH:MM       |
 | Dev 6       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM       | HH:MM       |
-| Dev 7       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM *     |
+| Dev 7       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | 02:40 *     |
 | Dev 8       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           |
 
-last update: 2021-03-24 17:30 
+last update: 2021-04-14 14:30 
