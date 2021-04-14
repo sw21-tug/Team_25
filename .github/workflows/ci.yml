@@ -1,0 +1,19 @@
+
+name: CI
+
+# Controls when the action will run.
+on: [push, pull_request]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    container:
+      image: androidsdk/android-30:latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: Build the app
+        run: ./gradlew --no-daemon build
+      - name: Test the app
+        run: ./gradlew --no-daemon test
