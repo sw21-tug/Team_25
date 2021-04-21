@@ -1,7 +1,13 @@
 package at.sw21_tug.team_25.expirydates
 
+import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import at.sw21_tug.team_25.expirydates.data.ExpItem
+import at.sw21_tug.team_25.expirydates.data.ExpItemDao
+import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
 import at.sw21_tug.team_25.expirydates.ui.add.AddViewModel
 import at.sw21_tug.team_25.expirydates.ui.errorhandling.ErrorCode
 import junit.framework.TestCase
@@ -31,15 +37,25 @@ class EXPDAT_002_test_01  : TestCase() {
     private lateinit var viewModel: AddViewModel
     private var today: Long = Calendar.getInstance().timeInMillis
 
+    private lateinit var expItemDao: ExpItemDao
+    private lateinit var db: ExpItemDatabase
+    private lateinit var repository: ExpItemRepository
+    private lateinit var context: Context
+
     @Before
     public override fun setUp() {
-        //val context = ApplicationProvider.getApplicationContext<Context>()
+        context = InstrumentationRegistry.getInstrumentation().targetContext
+        //context = ApplicationProvider.getApplicationContext<Context>()
         viewModel = AddViewModel()
+        db = ExpItemDatabase.getDatabase(context)
+        //Room.databaseBuilder(context, ExpItemDatabase::class.java, "expitem-database").build()
+        expItemDao = db.expItemDao()
+        repository = ExpItemRepository(expItemDao)
     }
 
     @Test
     fun testBasic() {
-        val success = viewModel.saveValues("test123", today)
+        val success = viewModel.saveValues("test123", today, expItemDao)
         assertEquals(success, ErrorCode.OK)
         assertEquals(viewModel.text, "test123")
         assertEquals(viewModel.date, today)
@@ -47,7 +63,7 @@ class EXPDAT_002_test_01  : TestCase() {
 
     @Test
     fun testEmpty() {
-        val success = viewModel.saveValues("", today)
+        val success = viewModel.saveValues("", today, expItemDao)
         assertEquals(success, ErrorCode.INPUT_ERROR)
         assertEquals(viewModel.text, "")
         assertEquals(viewModel.date, 0)
@@ -56,7 +72,7 @@ class EXPDAT_002_test_01  : TestCase() {
     @Test
     fun testMax() {
         val success = viewModel.saveValues("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", today)
+                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", today, expItemDao)
         assertEquals(success, ErrorCode.INPUT_ERROR)
         assertEquals(viewModel.text, "")
         assertEquals(viewModel.date, 0)
@@ -64,7 +80,7 @@ class EXPDAT_002_test_01  : TestCase() {
 
     @Test
     fun testDateFuture() {
-        val success = viewModel.saveValues("test", today - 106400000 )
+        val success = viewModel.saveValues("test", today - 106400000, expItemDao)
         assertEquals(success, ErrorCode.DATE_ERROR)
         assertEquals(viewModel.text, "")
         assertEquals(viewModel.date, 0)
@@ -72,9 +88,17 @@ class EXPDAT_002_test_01  : TestCase() {
 
     @Test
     fun testDateNegative() {
-        val success = viewModel.saveValues("test", -1)
+        val success = viewModel.saveValues("test", -1, expItemDao)
         assertEquals(success, ErrorCode.DATE_ERROR)
         assertEquals(viewModel.text, "")
         assertEquals(viewModel.date, 0)
+    }
+
+    @Test
+    fun testSaveItem() {
+        val success = viewModel.saveValues("test", today, expItemDao)
+        val items: LiveData<List<ExpItem>> = expItemDao.readAllItems()
+        assertEquals(viewModel.text, 1)
+
     }
 }
