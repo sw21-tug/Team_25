@@ -66,6 +66,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 
     // Required -- JUnit 4 framework
     testImplementation 'junit:junit:4.13.2'
