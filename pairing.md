@@ -4,7 +4,7 @@
 | Dev 1 | Benjamin G  | senior | 005
 | Dev 2 | Matthias    | junior | 015
 | Dev 3 | Benjamin W  | senior | 015
-| Dev 4 | Esthner     | junior | 005
+| Dev 4 | Esther      | junior | 005
 | Dev 5 | Christopher | senior | 002 list and detail view
 | Dev 6 | Florian     | senior | 002 list and detail view
 | Dev 7 | Nico        | junior | 004
