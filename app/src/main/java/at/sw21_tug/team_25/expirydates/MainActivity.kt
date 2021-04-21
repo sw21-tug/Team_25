@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import at.sw21_tug.team_25.expirydates.utils.NotificationManager
 import at.sw21_tug.team_25.expirydates.misc.Util
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        NotificationManager.setContext(this)
 
         // without this, the title is not updated on other fragments on first load
         updateLayoutList = ArrayList()

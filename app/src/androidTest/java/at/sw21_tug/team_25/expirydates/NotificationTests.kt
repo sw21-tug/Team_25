@@ -33,12 +33,13 @@ class NotificationTests {
         clearAllNotifications()
         Thread.sleep(500)
         NotificationManager.displayNotification("Hello", "Hello World");
-        Thread.sleep(500)
+        Thread.sleep(5000)
         val notificationStackScroller = device.findObject(
                 By
                 .pkg("com.android.systemui")
                 .res("com.android.systemui:id/notification_stack_scroller")
         )
+
 
         assertTrue(notificationStackScroller != null)
     }
