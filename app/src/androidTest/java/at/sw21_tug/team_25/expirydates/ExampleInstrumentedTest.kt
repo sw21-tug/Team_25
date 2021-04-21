@@ -3,6 +3,7 @@ package at.sw21_tug.team_25.expirydates
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import at.sw21_tug.team_25.expirydates.ui.add.AddViewModel
+import at.sw21_tug.team_25.expirydates.ui.errorhandling.ErrorCode
 import junit.framework.TestCase
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -39,7 +40,7 @@ class EXPDAT_002_test_01  : TestCase() {
     @Test
     fun testBasic() {
         val success = viewModel.saveValues("test123", today)
-        assertEquals(success, true)
+        assertEquals(success, ErrorCode.OK)
         assertEquals(viewModel.text, "test123")
         assertEquals(viewModel.date, today)
     }
@@ -47,7 +48,7 @@ class EXPDAT_002_test_01  : TestCase() {
     @Test
     fun testEmpty() {
         val success = viewModel.saveValues("", today)
-        assertEquals(success, false)
+        assertEquals(success, ErrorCode.INPUT_ERROR)
         assertEquals(viewModel.text, "")
         assertEquals(viewModel.date, 0)
     }
@@ -56,7 +57,7 @@ class EXPDAT_002_test_01  : TestCase() {
     fun testMax() {
         val success = viewModel.saveValues("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
                 "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", today)
-        assertEquals(success, false)
+        assertEquals(success, ErrorCode.INPUT_ERROR)
         assertEquals(viewModel.text, "")
         assertEquals(viewModel.date, 0)
     }
@@ -64,7 +65,7 @@ class EXPDAT_002_test_01  : TestCase() {
     @Test
     fun testDateFuture() {
         val success = viewModel.saveValues("test", today - 106400000 )
-        assertEquals(success, false)
+        assertEquals(success, ErrorCode.DATE_ERROR)
         assertEquals(viewModel.text, "")
         assertEquals(viewModel.date, 0)
     }
@@ -72,7 +73,7 @@ class EXPDAT_002_test_01  : TestCase() {
     @Test
     fun testDateNegative() {
         val success = viewModel.saveValues("test", -1)
-        assertEquals(success, false)
+        assertEquals(success, ErrorCode.DATE_ERROR)
         assertEquals(viewModel.text, "")
         assertEquals(viewModel.date, 0)
     }
