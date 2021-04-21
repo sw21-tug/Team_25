@@ -14,7 +14,6 @@ import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
-import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.ui.errorhandling.ErrorCode
 import java.text.SimpleDateFormat
 import java.util.*
@@ -57,7 +56,8 @@ class AddFragment : Fragment() {
                     toast.show()
                 }
                 ErrorCode.OK -> {
-                    val dateString = Util.convertDateToString(newDate.timeInMillis)
+                    val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.GERMANY)
+                    val dateString = formatter.format(newDate.time)
 
                     val toast = Toast.makeText(activity, "Input: " + addViewModel.text + "\n" +
                             "Date: " + dateString, Toast.LENGTH_SHORT)

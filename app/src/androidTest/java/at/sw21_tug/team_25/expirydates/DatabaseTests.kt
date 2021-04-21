@@ -11,7 +11,6 @@ import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
-import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.ui.add.AddViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -115,7 +114,7 @@ class DatabaseTests {
                 Assert.assertTrue(
                     "Date saved incorrectly: "
                             + it.get(0).date,
-                    Util.convertDateToString(viewModel.date) == it.get(0).date)
+                    viewModel.date.toString() == it.get(0).date)
             }
         })
     }
