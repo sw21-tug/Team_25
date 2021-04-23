@@ -6,6 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject2
 import at.sw21_tug.team_25.expirydates.utils.NotificationManager
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -33,22 +34,21 @@ class NotificationTests {
         clearAllNotifications()
         Thread.sleep(500)
         NotificationManager.displayNotification("Hello", "Hello World");
-        Thread.sleep(5000)
-        val notificationStackScroller = device.findObject(
-                By
-                .pkg("com.android.systemui")
-                .res("com.android.systemui:id/notification_stack_scroller")
-        )
+        Thread.sleep(2000)
+        device.openNotification()
+        Thread.sleep(500)
+        val clearButton = getClearButton();
 
-
-        assertTrue(notificationStackScroller != null)
+        assertTrue(clearButton != null)
+        clearButton?.click()
+        Thread.sleep(500)
     }
 
     private fun clearAllNotifications() {
         val uiDevice = UiDevice.getInstance(getInstrumentation())
         uiDevice.openNotification()
         Thread.sleep(500)
-        val clearButton = uiDevice.findObject(By.desc("Clear all notifications."))
+        val clearButton = getClearButton();
 
         if (clearButton != null) {
             clearButton.click()
@@ -57,6 +57,9 @@ class NotificationTests {
         }
     }
 
-
+    private fun getClearButton(): UiObject2? {
+        val uiDevice = UiDevice.getInstance(getInstrumentation())
+        return uiDevice.findObject(By.desc("Clear all notifications."))
+    }
 
 }

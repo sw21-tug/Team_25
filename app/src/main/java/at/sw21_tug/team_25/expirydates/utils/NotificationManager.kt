@@ -1,5 +1,6 @@
 package at.sw21_tug.team_25.expirydates.utils
 
+import android.app.NotificationManager as AndroidNotificationManager
 import android.app.Notification
 import android.app.NotificationChannel
 import android.content.Context
@@ -9,7 +10,7 @@ import at.sw21_tug.team_25.expirydates.R
 object NotificationManager {
 
     private lateinit var context: Context
-    private var channel_id = "12345"
+    private var channel_id = "reminders"
 
     fun displayNotification(title: String, body: String) {
 
@@ -31,10 +32,10 @@ object NotificationManager {
         with(NotificationManagerCompat.from(context)) {
 
             if(getNotificationChannel(channel_id) == null) {
-                val name = "channelname"
-                val descriptionText = "channeldescription"
+                val name = "ExpiryDates Notifications"
+                val descriptionText = "Notifications about expiring products."
                 val importance = NotificationManagerCompat.IMPORTANCE_DEFAULT
-                val channel = NotificationChannel(channel_id, name, importance).apply {
+                val channel = NotificationChannel(channel_id, name, AndroidNotificationManager.IMPORTANCE_DEFAULT).apply {
                     description = descriptionText
                 }
 
