@@ -12,10 +12,13 @@ object NotificationManager {
     private lateinit var context: Context
     private var channel_id = "reminders"
 
-    fun displayNotification(title: String, body: String) {
+    fun displayNotification(title: String, body: String, ctx: Context? = null) {
 
+        val usedCtx: Context = ctx ?: context
 
-        val builder = Notification.Builder(context, channel_id)
+        constructChannel(usedCtx)
+
+        val builder = Notification.Builder(usedCtx, channel_id)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setSmallIcon(R.drawable.ic_home_black_24dp)
@@ -23,13 +26,13 @@ object NotificationManager {
         val notification = builder.build();
         val notification_id = 10
 
-        with(NotificationManagerCompat.from(context)) {
+        with(NotificationManagerCompat.from(usedCtx)) {
             notify(notification_id, notification)
         }
     }
 
-    fun constructChannel() {
-        with(NotificationManagerCompat.from(context)) {
+    fun constructChannel(ctx: Context) {
+        with(NotificationManagerCompat.from(ctx)) {
 
             if(getNotificationChannel(channel_id) == null) {
                 val name = "ExpiryDates Notifications"
@@ -44,9 +47,8 @@ object NotificationManager {
         }
     }
 
-    fun setContext(con: Context) {
+    fun setDefaultContext(con: Context) {
         context=con
-        constructChannel()
     }
 
 }

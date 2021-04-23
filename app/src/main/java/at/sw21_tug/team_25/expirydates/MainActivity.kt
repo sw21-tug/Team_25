@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        NotificationManager.setDefaultContext(this)
         NotificationManager.setContext(this)
 
         // without this, the title is not updated on other fragments on first load
