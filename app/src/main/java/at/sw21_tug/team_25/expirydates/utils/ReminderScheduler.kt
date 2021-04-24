@@ -34,9 +34,12 @@ object ReminderScheduler {
     @VisibleForTesting
     fun createWorkerRequest(currentDateTime: LocalDateTime, items: List<ExpItem>): OneTimeWorkRequest {
         val ids = items.map { it.id }
+        val names = items.map { it.name }
+
 
         val data = Data.Builder()
                 .putIntArray("item_ids", ids.toIntArray())
+                .putStringArray("item_names", names.toTypedArray())
                 .build();
 
         val timeDelay = calculateNotificationDelayTimeInMillis(currentDateTime, items[0].date)

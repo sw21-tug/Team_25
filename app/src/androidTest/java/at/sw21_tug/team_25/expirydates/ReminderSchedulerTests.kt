@@ -27,7 +27,7 @@ class ReminderSchedulerTests {
 
         val req = ReminderScheduler.createWorkerRequest(currentDate, items)
 
-        req.tags.contains(ReminderScheduler.work_tag)
+        Assert.assertTrue(req.tags.contains(ReminderScheduler.work_tag))
 
         val ids = req.workSpec.input.getIntArray("item_ids")
         Assert.assertArrayEquals(ids, items.map { it.id }.toIntArray())

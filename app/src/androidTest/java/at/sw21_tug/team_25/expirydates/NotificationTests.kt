@@ -1,6 +1,7 @@
 package at.sw21_tug.team_25.expirydates
 
 
+import androidx.annotation.VisibleForTesting
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.By
@@ -44,22 +45,25 @@ class NotificationTests {
         Thread.sleep(500)
     }
 
-    private fun clearAllNotifications() {
-        val uiDevice = UiDevice.getInstance(getInstrumentation())
-        uiDevice.openNotification()
-        Thread.sleep(500)
-        val clearButton = getClearButton();
+    companion object {
+        @VisibleForTesting
+        fun clearAllNotifications() {
+            val uiDevice = UiDevice.getInstance(getInstrumentation())
+            uiDevice.openNotification()
+            Thread.sleep(500)
+            val clearButton = getClearButton();
 
-        if (clearButton != null) {
-            clearButton.click()
-        } else {
-            uiDevice.swipe(50, uiDevice.displayHeight, 50, 2, 5);
+            if (clearButton != null) {
+                clearButton.click()
+            } else {
+                uiDevice.swipe(50, uiDevice.displayHeight, 50, 2, 5);
+            }
+        }
+
+        @VisibleForTesting
+        fun getClearButton(): UiObject2? {
+            val uiDevice = UiDevice.getInstance(getInstrumentation())
+            return uiDevice.findObject(By.desc("Clear all notifications."))
         }
     }
-
-    private fun getClearButton(): UiObject2? {
-        val uiDevice = UiDevice.getInstance(getInstrumentation())
-        return uiDevice.findObject(By.desc("Clear all notifications."))
-    }
-
 }

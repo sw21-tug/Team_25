@@ -20,6 +20,9 @@ interface ExpItemDao {
     @Query("SELECT * FROM items WHERE date = ( SELECT date FROM items GROUP BY date ORDER BY date ASC LIMIT 1 )")
     suspend fun getNextExpiringItems(): List<ExpItem>
 
+    @Query("SELECT * FROM items WHERE id = :itemId LIMIT 1")
+    suspend fun getItemByID(itemId: Int): ExpItem
+
     @Query("DELETE FROM items")
     fun deleteAllItems()
 
