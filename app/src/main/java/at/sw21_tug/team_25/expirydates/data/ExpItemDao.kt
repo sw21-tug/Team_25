@@ -14,6 +14,12 @@ interface ExpItemDao {
     @Query("SELECT * FROM items ORDER BY id ASC")
     fun readAllItems(): LiveData<List<ExpItem>>
 
+    /**
+     * Returns all items which are the next ones to expire
+     */
+    @Query("SELECT * FROM items WHERE date = ( SELECT date FROM items GROUP BY date ORDER BY date ASC LIMIT 1 )")
+    suspend fun getNextExpiringItems(): List<ExpItem>
+
     @Query("DELETE FROM items")
     fun deleteAllItems()
 
