@@ -1,10 +1,8 @@
 package at.sw21_tug.team_25.expirydates
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
@@ -92,13 +90,5 @@ class EXPDAT_002_test_01  : TestCase() {
         assertEquals(success, ErrorCode.DATE_ERROR)
         assertEquals(viewModel.text, "")
         assertEquals(viewModel.date, 0)
-    }
-
-    @Test
-    fun testSaveItem() {
-        val success = viewModel.saveValues("test", today, expItemDao)
-        val items: LiveData<List<ExpItem>> = expItemDao.readAllItems()
-        assertEquals(viewModel.text, 1)
-
     }
 }
