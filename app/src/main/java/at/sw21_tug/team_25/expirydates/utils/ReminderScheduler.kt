@@ -1,27 +1,60 @@
 package at.sw21_tug.team_25.expirydates.utils
 
 import android.content.Context
-import android.icu.util.Calendar
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.annotation.VisibleForTesting
+import androidx.work.*
+import at.sw21_tug.team_25.expirydates.data.ExpItem
+import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+import java.util.concurrent.TimeUnit
 
 object ReminderScheduler {
 
-    fun scheduleNextReminder(ctx: Context) {
+    var work_tag = "expiry_reminders_queue"
+    var unique_work_tag = "remind_next_expiry_date_job"
 
-        val currentDate = Calendar.getInstance()
-        val expiryDate = Calendar.getInstance()
-        expiryDate.add(Calendar.SECOND, 10);
+    suspend fun ensureNextReminderScheduled(ctx: Context) {
 
-        val data = Data.Builder().putInt("item_id", 42).build();
+        val db = ExpItemDatabase.getDatabase(ctx).expItemDao()
 
-        val timeDiff = expiryDate.timeInMillis - currentDate.timeInMillis
-        val dailyWorkRequest = OneTimeWorkRequestBuilder<Reminder>()
-            .setInputData(data)
-            .setInitialDelay(timeDiff, java.util.concurrent.TimeUnit.MILLISECONDS).build()
-        WorkManager.getInstance(ctx).enqueue(dailyWorkRequest)
+        val expiredItems = db.getNextExpiringItems()
 
+        if (expiredItems.isEmpty()) {
+            return
+        }
+
+        val workRequest = createWorkerRequest(LocalDateTime.now(), expiredItems)
+
+        WorkManager.getInstance(ctx).enqueueUniqueWork(unique_work_tag, ExistingWorkPolicy.REPLACE, workRequest)
+    }
+
+    @VisibleForTesting
+    fun createWorkerRequest(currentDateTime: LocalDateTime, items: List<ExpItem>): OneTimeWorkRequest {
+        val ids = items.map { it.id }
+
+        val data = Data.Builder()
+                .putIntArray("item_ids", ids.toIntArray())
+                .build();
+
+        val timeDelay = calculateNotificationDelayTimeInMillis(currentDateTime, items[0].date)
+
+        return OneTimeWorkRequestBuilder<Reminder>()
+                .setInputData(data)
+                .addTag(work_tag)
+                .setInitialDelay(timeDelay, TimeUnit.MILLISECONDS).build()
+    }
+
+    @VisibleForTesting
+    fun calculateNotificationDelayTimeInMillis(currentDateTime: LocalDateTime, dueDate: String): Long {
+        // "yyyy-MM-dd" -> dueDate
+        var reminderDateTime = LocalDate.parse(dueDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay()
+        reminderDateTime = reminderDateTime.minusDays(1)
+        reminderDateTime = reminderDateTime.withHour(9)
+
+        return reminderDateTime.toInstant(ZoneOffset.UTC).toEpochMilli() - currentDateTime.toInstant(ZoneOffset.UTC).toEpochMilli()
     }
 
 }
