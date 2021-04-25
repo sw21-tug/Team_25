@@ -1,5 +1,6 @@
 package at.sw21_tug.team_25.expirydates
 
+import android.util.Log
 import androidx.annotation.MainThread
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Lifecycle
@@ -11,14 +12,19 @@ import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
+import at.sw21_tug.team_25.expirydates.misc.Util
+import at.sw21_tug.team_25.expirydates.ui.add.AddViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import org.junit.*
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
-import java.io.IOException
+import java.util.*
 
 
 /**
@@ -41,14 +47,8 @@ class DatabaseTests {
         db = ExpItemDatabase.getDatabase(context)
                 //Room.databaseBuilder(context, ExpItemDatabase::class.java, "expitem-database").build()
         expItemDao = db.expItemDao()
-        repository = ExpItemRepository(expItemDao)
     }
 
-    @After
-    @Throws(IOException::class)
-    fun closeDb() {
-        db.close()
-    }
 
     /*
     Test to create a database Item and retrieve it.
@@ -57,7 +57,9 @@ class DatabaseTests {
     @Throws(Exception::class)
     fun createTest() {
         // Delete all items in the database
-        expItemDao.deleteAllItems()
+        try {
+            expItemDao.deleteAllItems() // This crashes the program when there are no items!
+        } catch (t: Throwable){}
 
         // Create fake data
         val name = "Salami"
@@ -67,6 +69,7 @@ class DatabaseTests {
         val item = ExpItem(name, date)
 
         // Add Item to database
+        @Suppress("DeferredResultUnused")
         GlobalScope.async {
             expItemDao.insertItem(item)
         }
@@ -85,6 +88,42 @@ class DatabaseTests {
         })
     }
 
+    /*
+    Test to create a database Item and retrieve it.
+     */
+    @Test @MainThread
+    @Throws(Exception::class)
+    fun createTestUI() {
+        // Delete all items in the database
+        try {
+            expItemDao.deleteAllItems()
+        } catch (t: Throwable){}
+
+        val viewModel = AddViewModel()
+
+        viewModel.saveValues("test", Calendar.getInstance().timeInMillis, expItemDao)
+
+        // Get items from database
+        val items = expItemDao.readAllItems()
+
+        val lifecycleOwner: LifecycleOwner = mockLifecycleOwner()  // Mockito.mock(LifecycleOwner::class.java)
+        items.observe(lifecycleOwner, Observer<List<ExpItem>> {
+            if (it != null && it.size == 1) {
+                Assert.assertTrue(
+                    "Text saved incorrectly: "
+                            + it.get(0).name,
+                    viewModel.text == it.get(0).name)
+
+                Assert.assertTrue(
+                    "Date saved incorrectly: "
+                            + it.get(0).date,
+                    Util.convertDateToString(viewModel.date) == it.get(0).date)
+            } else {
+                Log.e("DBTest","Invalid number of items in db, should be 1: " + it.size)
+            }
+        })
+    }
+
     private fun mockLifecycleOwner(): LifecycleOwner {
         val owner: LifecycleOwner = Mockito.mock(LifecycleOwner::class.java)
         val lifecycle = LifecycleRegistry(owner)
@@ -92,4 +131,6 @@ class DatabaseTests {
         `when`(owner.lifecycle).thenReturn(lifecycle)
         return owner
     }
+
+
 }

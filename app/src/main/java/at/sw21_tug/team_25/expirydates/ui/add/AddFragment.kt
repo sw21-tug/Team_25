@@ -11,6 +11,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import at.sw21_tug.team_25.expirydates.R
+import at.sw21_tug.team_25.expirydates.data.ExpItemDao
+import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
+import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.ui.errorhandling.ErrorCode
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,13 +37,17 @@ class AddFragment : Fragment() {
 
         val cal: Calendar = Calendar.getInstance()
         calender.minDate = cal.timeInMillis
+        var db: ExpItemDatabase = ExpItemDatabase.getDatabase(this.requireContext())
+        var expItemDao: ExpItemDao = db.expItemDao()
+        var repository: ExpItemRepository = ExpItemRepository(expItemDao)
+
 
         button.setOnClickListener {
 
             val newDate : Calendar = Calendar.getInstance()
             newDate.set(calender.year, calender.month, calender.dayOfMonth)
 
-            when (addViewModel.saveValues(textView.editableText.toString(), newDate.timeInMillis)) {
+            when (addViewModel.saveValues(textView.editableText.toString(), newDate.timeInMillis, expItemDao)) {
                 ErrorCode.INPUT_ERROR -> {
                     val toast = Toast.makeText(activity, "Invalid Input (Must be between 1 and 255 characters long)", Toast.LENGTH_SHORT)
                     toast.show()
@@ -49,8 +57,7 @@ class AddFragment : Fragment() {
                     toast.show()
                 }
                 ErrorCode.OK -> {
-                    val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.GERMANY)
-                    val dateString = formatter.format(newDate.time)
+                    val dateString = Util.convertDateToString(newDate.timeInMillis)
 
                     val toast = Toast.makeText(activity, "Input: " + addViewModel.text + "\n" +
                             "Date: " + dateString, Toast.LENGTH_SHORT)
@@ -61,6 +68,4 @@ class AddFragment : Fragment() {
         }
         return root
     }
-
-
 }
