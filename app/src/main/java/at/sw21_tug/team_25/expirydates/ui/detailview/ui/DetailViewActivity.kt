@@ -17,19 +17,24 @@ class DetailViewActivity : AppCompatActivity() {
 
         if(bundle != null) {
 
-            val name = bundle.getString("name");
+            val name = bundle.getString("name").orEmpty();
             val date_int = bundle.getLong("date");
 
             val date = Date(date_int);
 
-
-            val product_name = findViewById<TextView>(R.id.product_name);
-            product_name.text = name;
-
-            val exp_date = findViewById<TextView>(R.id.exp_date);
-            exp_date.text = date.toString()
+            OpenPopup(name, date);
 
         }
+    }
+
+    fun OpenPopup(name : String, date : Date)
+    {
+
+        val product_name = findViewById<TextView>(R.id.product_name);
+        product_name.text = name;
+
+        val exp_date = findViewById<TextView>(R.id.exp_date);
+        exp_date.text = date.toString()
     }
 
 }
