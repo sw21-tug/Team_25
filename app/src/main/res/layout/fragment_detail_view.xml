@@ -1,37 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
 
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/view">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="35dp"
+    android:paddingVertical="120dp">
 
-                <TextView
-                        android:text="Product"
-                        android:layout_width="307dp"
-                        android:layout_height="73dp"
-                        android:id="@+id/product_name"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="50dp"
-                        android:layout_marginEnd="50dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginTop="60dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:src="?attr/popupMenuBackground"
+            />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="25dp"
+                    android:orientation="vertical"
+                    >
 
                 <TextView
-                        android:text="exp date"
-                        android:layout_width="220dp"
-                        android:layout_height="37dp"
-                        android:id="@+id/exp_date"
-                        android:layout_marginTop="40dp"
-                        app:layout_constraintTop_toBottomOf="@+id/product_name"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="50dp" />
-        </View>
-</RelativeLayout>
+                    android:id="@+id/product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <TextView
+                    android:id="@+id/exp_date"
+                    android:text="exp_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="25dp"
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            >
+
+                <Button
+                    android:id="@+id/closePopUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Close"
+                    android:layout_gravity="right"/>
+        </LinearLayout>
+
+</FrameLayout>
