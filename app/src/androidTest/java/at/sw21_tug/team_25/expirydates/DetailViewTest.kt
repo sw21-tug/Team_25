@@ -24,9 +24,9 @@ class DetailViewTest {
     var mActivityTestRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun detailViewTest4() {
+    fun detailViewTest() {
 
-        onView(withId(R.id.detail_view)).perform(click())
+        //todo open detail view
         onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup()).check((matches(isDisplayed())))
         onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         onView(withId(R.id.detail_view_popup)).check(doesNotExist())
