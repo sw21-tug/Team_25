@@ -29,6 +29,7 @@
 |---|---|---|---|---|
 |EXPDAT-001   | create an App that starts and shows title  | +continuous integration  | Stefan  | Nico  |
 |EXPDAT-009   | tab view  | -  | Stefan  | Nico  |
-|EXPDAT-003   | Save Entry  | -  | Benjamin G  | Matthias  |
+|EXPDAT-003   | save Entry  | -  | Benjamin G  | Matthias  |
 |EXPDAT-002   | input fields for product name and expiry dates    | -  | Benjamin W  | Esther  |
+|EXPDAT-018   | input data save in DB  | -  | Benjamin W  | Matthias |
 |   |   |   |   |   |
