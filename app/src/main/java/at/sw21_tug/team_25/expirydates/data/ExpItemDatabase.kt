@@ -20,11 +20,17 @@ public abstract class ExpItemDatabase: RoomDatabase() {
                 return tempInstance
             }
             synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    ExpItemDatabase::class.java,
-                    "item_database"
-                ).build()
+                val instance = try {
+                    Class.forName("at.sw21_tug.team_25.expirydates.DatabaseTestsV2")
+                    Room.inMemoryDatabaseBuilder(context, ExpItemDatabase::class.java).build()
+                } catch (e: ClassNotFoundException) {
+                    Room.databaseBuilder(
+                        context.applicationContext,
+                        ExpItemDatabase::class.java,
+                        "item_database"
+                    ).build()
+                }
+
                 this.INSTANCE = instance
                 return instance
             }
