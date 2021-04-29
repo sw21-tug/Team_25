@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
+import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 
 class ListFragment : Fragment() {
 
@@ -28,7 +29,7 @@ class ListFragment : Fragment() {
         val itemsRecyclerView = root.findViewById<RecyclerView>(R.id.items_rv)
         itemsRecyclerView.layoutManager = LinearLayoutManager((activity as MainActivity))
 
-        listViewModel.expItems = (activity as MainActivity).db?.expItemDao()?.readAllItems()
+        listViewModel.expItems = ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItems()
         listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 itemsRecyclerView.adapter = ExpItemRecyclerViewAdapter(it)

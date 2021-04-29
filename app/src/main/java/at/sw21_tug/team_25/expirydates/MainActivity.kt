@@ -6,15 +6,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import at.sw21_tug.team_25.expirydates.data.ExpItem
-import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 
 class MainActivity : AppCompatActivity() {
-
-    var db: ExpItemDatabase?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,44 +25,5 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        this.db = ExpItemDatabase.getDatabase(this.applicationContext)
-        createFakeData() // TODO: Remove this once tests is implemented
     }
-
-    /*
-    * Remove me this once tests are implemented
-    * */
-    fun createFakeData() {
-        var expItemDao = this.db?.expItemDao()
-        //expItemDao?.deleteAllItems()
-        GlobalScope.async {
-            expItemDao?.deleteAllItems()
-        }
-
-        for (i in 10..30) {
-            GlobalScope.async {
-                // yyyy-MM-dd hh:mm:ss
-                var date = "20" + i.toString()
-                date = date + "-05-01 20:43:45"
-                var expItem = ExpItem("salami " + i.toString(), date)
-                expItemDao?.insertItem(expItem)
-            }
-        }
-    }
-
-
-//    inner class Listener : NavController.OnDestinationChangedListener {
-//        override fun onDestinationChanged(
-//            controller: NavController,
-//            destination: NavDestination,
-//            arguments: Bundle?
-//        ) {
-//            if(destination.label == "List") {
-//                this@MainActivity.db?.expItemDao()?.readAllItems()
-//
-//            }
-//        }
-//
-//    }
 }

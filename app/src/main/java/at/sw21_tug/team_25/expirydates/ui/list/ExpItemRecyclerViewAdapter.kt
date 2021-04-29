@@ -23,7 +23,7 @@ class ExpItemRecyclerViewAdapter(private val expItems: List<ExpItem>):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val expItem = expItems[position]
-        val expItemText = expItem.name + "  " + expItem.date
+        val expItemText = expItem.name.capitalize() + "  " + expItem.date
         holder.textView.text = expItemText
     }
 
