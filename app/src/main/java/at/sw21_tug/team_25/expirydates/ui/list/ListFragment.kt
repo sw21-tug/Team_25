@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import at.sw21_tug.team_25.expirydates.MainActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
+import at.sw21_tug.team_25.expirydates.misc.Util
+import java.util.*
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 
 class ListFragment : Fragment() {
@@ -33,11 +35,20 @@ class ListFragment : Fragment() {
             R.id.language_en -> {
                 val toast = Toast.makeText(activity, "English clicked", Toast.LENGTH_SHORT)
                 toast.show()
+                Util.setLanguage("en", requireActivity())
+                Util.setLocale(requireActivity(), Locale("en"))
+
+                (this.activity as MainActivity).refreshCurrentFragment()
             }
 
             R.id.language_ru -> {
                 val toast = Toast.makeText(activity, "Russian clicked", Toast.LENGTH_SHORT)
                 toast.show()
+
+                Util.setLanguage("ru", requireActivity())
+                Util.setLocale(requireActivity(), Locale("ru"))
+
+                (this.activity as MainActivity).refreshCurrentFragment()
             }
         }
         return false
