@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ДатаИстеченияСрока</string>
+    <string name="title_home">Заставке</string>
+    <string name="title_add">Добавлять</string>
+    <string name="title_list">Список</string>
+    <string name="save_date">Сохранить Дату</string>
+    <string name="enter_item_name">Введите Название Предмета</string>
+</resources>
