@@ -17,7 +17,7 @@ class Util {
 
         fun getLanguage(activity: Activity): Locale{
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-            val languageCode = sharedPref.getString("ExpiryDate.language_preferences", "ru")
+            val languageCode = sharedPref.getString("ExpiryDate.language_preferences", "en")
             return Locale(languageCode)
         }
 
