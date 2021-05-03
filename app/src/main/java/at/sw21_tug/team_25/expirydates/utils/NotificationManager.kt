@@ -18,6 +18,21 @@ object NotificationManager {
 
     private lateinit var context: Context
     private var channel_id = "reminders"
+    private const val EXTRA_ITEM_ID_KEY = "item_id"
+
+    fun displayExpiryNotification(id: Int, name: String, ctx: Context? = null) {
+        val usedCtx: Context = ctx ?: context
+
+
+        val notificationTitle =
+            usedCtx.resources.getString(R.string.expiry_notification_title, name)
+        val notificationBody = usedCtx.resources.getString(R.string.expiry_notification_body, name)
+
+        val data: Bundle = Bundle.EMPTY.deepCopy()
+        data.putInt(EXTRA_ITEM_ID_KEY, id)
+
+        displayNotification(notificationTitle, notificationBody, usedCtx, data)
+    }
 
     fun displayNotification(
         title: String,
@@ -74,7 +89,7 @@ object NotificationManager {
     fun setup(con: Activity) {
         context = con
 
-        val id = con.intent.getIntExtra("item_id", -1)
+        val id = con.intent.getIntExtra(EXTRA_ITEM_ID_KEY, -1)
         if (id != -1) {
             Log.d("NotificationManager", "opened by notification with item_id $id")
             // TODO: open detail view for item with $id
