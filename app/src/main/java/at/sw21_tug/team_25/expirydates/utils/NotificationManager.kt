@@ -86,13 +86,17 @@ object NotificationManager {
         }
     }
 
-    fun setup(con: Activity) {
+    fun setDefaultContext(con: Activity) {
         context = con
+    }
 
-        val id = con.intent.getIntExtra(EXTRA_ITEM_ID_KEY, -1)
-        if (id != -1) {
+    fun whenAppWasStartedByExpiryNotification(intent: Intent, cb: (itemId: Int) -> Unit) {
+
+        val defaultValue: Int = -1
+        val id = intent.getIntExtra(EXTRA_ITEM_ID_KEY, defaultValue)
+        if (id != defaultValue) {
             Log.d("NotificationManager", "opened by notification with item_id $id")
-            // TODO: open detail view for item with $id
+            cb(id)
         }
     }
 

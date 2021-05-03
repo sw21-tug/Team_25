@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface ExpItemDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertItem(item: ExpItem)
+    suspend fun insertItem(item: ExpItem): Long
 
     @Query("SELECT * FROM items ORDER BY id ASC")
     fun readAllItems(): LiveData<List<ExpItem>>
@@ -21,7 +21,7 @@ interface ExpItemDao {
     suspend fun getNextExpiringItems(): List<ExpItem>
 
     @Query("SELECT * FROM items WHERE id = :itemId LIMIT 1")
-    suspend fun getItemByID(itemId: Int): ExpItem
+    suspend fun getItemByID(itemId: Long): ExpItem?
 
     @Query("DELETE FROM items")
     fun deleteAllItems()

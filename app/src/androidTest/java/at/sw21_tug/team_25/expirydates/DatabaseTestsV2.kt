@@ -95,6 +95,20 @@ class DatabaseTestsV2 {
     }
 
     @Test
+    fun getItemByIdTest(): Unit = testScope.runBlockingTest {
+        val date = "2021-04-22"
+
+        val item1 = ExpItem("Item1", date)
+        val item2 = ExpItem("Item2", date)
+        val id1 = expItemDao.insertItem(item1)
+        expItemDao.insertItem(item2)
+        Assert.assertNotNull(expItemDao.getItemByID(id1))
+        Assert.assertEquals(item1.name, expItemDao.getItemByID(id1)?.name)
+        Assert.assertNull(expItemDao.getItemByID(1000))
+    }
+
+
+    @Test
     fun retrieveNextExpiringItemsTest1(): Unit = testScope.runBlockingTest {
         val item1 = ExpItem("Item1", "2021-12-01")
         val item2 = ExpItem("Item2", "2021-12-02")
