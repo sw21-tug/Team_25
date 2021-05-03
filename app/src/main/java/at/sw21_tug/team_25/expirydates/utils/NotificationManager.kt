@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
+import kotlin.random.Random
 import android.app.NotificationManager as AndroidNotificationManager
 
 object NotificationManager {
@@ -27,11 +28,18 @@ object NotificationManager {
 
         val usedCtx: Context = ctx ?: context
 
+        val notificationId = Random.nextInt()
+
         constructChannel(usedCtx)
         val intent = Intent(usedCtx, MainActivity::class.java)
         intent.putExtras(extras)
         val pendingIntent: PendingIntent =
-            PendingIntent.getActivity(usedCtx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getActivity(
+                usedCtx,
+                notificationId,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
         val builder = Notification.Builder(usedCtx, channel_id)
             .setContentTitle(title)
@@ -41,10 +49,9 @@ object NotificationManager {
             .setAutoCancel(true)
 
         val notification = builder.build()
-        val notification_id = 10
 
         with(NotificationManagerCompat.from(usedCtx)) {
-            notify(notification_id, notification)
+            notify(notificationId, notification)
         }
     }
 
