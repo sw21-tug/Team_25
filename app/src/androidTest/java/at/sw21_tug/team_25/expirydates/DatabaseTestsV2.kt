@@ -4,13 +4,19 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.*
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
-import at.sw21_tug.team_25.expirydates.data.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.test.*
-
+import at.sw21_tug.team_25.expirydates.data.ExpItem
+import at.sw21_tug.team_25.expirydates.data.ExpItemDao
+import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.asExecutor
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.setMain
 import org.junit.*
 import org.junit.runner.RunWith
-
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
@@ -86,6 +92,31 @@ class DatabaseTestsV2 {
         checkLiveData(items) {
             Assert.assertEquals(0, it.size)
         }
+    }
+
+    @Test
+    fun retrieveNextExpiringItemsTest1(): Unit = testScope.runBlockingTest {
+        val item1 = ExpItem("Item1", "2021-12-01")
+        val item2 = ExpItem("Item2", "2021-12-02")
+        val item3 = ExpItem("Item3", "2021-12-01")
+        val item4 = ExpItem("Item4", "2021-12-02")
+
+        expItemDao.insertItem(item1)
+        expItemDao.insertItem(item2)
+        expItemDao.insertItem(item3)
+        expItemDao.insertItem(item4)
+
+        val items = expItemDao.getNextExpiringItems()
+        Assert.assertEquals(items.size, 2)
+
+    }
+
+    @Test
+    fun retrieveNextExpiringItemsTest2(): Unit = testScope.runBlockingTest {
+
+        val items = expItemDao.getNextExpiringItems()
+
+        Assert.assertEquals(items.size, 0)
     }
 
     private fun <T>checkLiveData(data: LiveData<T>, lambda: (b: T) -> Unit) {
