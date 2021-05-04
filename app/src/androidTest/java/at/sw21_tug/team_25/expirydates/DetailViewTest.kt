@@ -21,6 +21,7 @@ import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -32,10 +33,12 @@ import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
 import org.junit.*
 import org.junit.runner.RunWith
+import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
 
-@LargeTest
-@RunWith(AndroidJUnit4::class)
+@ExperimentalCoroutinesApi
+@RunWith(MockitoJUnitRunner::class)
+@FixMethodOrder
 class DetailViewTest {
 
     companion object {
@@ -56,13 +59,13 @@ class DetailViewTest {
             expItemDao = db.expItemDao()
             repository = ExpItemRepository(expItemDao)
         }
-
-        @AfterClass
-        @JvmStatic
-        @Throws(IOException::class)
-        fun closeDb() {
-            db.close()
-        }
+//        - - - - - INFO: Causes errors in following test, that also use ExpItemDatabase - - - -
+//        @AfterClass
+//        @JvmStatic
+//        @Throws(IOException::class)
+//        fun closeDb() {
+//            db.close()
+//        }
     }
 
     @Rule
