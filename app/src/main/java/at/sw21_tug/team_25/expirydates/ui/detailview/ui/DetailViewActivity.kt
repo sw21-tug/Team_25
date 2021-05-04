@@ -14,10 +14,9 @@ import at.sw21_tug.team_25.expirydates.data.ExpItem
 
 class DetailViewActivity : AppCompatActivity() {
     companion object {
-        fun openDetailView(activity: Activity, product_id: Int) {
-            //todo get product
-            openDetailView(activity, "product", "date")
-        }
+//        fun openDetailView(activity: Activity, product_id: Int) {
+//            openDetailView(activity, "product", "date")
+//        }
 
         fun openDetailView(activity: Activity, product: ExpItem){
             openDetailView(activity, product.name, product.date)
