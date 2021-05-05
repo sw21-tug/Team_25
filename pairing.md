@@ -1,5 +1,5 @@
 ### Pairing Matrix
-| Dev # |  Name       | Level  | Theme Sprint 1
+| Dev # |  Name       | Level  | Theme Current Sprint
 | :---  |    :----    | :---:  | :----  
 | Dev 1 | Benjamin G  | senior | 022
 | Dev 2 | Matthias    | junior | 021
