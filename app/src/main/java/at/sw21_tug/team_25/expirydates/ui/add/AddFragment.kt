@@ -14,8 +14,10 @@ import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.ui.errorhandling.ErrorCode
+import at.sw21_tug.team_25.expirydates.utils.ReminderScheduler
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import java.util.*
-
 
 class AddFragment : Fragment() {
     private lateinit var addViewModel: AddViewModel
@@ -141,6 +143,12 @@ class AddFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         )
                         toast.show()
+                    }
+                    val toast = Toast.makeText(activity, "Input: " + addViewModel.text + "\n" +
+                            "Date: " + dateString, Toast.LENGTH_SHORT)
+                    toast.show()
+                    GlobalScope.async {
+                        ReminderScheduler.ensureNextReminderScheduled(this@AddFragment.requireContext())
                     }
                 }
             }

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.work.*
 import at.sw21_tug.team_25.expirydates.data.ExpItem
+import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -17,12 +18,12 @@ object ReminderScheduler {
     var unique_work_tag = "remind_next_expiry_date_job"
 
     suspend fun ensureNextReminderScheduled(ctx: Context) {
-
         val db = ExpItemDatabase.getDatabase(ctx).expItemDao()
 
         val expiredItems = db.getNextExpiringItems()
 
         if (expiredItems.isEmpty()) {
+            WorkManager.getInstance(ctx).cancelUniqueWork(unique_work_tag)
             return
         }
 
