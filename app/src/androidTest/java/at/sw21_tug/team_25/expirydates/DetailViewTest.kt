@@ -72,9 +72,9 @@ class DetailViewTest {
             InstrumentationRegistry.getInstrumentation().targetContext).expItemDao()
         expItemDao.deleteAllItems()
         GlobalScope.async {
-            expItemDao.insertItem(ExpItem("Salami", "2021-01-01"))
-            expItemDao.insertItem(ExpItem("Tomato", "2021-01-02"))
-            expItemDao.insertItem(ExpItem("Bread", "2021-01-03"))
+            expItemDao.insertItem(ExpItem("Salami", "2021-01-01 01:01:01"))
+            expItemDao.insertItem(ExpItem("Tomato", "2021-01-02 02:02:02"))
+            expItemDao.insertItem(ExpItem("Bread", "2021-01-03 03:03:03"))
         }
     }
 
@@ -97,7 +97,7 @@ class DetailViewTest {
 
         val materialTextViewSalami = onView(
             allOf(
-                withId(R.id.item_tv), withText("Salami  2021-01-01"),
+                withId(R.id.item_tv), withText("Salami  2021-01-01 01:01:01"),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.items_rv),
@@ -112,9 +112,53 @@ class DetailViewTest {
 
         onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup()).check((matches(isDisplayed())))
         onView(withId(R.id.product_name)).inRoot(RootMatchers.isPlatformPopup()).check(matches(withText("Salami")))
-        onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup()).check(matches(withText("2021-01-01")))
+        onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup()).check(matches(withText("2021-01-01 01:01:01")))
         onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         onView(withId(R.id.detail_view_popup)).check(doesNotExist())
+    }
+
+
+    @Test
+    fun deleteItemTest() {
+        val bottomNavigationItemView = onView(
+            allOf(
+                withId(R.id.navigation_list), withContentDescription("List"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_view),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        bottomNavigationItemView.perform(click())
+
+        val materialTextViewSalami = onView(
+            allOf(
+                withId(R.id.item_tv), withText("Tomato  2021-01-02 02:02:02"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.items_rv),
+                        1
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        materialTextViewSalami.perform(click())
+
+        onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup()).check((matches(isDisplayed())))
+        onView(withId(R.id.product_name)).inRoot(RootMatchers.isPlatformPopup()).check(matches(withText("Tomato")))
+        onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup()).check(matches(withText("2021-01-02 02:02:02")))
+        onView(withId(R.id.deleteItem)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        onView(withId(R.id.detail_view_popup)).check(doesNotExist())
+
+        onView(withId(R.id.items_rv)).check(ListFragmentTest.RecyclerViewItemCountAssertion(2))
+
+
     }
 
 

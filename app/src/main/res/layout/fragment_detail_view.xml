@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -46,17 +48,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="25dp"
-            android:orientation="vertical"
             android:layout_gravity="bottom"
-            >
+            android:orientation="horizontal"
+            android:padding="25dp">
+
+                <Button
+                    android:id="@+id/deleteItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginHorizontal="15dp"
+                    android:backgroundTint="@color/red"
+                    android:text="@string/delete"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
                     android:id="@+id/closePopUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Close"
-                    android:layout_gravity="right"/>
+                    android:layout_gravity="end"
+                    android:text="@string/close"
+                    android:layout_marginHorizontal="15dp"
+                    tools:ignore="ButtonStyle" />
         </LinearLayout>
 
 </FrameLayout>

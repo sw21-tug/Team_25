@@ -9,8 +9,12 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItem
+import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 
 class DetailViewActivity : AppCompatActivity() {
     companion object {
@@ -19,10 +23,10 @@ class DetailViewActivity : AppCompatActivity() {
 //        }
 
         fun openDetailView(activity: Activity, product: ExpItem){
-            openDetailView(activity, product.name, product.date)
+            openDetailView(activity, product.id, product.name, product.date)
         }
 
-        fun openDetailView(activity: Activity, name: String, date: String) {
+        fun openDetailView(activity: Activity, itemId: Int, name: String, date: String) {
 
             val inflater: LayoutInflater = activity.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater;
             val popupView = inflater.inflate(R.layout.fragment_detail_view, null);
@@ -46,6 +50,15 @@ class DetailViewActivity : AppCompatActivity() {
             // set on-click listener
             closePopUpButton.setOnClickListener {
                 popupWindow.dismiss()
+            }
+
+            val deleteItemButton = popupView.findViewById<Button>(R.id.deleteItem)
+            // set on-click listener
+            deleteItemButton.setOnClickListener {
+                GlobalScope.async {
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().deleteItemById(itemId)
+                    popupWindow.dismiss()
+                }
             }
         }
     }
