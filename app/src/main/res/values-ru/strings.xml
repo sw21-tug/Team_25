@@ -6,5 +6,6 @@
     <string name="detail_view">Подробный вид</string>
     <string name="save_date">Сохранить Дату</string>
     <string name="enter_item_name">Введите Название Предмета</string>
-    <string name="closeButtonDetail">Назад</string>
+    <string name="delete">Удалить</string>
+    <string name="close">Назад</string>
 </resources>
