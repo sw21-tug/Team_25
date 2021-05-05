@@ -2,7 +2,6 @@ package at.sw21_tug.team_25.expirydates.ui.list
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -39,8 +38,6 @@ class ListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.language_en -> {
-                val toast = Toast.makeText(activity, "English clicked", Toast.LENGTH_SHORT)
-                toast.show()
                 Util.setLanguage("en", requireActivity())
                 Util.setLocale(requireActivity(), Locale("en"))
 
@@ -48,9 +45,6 @@ class ListFragment : Fragment() {
             }
 
             R.id.language_ru -> {
-                val toast = Toast.makeText(activity, "Russian clicked", Toast.LENGTH_SHORT)
-                toast.show()
-
                 Util.setLanguage("ru", requireActivity())
                 Util.setLocale(requireActivity(), Locale("ru"))
 

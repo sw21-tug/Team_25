@@ -34,8 +34,6 @@ class AddFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.language_en -> {
-                val toast = Toast.makeText(activity, "English clicked", Toast.LENGTH_SHORT)
-                toast.show()
                 Util.setLanguage("en", requireActivity())
                 Util.setLocale(requireActivity(), Locale("en"))
 
@@ -43,9 +41,6 @@ class AddFragment : Fragment() {
             }
 
             R.id.language_ru -> {
-                val toast = Toast.makeText(activity, "Russian clicked", Toast.LENGTH_SHORT)
-                toast.show()
-
                 Util.setLanguage("ru", requireActivity())
                 Util.setLocale(requireActivity(), Locale("ru"))
 
@@ -93,29 +88,60 @@ class AddFragment : Fragment() {
                 expItemDao
             )) {
                 ErrorCode.INPUT_ERROR -> {
-                    val toast = Toast.makeText(
-                        activity,
-                        "Invalid Input (Must be between 1 and 255 characters long)",
-                        Toast.LENGTH_SHORT
-                    )
-                    toast.show()
+                    if (Util.getLanguage(this.activity as MainActivity) == Locale("en")) {
+                        val toast = Toast.makeText(
+                            activity,
+                            "Invalid Input (Must be between 1 and 255 characters long)",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                    } else if (Util.getLanguage(this.activity as MainActivity) == Locale("ru")) {
+                        val toast = Toast.makeText(
+                            activity,
+                            "Недействительный ввод (должен содержать от 1 до 255 символов)",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                    }
+
                 }
                 ErrorCode.DATE_ERROR -> {
-                    val toast = Toast.makeText(
-                        activity,
-                        "Invalid Date (Must not be a past date)",
-                        Toast.LENGTH_SHORT
-                    )
-                    toast.show()
+                    if (Util.getLanguage(this.activity as MainActivity) == Locale("en")) {
+                        val toast = Toast.makeText(
+                            activity,
+                            "Invalid Date (Must not be a past date)",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                    } else if (Util.getLanguage(this.activity as MainActivity) == Locale("ru")) {
+                        val toast = Toast.makeText(
+                            activity,
+                            "Недействительная дата (не должна быть прошедшей датой)",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                    }
                 }
                 ErrorCode.OK -> {
                     val dateString = Util.convertDateToString(newDate.timeInMillis)
 
-                    val toast = Toast.makeText(
-                        activity, "Input: " + addViewModel.text + "\n" +
-                                "Date: " + dateString, Toast.LENGTH_SHORT
-                    )
-                    toast.show()
+                    if (Util.getLanguage(this.activity as MainActivity) == Locale("en")) {
+                        val toast = Toast.makeText(
+                            activity,
+                            "Input: " + addViewModel.text + "\n" +
+                                    "Date: " + dateString,
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                    } else if (Util.getLanguage(this.activity as MainActivity) == Locale("ru")) {
+                        val toast = Toast.makeText(
+                            activity,
+                            "Вход: " + addViewModel.text + "\n" +
+                                    "Дата: " + dateString,
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                    }
                 }
             }
             textView.text = ""

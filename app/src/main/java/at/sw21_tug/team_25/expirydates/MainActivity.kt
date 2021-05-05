@@ -64,15 +64,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateTitle() {
-        when (navController.currentDestination?.label) {
-            "Добавлять" -> navController.currentDestination?.label = getString(R.string.title_add)
-            "Add" -> navController.currentDestination?.label = getString(R.string.title_add)
-
-            "Заставке" -> navController.currentDestination?.label = getString(R.string.title_home)
-            "Home" -> navController.currentDestination?.label = getString(R.string.title_home)
-
-            "Список" -> navController.currentDestination?.label = getString(R.string.title_list)
-            "List" -> navController.currentDestination?.label = getString(R.string.title_list)
+        when (navController.currentDestination?.id) {
+            R.id.navigation_add -> navController.currentDestination?.label = getString(R.string.title_add)
+            R.id.navigation_home -> navController.currentDestination?.label = getString(R.string.title_home)
+            R.id.navigation_list -> navController.currentDestination?.label = getString(R.string.title_list)
         }
     }
 

@@ -3,7 +3,6 @@ package at.sw21_tug.team_25.expirydates.ui.home
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -37,8 +36,7 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.language_en -> {
-                val toast = Toast.makeText(activity, "English clicked", Toast.LENGTH_SHORT)
-                toast.show()
+
                 Util.setLanguage("en", requireActivity())
                 Util.setLocale(requireActivity(), Locale("en"))
 
@@ -46,9 +44,6 @@ class HomeFragment : Fragment() {
             }
 
             R.id.language_ru -> {
-                val toast = Toast.makeText(activity, "Russian clicked", Toast.LENGTH_SHORT)
-                toast.show()
-
                 Util.setLanguage("ru", requireActivity())
                 Util.setLocale(requireActivity(), Locale("ru"))
 
