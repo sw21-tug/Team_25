@@ -1,12 +1,12 @@
 ### Pairing Matrix
 | Dev # |  Name       | Level  | Theme Sprint 1
 | :---  |    :----    | :---:  | :----  
-| Dev 1 | Benjamin G  | senior | 005
+| Dev 1 | Benjamin G  | senior | 022
 | Dev 2 | Matthias    | junior | 021
 | Dev 3 | Benjamin W  | senior | 021
-| Dev 4 | Esther      | junior | 005
-| Dev 5 | Christopher | senior | 008
-| Dev 6 | Florian     | senior | 008
+| Dev 4 | Esther      | junior | 024
+| Dev 5 | Christopher | senior | 022
+| Dev 6 | Florian     | senior | 024
 | Dev 7 | Nico        | junior | 004
 | Dev 8 | Stefan      | senior | 004
 
