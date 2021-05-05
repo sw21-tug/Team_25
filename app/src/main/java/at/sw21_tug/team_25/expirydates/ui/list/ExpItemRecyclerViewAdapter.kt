@@ -4,10 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
 import androidx.fragment.app.FragmentActivity
-import at.sw21_tug.team_25.expirydates.MainActivity
+import androidx.recyclerview.widget.RecyclerView
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.ui.detailview.ui.DetailViewActivity
