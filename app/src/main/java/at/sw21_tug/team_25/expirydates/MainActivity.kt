@@ -1,6 +1,7 @@
 package at.sw21_tug.team_25.expirydates
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -8,8 +9,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.ui.detailview.ui.DetailViewActivity
+import at.sw21_tug.team_25.expirydates.utils.NotificationManager
+import at.sw21_tug.team_25.expirydates.utils.ReminderScheduler
 import at.sw21_tug.team_25.expirydates.misc.Util
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +27,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // without this, the title is not updated on other fragments on first load
         updateLayoutList = ArrayList()
 
@@ -39,6 +45,26 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        NotificationManager.whenAppWasStartedByExpiryNotification(this.intent) {
+            navController.navigate(R.id.navigation_list)
+
+            GlobalScope.async {
+                val dao = ExpItemDatabase.getDatabase(applicationContext).expItemDao()
+                val item = dao.getItemByID(it.toLong())
+                if (item != null) {
+                    runOnUiThread {
+                        DetailViewActivity.openDetailView(this@MainActivity, item)
+                    }
+                } else {
+                    Log.d("MainActivity", "no item found for id $it")
+                }
+            }
+        }
+
+        GlobalScope.async {
+            ReminderScheduler.ensureNextReminderScheduled(applicationContext)
+        }
         navMenu = navView.menu
     }
 

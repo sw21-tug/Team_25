@@ -28,10 +28,12 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
-import org.junit.*
+import org.junit.Before
+import org.junit.BeforeClass
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import java.io.IOException
 
 @ExperimentalCoroutinesApi
 @LargeTest
@@ -55,13 +57,6 @@ class ListFragmentTest {
 
             expItemDao = db.expItemDao()
             repository = ExpItemRepository(expItemDao)
-        }
-
-        @AfterClass
-        @JvmStatic
-        @Throws(IOException::class)
-        fun closeDb() {
-            db.close()
         }
     }
 

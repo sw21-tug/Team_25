@@ -6,6 +6,8 @@
     <string name="detail_view">Detail View</string>
     <string name="save_date">Save Date</string>
     <string name="enter_item_name">Enter Item name</string>
+    <string name="expiry_notification_title">%1$s is expiring</string>
+    <string name="expiry_notification_body">Product %1$s is expiring tomorrow</string>
     <string name="delete">Delete</string>
     <string name="close">Close</string>
 </resources>

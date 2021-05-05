@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [ExpItem::class], version = 1, exportSchema = false)
-abstract class ExpItemDatabase: RoomDatabase() {
+@Database(entities = [ExpItem::class], version = 2, exportSchema = false)
+public abstract class ExpItemDatabase: RoomDatabase() {
 
     abstract fun expItemDao(): ExpItemDao
 
@@ -28,7 +28,7 @@ abstract class ExpItemDatabase: RoomDatabase() {
                         context.applicationContext,
                         ExpItemDatabase::class.java,
                         "item_database"
-                    ).build()
+                    ).addMigrations(ExpItemMigrations.MIGRATION_1_2).build()
                 }
 
                 this.INSTANCE = instance
