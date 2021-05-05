@@ -1,7 +1,9 @@
 package at.sw21_tug.team_25.expirydates
 
 
+import android.app.Application
 import androidx.annotation.VisibleForTesting
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
@@ -16,6 +18,7 @@ import androidx.test.uiautomator.UiObject2
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.utils.NotificationManager
+import com.android.dx.command.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import org.junit.Assert.assertTrue
@@ -44,7 +47,7 @@ class NotificationTests {
         Thread.sleep(500)
         clearAllNotifications()
         Thread.sleep(500)
-        NotificationManager.displayNotification("Hello", "Hello World")
+        NotificationManager.displayNotification("Hello", "Hello World", ApplicationProvider.getApplicationContext())
         Thread.sleep(2000)
         device.openNotification()
         Thread.sleep(500)
@@ -58,7 +61,7 @@ class NotificationTests {
     @Test
     fun canOpenDetailViewFromNotification() {
 
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val appContext = ApplicationProvider.getApplicationContext<Application>()
         val expItemDao = ExpItemDatabase.getDatabase(
             appContext
         ).expItemDao()
@@ -138,6 +141,7 @@ class NotificationTests {
 
         @VisibleForTesting
         fun getClearButton(): UiObject2? {
+            Thread.sleep(500)
             val uiDevice = UiDevice.getInstance(getInstrumentation())
             val btn = uiDevice.findObject(By.textContains("Clear"))
             if (btn != null) {

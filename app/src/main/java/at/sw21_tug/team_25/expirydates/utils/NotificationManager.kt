@@ -1,13 +1,11 @@
 package at.sw21_tug.team_25.expirydates.utils
 
-import android.app.Activity
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
@@ -16,47 +14,42 @@ import android.app.NotificationManager as AndroidNotificationManager
 
 object NotificationManager {
 
-    private lateinit var context: Context
     private var channel_id = "reminders"
     private const val EXTRA_ITEM_ID_KEY = "item_id"
 
-    fun displayExpiryNotification(id: Int, name: String, ctx: Context? = null) {
-        val usedCtx: Context = ctx ?: context
-
+    fun displayExpiryNotification(id: Int, name: String, ctx: Context) {
 
         val notificationTitle =
-            usedCtx.resources.getString(R.string.expiry_notification_title, name)
-        val notificationBody = usedCtx.resources.getString(R.string.expiry_notification_body, name)
+            ctx.resources.getString(R.string.expiry_notification_title, name)
+        val notificationBody = ctx.resources.getString(R.string.expiry_notification_body, name)
 
         val data: Bundle = Bundle.EMPTY.deepCopy()
         data.putInt(EXTRA_ITEM_ID_KEY, id)
 
-        displayNotification(notificationTitle, notificationBody, usedCtx, data)
+        displayNotification(notificationTitle, notificationBody, ctx, data)
     }
 
     fun displayNotification(
         title: String,
         body: String,
-        ctx: Context? = null,
+        ctx: Context,
         extras: Bundle = Bundle.EMPTY
     ) {
 
-        val usedCtx: Context = ctx ?: context
-
         val notificationId = Random.nextInt()
 
-        constructChannel(usedCtx)
-        val intent = Intent(usedCtx, MainActivity::class.java)
+        constructChannel(ctx)
+        val intent = Intent(ctx, MainActivity::class.java)
         intent.putExtras(extras)
         val pendingIntent: PendingIntent =
             PendingIntent.getActivity(
-                usedCtx,
+                ctx,
                 notificationId,
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-        val builder = Notification.Builder(usedCtx, channel_id)
+        val builder = Notification.Builder(ctx, channel_id)
             .setContentTitle(title)
             .setContentText(body)
             .setSmallIcon(R.drawable.ic_home_black_24dp)
@@ -65,7 +58,7 @@ object NotificationManager {
 
         val notification = builder.build()
 
-        with(NotificationManagerCompat.from(usedCtx)) {
+        with(NotificationManagerCompat.from(ctx)) {
             notify(notificationId, notification)
         }
     }
@@ -86,16 +79,11 @@ object NotificationManager {
         }
     }
 
-    fun setDefaultContext(con: Activity) {
-        context = con
-    }
-
     fun whenAppWasStartedByExpiryNotification(intent: Intent, cb: (itemId: Int) -> Unit) {
 
         val defaultValue: Int = -1
         val id = intent.getIntExtra(EXTRA_ITEM_ID_KEY, defaultValue)
         if (id != defaultValue) {
-            Log.d("NotificationManager", "opened by notification with item_id $id")
             cb(id)
         }
     }
