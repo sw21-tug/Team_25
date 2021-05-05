@@ -3,21 +3,19 @@ package at.sw21_tug.team_25.expirydates.ui.list
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import at.sw21_tug.team_25.expirydates.MainActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
+import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.misc.Util
 import java.util.*
-import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 
 class ListFragment : Fragment() {
-    var updateLayout = false
     private lateinit var listViewModel: ListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

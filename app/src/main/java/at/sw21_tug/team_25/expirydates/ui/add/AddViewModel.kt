@@ -7,7 +7,6 @@ import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.ui.errorhandling.ErrorCode
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.HOUR_OF_DAY
 
@@ -34,7 +33,8 @@ class AddViewModel : ViewModel() {
 
         val dateString = Util.convertDateToString(this.date)
 
-        val item: ExpItem = ExpItem(text, dateString)
+        val item = ExpItem(text, dateString)
+        @Suppress("DeferredResultUnused")
         GlobalScope.async {
             dao.insertItem(item)
         }

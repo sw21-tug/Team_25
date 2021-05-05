@@ -13,7 +13,6 @@ import at.sw21_tug.team_25.expirydates.misc.Util
 import java.util.*
 
 class HomeFragment : Fragment() {
-    var updateLayout = false
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
