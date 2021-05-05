@@ -32,7 +32,6 @@ class AddViewModel : ViewModel() {
         this.text = text
 
         val dateString = Util.convertDateToString(this.date)
-
         val item = ExpItem(text, dateString)
         @Suppress("DeferredResultUnused")
         GlobalScope.async {
