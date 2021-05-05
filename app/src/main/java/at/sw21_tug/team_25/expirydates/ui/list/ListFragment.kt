@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,7 +33,7 @@ class ListFragment : Fragment() {
         listViewModel.expItems = ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItems()
         listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                itemsRecyclerView.adapter = ExpItemRecyclerViewAdapter(it)
+                itemsRecyclerView.adapter = ExpItemRecyclerViewAdapter((this.activity as FragmentActivity), it)
             }
         })
         return root
