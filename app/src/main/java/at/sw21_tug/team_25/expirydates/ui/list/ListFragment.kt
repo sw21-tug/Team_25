@@ -1,9 +1,7 @@
 package at.sw21_tug.team_25.expirydates.ui.list
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -13,10 +11,50 @@ import androidx.recyclerview.widget.RecyclerView
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.misc.Util
+import java.util.*
 
 class ListFragment : Fragment() {
-
     private lateinit var listViewModel: ListViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    // add other menu items in language_choice_menu / choose different menu to show here
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.language_choice_menu, menu)
+    }
+
+    override fun onResume() {
+        if ((this.activity as MainActivity).updateLayoutList.contains(R.id.navigation_list)) {
+            (this.activity as MainActivity).updateLayoutList.remove(R.id.navigation_list)
+            (this.activity as MainActivity).refreshCurrentFragment()
+        }
+        super.onResume()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.language_en -> {
+                Util.setLanguage("en", requireActivity())
+                Util.setLocale(requireActivity(), Locale("en"))
+
+                (this.activity as MainActivity).refreshCurrentFragment()
+            }
+
+            R.id.language_ru -> {
+                Util.setLanguage("ru", requireActivity())
+                Util.setLocale(requireActivity(), Locale("ru"))
+
+                (this.activity as MainActivity).refreshCurrentFragment()
+            }
+        }
+        (this.activity as MainActivity).requestUpdates(R.id.navigation_list)
+
+        return false
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,

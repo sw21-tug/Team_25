@@ -112,4 +112,8 @@ dependencies {
     androidTestImplementation  'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.9'
 
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+
+    // fragment dependencies for ui tests
+    debugImplementation "androidx.fragment:fragment-testing:1.3.3"
+
 }

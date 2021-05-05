@@ -28,8 +28,8 @@ class DetailViewActivity : AppCompatActivity() {
 
         fun openDetailView(activity: Activity, itemId: Int, name: String, date: String) {
 
-            val inflater: LayoutInflater = activity.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater;
-            val popupView = inflater.inflate(R.layout.fragment_detail_view, null);
+            val inflater: LayoutInflater = activity.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val popupView = inflater.inflate(R.layout.fragment_detail_view, null)
 
             val popupWindow = PopupWindow(
                 popupView,
@@ -37,8 +37,8 @@ class DetailViewActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.MATCH_PARENT
             )
 
-            popupView.findViewById<TextView>(R.id.product_name).text = name;
-            popupView.findViewById<TextView>(R.id.exp_date).text = date;
+            popupView.findViewById<TextView>(R.id.product_name).text = name
+            popupView.findViewById<TextView>(R.id.exp_date).text = date
 
             popupWindow.elevation = 10.0F
 
