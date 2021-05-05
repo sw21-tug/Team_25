@@ -20,7 +20,8 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
-
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 @ExperimentalCoroutinesApi
@@ -110,18 +111,23 @@ class DatabaseTestsV2 {
 
     @Test
     fun retrieveNextExpiringItemsTest1(): Unit = testScope.runBlockingTest {
-        val item1 = ExpItem("Item1", "2021-12-01")
-        val item2 = ExpItem("Item2", "2021-12-02")
-        val item3 = ExpItem("Item3", "2021-12-01")
-        val item4 = ExpItem("Item4", "2021-12-02")
+
+        val currentDate = LocalDate.now()
+
+        val yesterdayDate = currentDate.minusDays(1)
+        val tomorrowDate = currentDate.plusDays(1)
+
+        val item1 = ExpItem("Item1", yesterdayDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
+        val item2 = ExpItem("Item2", tomorrowDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
+        val item3 = ExpItem("Item3", currentDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
 
         expItemDao.insertItem(item1)
         expItemDao.insertItem(item2)
         expItemDao.insertItem(item3)
-        expItemDao.insertItem(item4)
 
         val items = expItemDao.getNextExpiringItems()
-        Assert.assertEquals(items.size, 2)
+        Assert.assertEquals(items.size, 1)
+        Assert.assertEquals(items[0].name, item2.name)
 
     }
 
