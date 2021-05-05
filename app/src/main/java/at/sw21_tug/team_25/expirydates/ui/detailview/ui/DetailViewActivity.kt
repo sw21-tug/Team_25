@@ -42,23 +42,25 @@ class DetailViewActivity : AppCompatActivity() {
 
             popupWindow.elevation = 10.0F
 
-            val view = activity.findViewById<View>(android.R.id.content).rootView
+            activity.findViewById<View>(android.R.id.content).post {
+                val view = activity.findViewById<View>(android.R.id.content).rootView
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
 
-            popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
-
-            val closePopUpButton = popupView.findViewById<Button>(R.id.closePopUp)
-            // set on-click listener
-            closePopUpButton.setOnClickListener {
-                popupWindow.dismiss()
-            }
-
-            val deleteItemButton = popupView.findViewById<Button>(R.id.deleteItem)
-            // set on-click listener
-            deleteItemButton.setOnClickListener {
-                GlobalScope.async {
-                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().deleteItemById(itemId)
+                val closePopUpButton = popupView.findViewById<Button>(R.id.closePopUp)
+                // set on-click listener
+                closePopUpButton.setOnClickListener {
                     popupWindow.dismiss()
                 }
+
+                val deleteItemButton = popupView.findViewById<Button>(R.id.deleteItem)
+                // set on-click listener
+                deleteItemButton.setOnClickListener {
+                    GlobalScope.async {
+                        ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().deleteItemById(itemId)
+                        popupWindow.dismiss()
+                    }
+                }
+
             }
         }
     }

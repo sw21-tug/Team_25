@@ -2,7 +2,6 @@ package at.sw21_tug.team_25.expirydates
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -11,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.ui.detailview.ui.DetailViewActivity
 import at.sw21_tug.team_25.expirydates.utils.NotificationManager
 import at.sw21_tug.team_25.expirydates.utils.ReminderScheduler
 import at.sw21_tug.team_25.expirydates.misc.Util
@@ -54,11 +54,9 @@ class MainActivity : AppCompatActivity() {
                 val dao = ExpItemDatabase.getDatabase(applicationContext).expItemDao()
                 val item = dao.getItemByID(it.toLong())
                 if (item != null) {
-                    Toast.makeText(
-                        applicationContext,
-                        "this will display " + item.name,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    runOnUiThread {
+                        DetailViewActivity.openDetailView(this@MainActivity, item)
+                    }
                 } else {
                     Log.d("MainActivity", "no item found for id $it")
                 }
