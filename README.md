@@ -32,4 +32,6 @@
 |EXPDAT-003   | save Entry  | -  | Benjamin G  | Matthias  |
 |EXPDAT-002   | input fields for product name and expiry dates    | -  | Benjamin W  | Esther  |
 |EXPDAT-018   | input data save in DB  | -  | Benjamin W  | Matthias |
+|EXPDAT-005   | Overview of all saved products  | -  | Benjamin G  | Esther |
+|EXPDAT-023   | Hotfix for better database testing  | -  | Stefan  | Nico |
 |   |   |   |   |   |
