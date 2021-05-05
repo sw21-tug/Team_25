@@ -6,4 +6,6 @@
     <string name="detail_view">Detail View</string>
     <string name="save_date">Save Date</string>
     <string name="enter_item_name">Enter Item name</string>
+    <string name="delete">Delete</string>
+    <string name="close">Close</string>
 </resources>

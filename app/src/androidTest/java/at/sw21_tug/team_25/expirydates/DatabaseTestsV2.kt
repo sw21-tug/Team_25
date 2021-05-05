@@ -103,4 +103,28 @@ class DatabaseTestsV2 {
         return owner
     }
 
+    @Test
+    fun deleteSingleItem(): Unit = testScope.runBlockingTest {
+        val sampleItem = ExpItem("Tomato", "2021-01-01 01:01:01")
+
+        expItemDao.insertItem(sampleItem)
+
+        var items = expItemDao.readAllItems()
+        var itemId = 9999
+
+        checkLiveData(items) {
+            Assert.assertEquals(1, it.size)
+            itemId = it[0].id
+        }
+
+        Assert.assertNotEquals(9999, itemId)
+        Assert.assertEquals(2, itemId) //in preceding test an item has been already created
+        expItemDao.deleteItemById(itemId)
+
+        items = expItemDao.readAllItems()
+
+        checkLiveData(items) {
+            Assert.assertEquals(0, it.size)
+        }
+    }
 }
