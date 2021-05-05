@@ -157,7 +157,7 @@ class DatabaseTestsV2 {
     @Test
     fun deleteSingleItem(): Unit = testScope.runBlockingTest {
         val sampleItem = ExpItem("Tomato", "2021-01-01 01:01:01")
-
+        sampleItem.id = 123
         expItemDao.insertItem(sampleItem)
 
         var items = expItemDao.readAllItems()
@@ -169,7 +169,7 @@ class DatabaseTestsV2 {
         }
 
         Assert.assertNotEquals(9999, itemId)
-        Assert.assertEquals(2, itemId) //in preceding test an item has been already created
+        Assert.assertEquals(123, itemId)
         expItemDao.deleteItemById(itemId)
 
         items = expItemDao.readAllItems()
