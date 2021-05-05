@@ -17,7 +17,7 @@ import java.util.*
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 
 class ListFragment : Fragment() {
-
+    var updateLayout = false
     private lateinit var listViewModel: ListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +28,14 @@ class ListFragment : Fragment() {
     // add other menu items in language_choice_menu / choose different menu to show here
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.language_choice_menu, menu)
+    }
+
+    override fun onResume() {
+        if ((this.activity as MainActivity).updateLayoutList.contains(R.id.navigation_list)) {
+            (this.activity as MainActivity).updateLayoutList.remove(R.id.navigation_list)
+            (this.activity as MainActivity).refreshCurrentFragment()
+        }
+        super.onResume()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -51,6 +59,8 @@ class ListFragment : Fragment() {
                 (this.activity as MainActivity).refreshCurrentFragment()
             }
         }
+        (this.activity as MainActivity).requestUpdates(R.id.navigation_list)
+
         return false
     }
 

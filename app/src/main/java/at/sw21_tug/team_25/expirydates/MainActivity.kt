@@ -1,7 +1,6 @@
 package at.sw21_tug.team_25.expirydates
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -16,31 +15,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var navView: BottomNavigationView
+    lateinit var updateLayoutList: ArrayList<Int>
     lateinit var navMenu: Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // without this, the title is not updated on other fragments on first load
+        updateLayoutList = ArrayList()
+
         val language = Util.getLanguage(this)
         Util.setLocale(this, language)
 
-        // load language test
-//        val language = "ru"
-//        val locale = Locale(language)
-//        val configuration = resources.configuration
-//        configuration.setLocale(locale)
-//
-//        val newConfig = Configuration()
-//        newConfig.setLocale(locale)
-        //baseContext.applicationContext.createConfigurationContext(newConfig)
-        //baseContext.resources.displayMetrics.setTo(baseContext.resources.displayMetrics)
-        //baseContext.resources.updateConfiguration(newConfig, baseContext.resources.displayMetrics)
-
         setContentView(R.layout.activity_main)
-
-
         navView = findViewById(R.id.nav_view)
-
         navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -76,7 +64,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateTitle() {
-        Log.i("test", "" + navController.currentDestination?.label)
         when (navController.currentDestination?.label) {
             "Добавлять" -> navController.currentDestination?.label = getString(R.string.title_add)
             "Add" -> navController.currentDestination?.label = getString(R.string.title_add)
@@ -87,5 +74,13 @@ class MainActivity : AppCompatActivity() {
             "Список" -> navController.currentDestination?.label = getString(R.string.title_list)
             "List" -> navController.currentDestination?.label = getString(R.string.title_list)
         }
+    }
+
+    fun requestUpdates(fragToIgnore: Int) {
+        updateLayoutList.clear()
+        updateLayoutList.add(R.id.navigation_home)
+        updateLayoutList.add(R.id.navigation_add)
+        updateLayoutList.add(R.id.navigation_list)
+        updateLayoutList.remove(fragToIgnore)
     }
 }

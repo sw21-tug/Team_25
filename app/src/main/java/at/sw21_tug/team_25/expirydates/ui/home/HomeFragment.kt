@@ -13,7 +13,7 @@ import at.sw21_tug.team_25.expirydates.misc.Util
 import java.util.*
 
 class HomeFragment : Fragment() {
-
+    var updateLayout = false
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +25,14 @@ class HomeFragment : Fragment() {
     // add other menu items in language_choice_menu / choose different menu to show here
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.language_choice_menu, menu)
+    }
+
+    override fun onResume() {
+        if ((this.activity as MainActivity).updateLayoutList.contains(R.id.navigation_home)) {
+            (this.activity as MainActivity).updateLayoutList.remove(R.id.navigation_home)
+            (this.activity as MainActivity).refreshCurrentFragment()
+        }
+        super.onResume()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -48,6 +56,7 @@ class HomeFragment : Fragment() {
                 (this.activity as MainActivity).refreshCurrentFragment()
             }
         }
+        (this.activity as MainActivity).requestUpdates(R.id.navigation_home)
         return false
     }
 

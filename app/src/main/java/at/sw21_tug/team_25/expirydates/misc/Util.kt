@@ -16,13 +16,13 @@ class Util {
 
 
         fun getLanguage(activity: Activity): Locale{
-            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+            val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
             val languageCode = sharedPref.getString("ExpiryDate.language_preferences", "en")
-            return Locale(languageCode)
+            return Locale(languageCode!!)
         }
 
         fun setLanguage(languageCode: String, activity: Activity){
-            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+            val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return
             with(sharedPref.edit()) {
                 putString("ExpiryDate.language_preferences", languageCode)
                 apply()
@@ -30,12 +30,13 @@ class Util {
 
         }
 
+        @Suppress("DEPRECATION")
         fun setLocale(activity: Activity, languageCode: Locale) {
             Locale.setDefault(languageCode)
             val resources: Resources = activity.resources
-            val config: Configuration = resources.getConfiguration()
+            val config: Configuration = resources.configuration
             config.setLocale(languageCode)
-            resources.updateConfiguration(config, resources.getDisplayMetrics())
+            resources.updateConfiguration(config, resources.displayMetrics)
         }
 
     }

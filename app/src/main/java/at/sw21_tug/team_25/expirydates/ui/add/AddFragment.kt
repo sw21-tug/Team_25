@@ -12,19 +12,18 @@ import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
-import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
 import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.ui.errorhandling.ErrorCode
 import java.util.*
 
 
 class AddFragment : Fragment() {
-
     private lateinit var addViewModel: AddViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        (this.activity as MainActivity).updateTitle()
     }
 
     // add other menu items in language_choice_menu / choose different menu to show here
@@ -53,7 +52,17 @@ class AddFragment : Fragment() {
                 (this.activity as MainActivity).refreshCurrentFragment()
             }
         }
+
+        (this.activity as MainActivity).requestUpdates(R.id.navigation_add)
         return false
+    }
+
+    override fun onResume() {
+        if ((this.activity as MainActivity).updateLayoutList.contains(R.id.navigation_add)) {
+            (this.activity as MainActivity).updateLayoutList.remove(R.id.navigation_add)
+            (this.activity as MainActivity).refreshCurrentFragment()
+        }
+        super.onResume()
     }
 
     override fun onCreateView(
@@ -70,9 +79,8 @@ class AddFragment : Fragment() {
 
         val cal: Calendar = Calendar.getInstance()
         calender.minDate = cal.timeInMillis
-        var db: ExpItemDatabase = ExpItemDatabase.getDatabase(this.requireContext())
-        var expItemDao: ExpItemDao = db.expItemDao()
-        var repository: ExpItemRepository = ExpItemRepository(expItemDao)
+        val db: ExpItemDatabase = ExpItemDatabase.getDatabase(this.requireContext())
+        val expItemDao: ExpItemDao = db.expItemDao()
 
         button.setOnClickListener {
 
