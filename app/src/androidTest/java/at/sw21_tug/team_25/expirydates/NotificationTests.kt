@@ -139,6 +139,14 @@ class NotificationTests {
         @VisibleForTesting
         fun getClearButton(): UiObject2? {
             val uiDevice = UiDevice.getInstance(getInstrumentation())
+            val btn = uiDevice.findObject(By.textContains("Clear"))
+            if (btn != null) {
+                return btn
+            }
+            val btn2 = uiDevice.findObject(By.textContains("CLEAR"))
+            if (btn2 != null) {
+                return btn2
+            }
             return uiDevice.findObject(By.desc("Clear all notifications."))
         }
     }
