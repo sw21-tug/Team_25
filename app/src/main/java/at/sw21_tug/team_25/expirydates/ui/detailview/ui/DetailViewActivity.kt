@@ -57,7 +57,9 @@ class DetailViewActivity : AppCompatActivity() {
                 deleteItemButton.setOnClickListener {
                     GlobalScope.async {
                         ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().deleteItemById(itemId)
-                        popupWindow.dismiss()
+                        activity.runOnUiThread {
+                            popupWindow.dismiss()
+                        }
                     }
                 }
 
