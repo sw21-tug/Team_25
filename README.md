@@ -39,5 +39,6 @@
 |EXPDAT-021   | russian language support  | -  | Benjamin W  | Matthias  |
 |EXPDAT-004   | Notification of upcoming expiry date | -  | Stefan  | Nico  |
 |EXPDAT-025   | Hotfix dissmis action of delete button runs in main thread | -  | Stefan  | -  |
+|EXPDAT-020   | app icon | -  | Christopher  | Benjamin G  |
 
 
