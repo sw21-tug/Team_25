@@ -15,7 +15,7 @@
 | Scrum Master | Benedikt |
 | Developer |  Benjamin G |
 | Developer | Benjamin W |
-| Developer | Christopher |
+| Developer | v |
 | Developer | Esther |
 | Developer | Florian |
 | Developer | Matthias |
@@ -34,4 +34,10 @@
 |EXPDAT-018   | input data save in DB  | -  | Benjamin W  | Matthias |
 |EXPDAT-005   | Overview of all saved products  | -  | Benjamin G  | Esther |
 |EXPDAT-023   | Hotfix for better database testing  | -  | Stefan  | Nico |
-|   |   |   |   |   |
+|EXPDAT-008   | Detail View for single product  | -  | Christopher  | Florian  |
+|EXPDAT-022   | delete single item on detailview  | -  | Christopher  | Benjamin G  |
+|EXPDAT-021   | russian language support  | -  | Benjamin W  | Matthias  |
+|EXPDAT-004   | Notification of upcoming expiry date | -  | Stefan  | Nico  |
+|EXPDAT-025   | Hotfix dissmis action of delete button runs in main thread | -  | Stefan  | -  |
+
+
