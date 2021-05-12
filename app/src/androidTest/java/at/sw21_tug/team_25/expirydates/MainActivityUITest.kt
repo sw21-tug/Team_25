@@ -28,12 +28,6 @@ class MainActivityUITest {
 
     @Test
     fun homeAndTabLabelsTest() {
-        val textView = onView(
-                allOf(withId(R.id.text_home), withText("ExpiryDates"),
-                        withParent(withParent(withId(R.id.nav_host_fragment))),
-                        isDisplayed()))
-        textView.check(matches(withText("ExpiryDates")))
-
         val textView2 = onView(
                 allOf(withId(R.id.largeLabel), withText("Home"),
                         withParent(allOf(withId(R.id.labelGroup),
