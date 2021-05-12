@@ -18,7 +18,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class DetailViewActivity(private val activity: View) : DatePickerDialog.OnDateSetListener {
+class DetailView(private val activity: View) : DatePickerDialog.OnDateSetListener {
     companion object {
 //        fun openDetailView(activity: Activity, product_id: Int) {
 //            openDetailView(activity, "product", "date")
@@ -77,25 +77,24 @@ class DetailViewActivity(private val activity: View) : DatePickerDialog.OnDateSe
 
             var name = popupView.findViewById<TextView>(R.id.product_name);
 
-            var date = popupView.findViewById<Button>(R.id.exp_date);
-            date.setOnClickListener{
-                if(is_editable) {
-                    var datePicker = DatePickerDialog(
-                        activity,
-                        DetailViewActivity(popupView),
-                        Calendar.getInstance().get(Calendar.YEAR),
-                        Calendar.getInstance().get(Calendar.MONTH),
-                        Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-                    )
-                    datePicker.show();
-                }
+            val date = popupView.findViewById<Button>(R.id.exp_date);
+            date.setOnClickListener {
+                val datePicker = DatePickerDialog(
+                    activity,
+                    DetailView(popupView),
+                    Calendar.getInstance().get(Calendar.YEAR),
+                    Calendar.getInstance().get(Calendar.MONTH),
+                    Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+                )
+                datePicker.show();
             }
 
             val edit_button = popupView.findViewById<Button>(R.id.edit);
             edit_button.setOnClickListener {
                 is_editable = !is_editable;
+                date.isEnabled = is_editable
                 if(is_editable)
-                    edit_button.text = "Cancel"
+                    edit_button.text = "Cancel" //TODO add to resources
                 else
                     edit_button.text = "Edit"
             }
