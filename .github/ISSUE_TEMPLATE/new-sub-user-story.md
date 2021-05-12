@@ -2,7 +2,7 @@
 name: new sub user story
 about: create a new sub user story
 title: 'EXPDAT-x '
-labels: 
+labels: 'sub user story'
 assignees: ''
 
 ---
