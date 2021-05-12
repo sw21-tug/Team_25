@@ -70,6 +70,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.0")
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
     androidTestImplementation "androidx.work:work-testing:2.5.0"
 
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
