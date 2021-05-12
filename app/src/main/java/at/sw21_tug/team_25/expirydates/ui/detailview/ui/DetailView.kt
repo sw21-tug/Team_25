@@ -7,10 +7,10 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
-import android.widget.LinearLayout
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItem
+import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -23,6 +23,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
     companion object {
 
         private var is_editable : Boolean = false;
+        private var product_id : Int = 0;
 
         fun openDetailView(activity: Activity, product: ExpItem){
             openDetailView(activity, product.id, product.name, product.date)
@@ -32,6 +33,8 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
             val inflater: LayoutInflater = activity.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val popupView = inflater.inflate(R.layout.fragment_detail_view, null)
+
+            product_id = itemId
 
             val popupWindow = PopupWindow(
                 popupView,
@@ -108,6 +111,25 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 }
             }
 
+        }
+
+        private fun save(productName: String, date: String, activity: Activity) {
+            val db: ExpItemDatabase = ExpItemDatabase.getDatabase(activity.applicationContext)
+            val expItemDao: ExpItemDao = db.expItemDao()
+            val expItem = ExpItem(productName, date)
+            expItem.id = product_id
+            @Suppress("DeferredResultUnused")
+            GlobalScope.async {
+                expItemDao.updateItem(expItem)
+            }
+        }
+
+
+        fun cancel(editButton: Button, closePopUpButton : Button, activity: Activity, nameEdit : EditText, name : TextView) {
+            editButton.text = activity.getString(R.string.edit)
+            closePopUpButton.text = activity.getString(R.string.close)
+            nameEdit.visibility = View.GONE
+            name.visibility = View.VISIBLE
         }
     }
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
