@@ -272,9 +272,6 @@ class DetailViewTest {
 
         onView(withId(R.id.share)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
 
-        onView(withId(R.id.share_view_popup)).inRoot(RootMatchers.isPlatformPopup()).check((matches(isDisplayed())))
-        onView(withId(R.id.share_message)).inRoot(RootMatchers.isPlatformPopup()).check(matches(withText("Hi, I have Tomato that I don't need anymore and expires at 2021-01-02 02:02:02. Do you want to have it?")))
-
     }
 
 
