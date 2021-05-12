@@ -18,11 +18,9 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class DetailView(private val activity: View) : DatePickerDialog.OnDateSetListener {
+class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
+
     companion object {
-//        fun openDetailView(activity: Activity, product_id: Int) {
-//            openDetailView(activity, "product", "date")
-//        }
 
         private var is_editable : Boolean = false;
 
@@ -72,7 +70,6 @@ class DetailView(private val activity: View) : DatePickerDialog.OnDateSetListene
             initEdit(activity, popupView)
         }
 
-
         fun initEdit(activity: Activity, popupView: View) {
 
             var name = popupView.findViewById<TextView>(R.id.product_name);
@@ -104,7 +101,7 @@ class DetailView(private val activity: View) : DatePickerDialog.OnDateSetListene
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-        activity.findViewById<TextView>(R.id.exp_date).text = LocalDate.of(year, month, dayOfMonth).format(formatter)
+        this.view.findViewById<TextView>(R.id.exp_date).text = LocalDate.of(year, month, dayOfMonth).format(formatter)
     }
 
 }

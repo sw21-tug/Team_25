@@ -29,8 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.detailview.ui.DetailView"
-                  android:label="@string/detail_view"/>
     </application>
 
 </manifest>
