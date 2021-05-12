@@ -31,6 +31,15 @@
                     android:text="Product"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+        <EditText
+                    android:id="@+id/product_name_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:visibility="gone"
+            />
+
                 <Button
                     android:id="@+id/exp_date"
                     android:text="exp_date"
@@ -43,7 +52,7 @@
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="PlaceHolder" />
+                    android:text="Placeholder" />
         </LinearLayout>
 
         <LinearLayout
@@ -51,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:orientation="horizontal"
-            android:padding="25dp">
+            android:padding="0dp">
 
                 <Button
                     android:id="@+id/deleteItem"
@@ -68,7 +77,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Edit"
-                    android:layout_gravity="left"/>
+                    android:layout_gravity="left"
+                    android:backgroundTint="@color/blue"
+                    />
                 <Button
                     android:id="@+id/closePopUp"
                     android:layout_width="wrap_content"

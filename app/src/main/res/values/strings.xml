@@ -10,5 +10,8 @@
     <string name="expiry_notification_body">Product %1$s is expiring tomorrow</string>
     <string name="delete">Delete</string>
     <string name="close">Close</string>
+    <string name="edit">Edit</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
     <string name="maps_api_key" translatable="false">AIzaSyCjufUCy1GthewZAl_YLQOAJ4Vza_TkbMs</string>
 </resources>

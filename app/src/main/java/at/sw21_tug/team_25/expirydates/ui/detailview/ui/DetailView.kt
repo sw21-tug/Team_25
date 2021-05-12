@@ -28,7 +28,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
             openDetailView(activity, product.id, product.name, product.date)
         }
 
-        fun openDetailView(activity: Activity, itemId: Int, name: String, date: String) {
+        fun openDetailView(activity: Activity, itemId: Int, name_string: String, date_string: String) {
 
             val inflater: LayoutInflater = activity.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val popupView = inflater.inflate(R.layout.fragment_detail_view, null)
@@ -39,8 +39,17 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 LinearLayout.LayoutParams.MATCH_PARENT
             )
 
-            popupView.findViewById<TextView>(R.id.product_name).text = name
-            popupView.findViewById<TextView>(R.id.exp_date).text = date
+            val name = popupView.findViewById<TextView>(R.id.product_name)
+            val nameEdit = popupView.findViewById<EditText>(R.id.product_name_edit)
+            val date = popupView.findViewById<TextView>(R.id.exp_date)
+            val closePopUpButton = popupView.findViewById<Button>(R.id.closePopUp)
+            val deleteItemButton = popupView.findViewById<Button>(R.id.deleteItem)
+            val dateButton = popupView.findViewById<Button>(R.id.exp_date);
+            val editButton = popupView.findViewById<Button>(R.id.edit);
+
+            name.text = name_string
+            nameEdit.setText(name_string)
+            date.text = date_string
 
             popupWindow.elevation = 10.0F
 
@@ -48,13 +57,15 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 val view = activity.findViewById<View>(android.R.id.content).rootView
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
 
-                val closePopUpButton = popupView.findViewById<Button>(R.id.closePopUp)
                 // set on-click listener
                 closePopUpButton.setOnClickListener {
-                    popupWindow.dismiss()
+                    if(!is_editable)
+                        popupWindow.dismiss()
+                    else{
+                        cancel(editButton, closePopUpButton, activity, nameEdit, name)
+                    }
                 }
 
-                val deleteItemButton = popupView.findViewById<Button>(R.id.deleteItem)
                 // set on-click listener
                 deleteItemButton.setOnClickListener {
                     GlobalScope.async {
@@ -67,15 +78,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
             }
 
-            initEdit(activity, popupView)
-        }
-
-        fun initEdit(activity: Activity, popupView: View) {
-
-            var name = popupView.findViewById<TextView>(R.id.product_name);
-
-            val date = popupView.findViewById<Button>(R.id.exp_date);
-            date.setOnClickListener {
+            dateButton.setOnClickListener {
                 val datePicker = DatePickerDialog(
                     activity,
                     DetailView(popupView),
@@ -83,17 +86,26 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                     Calendar.getInstance().get(Calendar.MONTH),
                     Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
                 )
+
+                datePicker.datePicker.minDate = Calendar.getInstance().timeInMillis
+                datePicker.datePicker.maxDate = Long.MAX_VALUE
                 datePicker.show();
             }
 
-            val edit_button = popupView.findViewById<Button>(R.id.edit);
-            edit_button.setOnClickListener {
+            editButton.setOnClickListener {
                 is_editable = !is_editable;
                 date.isEnabled = is_editable
-                if(is_editable)
-                    edit_button.text = "Cancel" //TODO add to resources
-                else
-                    edit_button.text = "Edit"
+                if(is_editable) {
+                    editButton.text = activity.getString(R.string.save)
+                    closePopUpButton.text = activity.getString(R.string.cancel)
+
+                    nameEdit.visibility = View.VISIBLE
+                    name.visibility = View.GONE
+                }
+                else {
+                    save(nameEdit.text.toString(), date.text.toString(), activity)
+                    cancel(editButton, closePopUpButton, activity, nameEdit, name)
+                }
             }
 
         }
@@ -101,7 +113,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-        this.view.findViewById<TextView>(R.id.exp_date).text = LocalDate.of(year, month, dayOfMonth).format(formatter)
+        this.view.findViewById<TextView>(R.id.exp_date).text = LocalDate.of(year, month + 1, dayOfMonth).format(formatter)
     }
 
 }
