@@ -236,6 +236,47 @@ class DetailViewTest {
         )
         textView.check(matches(withText("Hauswurst  " + currentDateFormatted)))
     }
+    @Test
+    fun shareViewTest() {
+        val bottomNavigationItemView = onView(
+                allOf(
+                        withId(R.id.navigation_list), withContentDescription("List"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_view),
+                                        0
+                                ),
+                                2
+                        ),
+                        isDisplayed()
+                )
+        )
+        bottomNavigationItemView.perform(click())
+
+        val materialTextViewSalami = onView(
+                allOf(
+                        withId(R.id.item_tv), withText("Tomato  2021-01-02 02:02:02"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.items_rv),
+                                        1
+                                ),
+                                0
+                        ),
+                        isDisplayed()
+                )
+        )
+        materialTextViewSalami.perform(click())
+
+        onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup()).check((matches(isDisplayed())))
+
+        onView(withId(R.id.share)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+
+        onView(withId(R.id.share_view_popup)).inRoot(RootMatchers.isPlatformPopup()).check((matches(isDisplayed())))
+        onView(withId(R.id.share_message)).inRoot(RootMatchers.isPlatformPopup()).check(matches(withText("Hi, I have Tomato that I don't need anymore and expires at 2021-01-02 02:02:02. Do you want to have it?")))
+
+    }
+
 
 
     private fun childAtPosition(
