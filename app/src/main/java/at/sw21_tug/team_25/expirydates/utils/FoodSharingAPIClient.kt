@@ -11,11 +11,15 @@ import java.net.CookieManager
 import java.net.CookiePolicy
 
 
-const val DEFAULT_API_PATH = "https://foodsharing.de/api"
-
 data class FoodSharePoint(val id: Int, val name: String, val lat: Double, val lon: Double)
 
-class FoodSharingAPIClient(private val baseUrl: String = DEFAULT_API_PATH) {
+class FoodSharingAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
+
+    companion object {
+        const val DEFAULT_API_URL = "https://foodsharing.de/api"
+        const val EMAIL = "ebe43008@zwoho.com"
+        const val PASSWORD = "expirydates"
+    }
 
     private var client: OkHttpClient
 
@@ -26,8 +30,8 @@ class FoodSharingAPIClient(private val baseUrl: String = DEFAULT_API_PATH) {
 
 
         val requestData = JSONObject()
-        requestData.put("email", "ebe43008@zwoho.com")
-        requestData.put("password", "expirydates")
+        requestData.put("email", EMAIL)
+        requestData.put("password", PASSWORD)
         requestData.put("remember_me", false)
 
         val jsonMediaType = "application/json; charset=utf-8".toMediaTypeOrNull()

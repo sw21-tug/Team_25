@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 @RunWith(AndroidJUnit4::class)
 class FoodSharingApiClientTests {
     @Test
-    fun canRequestFoodSharePoints() {
+    fun canLoginAndRequestDataFromLiveApi() {
         // Context of the app under test.
         val apiClient = FoodSharingAPIClient()
         val result = apiClient.getNearbyFoodSharePoints(47.070713, 15.439504)
@@ -23,12 +23,14 @@ class FoodSharingApiClientTests {
     }
 
     @Test
-    fun canCreateClientAndLogin() {
+    fun canLoginAndRequestData() {
+
+        val dummyCsrfTokenCookie = "CSRF-TOKEN=DUMMY_API_KEY"
 
         val server = MockWebServer()
 
         server.enqueue(
-            MockResponse().setBody("{}").setHeader("Set-Cookie", "CSRF-TOKEN=API_KEY; Path=/")
+                MockResponse().setBody("{}").setHeader("Set-Cookie", "$dummyCsrfTokenCookie; Path=/")
         )
 
         val apiClient = FoodSharingAPIClient(server.url("/api").toString())
@@ -39,10 +41,11 @@ class FoodSharingApiClientTests {
 
         Assert.assertEquals("/api/user/login", request1!!.path.toString())
         val reqData = JSONObject(request1.body.readUtf8())
-        Assert.assertEquals(reqData.getString("email"), "ebe43008@zwoho.com")
+        Assert.assertEquals(reqData.getString("email"), FoodSharingAPIClient.EMAIL)
+        Assert.assertEquals(reqData.getString("password"), FoodSharingAPIClient.PASSWORD)
 
         server.enqueue(
-            MockResponse().setBody("""
+                MockResponse().setBody("""
 [
    {
       "id":1773,
@@ -79,6 +82,14 @@ class FoodSharingApiClientTests {
         Assert.assertEquals(1773, result[0].id)
         Assert.assertEquals("Fair-Teiler Reitschulgasse Weltladen", result[1].name)
         Assert.assertEquals(47.0667686, result[1].lat, 0.0)
+
+        val request2 = server.takeRequest(5, TimeUnit.SECONDS)
+        Assert.assertNotNull(request1)
+
+        val usedPath = request2!!.path.toString()
+        Assert.assertEquals("/api/foodSharePoints/nearby?lat=47.070713&lon=15.439504&distance=20", usedPath)
+
+        Assert.assertEquals(dummyCsrfTokenCookie, request2.getHeader("Cookie"))
 
         server.shutdown()
     }
