@@ -13,6 +13,10 @@ import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class FoodSharingApiClientTests {
+
+    /*
+    * Test case unused, because it would test the live API. Can be used to test API if required.
+    *
     @Test
     fun canLoginAndRequestDataFromLiveApi() {
         // Context of the app under test.
@@ -20,7 +24,7 @@ class FoodSharingApiClientTests {
         val result = apiClient.getNearbyFoodSharePoints(47.070713, 15.439504)
         Assert.assertNotNull(result)
         Assert.assertTrue(result.isNotEmpty())
-    }
+    }*/
 
     @Test
     fun canLoginAndRequestData() {
