@@ -10,6 +10,7 @@
     <string name="expiry_notification_body">Product %1$s is expiring tomorrow</string>
     <string name="delete">Delete</string>
     <string name="close">Close</string>
+    <string name="share">Share</string>
     <string name="edit">Edit</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>

@@ -1,8 +1,13 @@
 package at.sw21_tug.team_25.expirydates
 
 
+import android.app.Application
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
@@ -12,6 +17,8 @@ import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
@@ -27,12 +34,13 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
-import org.hamcrest.core.Is
+import org.hamcrest.core.IsInstanceOf
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -238,6 +246,9 @@ class DetailViewTest {
     }
     @Test
     fun shareViewTest() {
+        val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        val appContext = ApplicationProvider.getApplicationContext<Application>()
+
         val bottomNavigationItemView = onView(
                 allOf(
                         withId(R.id.navigation_list), withContentDescription("List"),
@@ -253,7 +264,7 @@ class DetailViewTest {
         )
         bottomNavigationItemView.perform(click())
 
-        val materialTextViewSalami = onView(
+        val shareTextView = onView(
                 allOf(
                         withId(R.id.item_tv), withText("Tomato  2021-01-02 02:02:02"),
                         childAtPosition(
@@ -266,12 +277,19 @@ class DetailViewTest {
                         isDisplayed()
                 )
         )
-        materialTextViewSalami.perform(click())
-
-        onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup()).check((matches(isDisplayed())))
+        shareTextView.perform(click())
 
         onView(withId(R.id.share)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
 
+        Thread.sleep(500)
+        val copyButton = uiDevice.findObject(
+                By.text(
+                        "Copy"
+                )
+        )
+        Assert.assertTrue(copyButton.isClickable)
+
+        uiDevice.pressBack()
     }
 
 
