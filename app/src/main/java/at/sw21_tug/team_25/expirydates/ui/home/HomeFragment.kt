@@ -1,12 +1,24 @@
 package at.sw21_tug.team_25.expirydates.ui.home
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.*
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import at.sw21_tug.team_25.expirydates.MainActivity
@@ -15,20 +27,24 @@ import at.sw21_tug.team_25.expirydates.misc.Util
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.runBlocking
 import java.util.*
+
 
 class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mMap: GoogleMap
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationManager: LocationManager
+    private val REQUEST_LOCATION = 1
+    private lateinit var mapFragment: SupportMapFragment
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient((activity as MainActivity).applicationContext)
     }
 
     // add other menu items in language_choice_menu / choose different menu to show here
@@ -74,42 +90,39 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                 ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
-        var mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment?.getMapAsync(this)
+        mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        // mapFragment.getMapAsync(this)
+
+        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION)
 
         return root
     }
 
+    @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        if (ActivityCompat.checkSelfPermission(
-                (activity as MainActivity).applicationContext,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                (activity as MainActivity).applicationContext,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            ActivityCompat.requestPermissions((activity as MainActivity), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 2)
-        }
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location? ->
-                // Got last known location. In some rare situations this can be null.
-                Log.i("INFO", location.toString())
-            }
-
+        this.locationManager = (activity as MainActivity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val latitude: Double
+        val longitude: Double
+        val locationGps = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) as Location
+        latitude = locationGps.latitude
+        longitude = locationGps.longitude
 
         // TODO: Get closes items with REST API
 
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val myLocation = LatLng(latitude, longitude)
+        // val myLocation = LatLng(50.0, 50.0)
+        mMap.addMarker(MarkerOptions().position(myLocation).title("Marker at my location"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation))
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
+                                            grantResults: IntArray) {
+        if(requestCode == this.REQUEST_LOCATION) {
+            if (grantResults.isNotEmpty() && grantResults[0].equals(PackageManager.PERMISSION_GRANTED)) {
+                mapFragment.getMapAsync(this)
+            }
+        }
     }
 }
