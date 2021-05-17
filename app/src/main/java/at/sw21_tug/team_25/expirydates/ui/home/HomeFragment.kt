@@ -91,7 +91,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        // mapFragment.getMapAsync(this)
 
         requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION)
 
@@ -104,14 +103,19 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         this.locationManager = (activity as MainActivity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val latitude: Double
         val longitude: Double
-        val locationGps = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) as Location
-        latitude = locationGps.latitude
-        longitude = locationGps.longitude
+        val location = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        if (location == null) {
+            latitude = 47.05875826931372
+            longitude = 15.459148560238393
+        } else {
+            val locationGps = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) as Location
+            latitude = locationGps.latitude
+            longitude = locationGps.longitude
+        }
 
-        // TODO: Get closes items with REST API
+        // TODO: Get closest items with REST API
 
         val myLocation = LatLng(latitude, longitude)
-        // val myLocation = LatLng(50.0, 50.0)
         mMap.addMarker(MarkerOptions().position(myLocation).title("Marker at my location"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation))
     }
