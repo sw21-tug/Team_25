@@ -10,5 +10,4 @@
     <string name="expiry_notification_body">Product %1$s is expiring tomorrow</string>
     <string name="delete">Delete</string>
     <string name="close">Close</string>
-    <string name="google_maps_api_key" translatable="false">AIzaSyCjufUCy1GthewZAl_YLQOAJ4Vza_TkbMs</string>
 </resources>

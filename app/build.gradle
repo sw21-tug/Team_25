@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'  // necessary for Room
+    id 'com.google.secrets_gradle_plugin' version '0.5' // necessary for Maps API key
 }
 
 android {
