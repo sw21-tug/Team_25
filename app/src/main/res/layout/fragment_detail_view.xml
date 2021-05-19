@@ -28,7 +28,6 @@
                     android:id="@+id/product_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Product"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <EditText
@@ -53,7 +52,7 @@
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Placeholder" />
+                    android:text="@string/placeholder" />
         </LinearLayout>
 
         <LinearLayout

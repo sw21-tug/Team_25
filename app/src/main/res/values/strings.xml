@@ -13,5 +13,6 @@
     <string name="edit">Edit</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="placeholder">Placeholder</string>
     <string name="maps_api_key" translatable="false">AIzaSyCjufUCy1GthewZAl_YLQOAJ4Vza_TkbMs</string>
 </resources>

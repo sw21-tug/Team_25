@@ -13,4 +13,5 @@
     <string name="edit">редактировать</string>
     <string name="cancel">отменить</string>
     <string name="save">спасти</string>
+    <string name="placeholder">заполнитель</string>
 </resources>

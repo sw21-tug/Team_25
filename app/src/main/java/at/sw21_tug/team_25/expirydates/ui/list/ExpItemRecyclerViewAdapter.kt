@@ -29,14 +29,6 @@ class ExpItemRecyclerViewAdapter(private val activity: FragmentActivity, private
         holder.textView.text = expItemText
         holder.textView.setOnClickListener {
             DetailView.openDetailView(activity , expItem)
-//
-//            val message = expItem.name
-//
-//            val intent = Intent(activity, DetailViewActivity::class.java).apply {
-//                putExtra(EXTRA_MESSAGE, message)
-//            }
-//            startActivity(activity, intent, null)
-
         }
     }
 
