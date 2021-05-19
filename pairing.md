@@ -1,5 +1,5 @@
 ### Pairing Matrix
-| Dev # |  Name       | Level  | Theme Current Sprint | Afternoon
+| Dev # |  Name       | Level  | Theme Current Sprint | Additional
 | :---  |    :----    | :---:  | :----       | :----
 | Dev 1 | Benjamin G  | senior | 012/002     | (idee map fertig machen)
 | Dev 2 | Matthias    | junior | Research    |
