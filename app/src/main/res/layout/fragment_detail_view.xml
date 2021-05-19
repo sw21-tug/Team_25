@@ -28,29 +28,39 @@
                     android:id="@+id/product_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Product"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/product_name_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_item_name"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:visibility="gone"
+                    android:inputType="text"
+                />
+
+                <Button
                     android:id="@+id/exp_date"
                     android:text="exp_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                 />
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="PlaceHolder" />
+                    android:text="@string/placeholder" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:padding="25dp">
+            android:orientation="vertical"
+            android:padding="0dp">
 
                 <Button
                     android:id="@+id/deleteItem"
@@ -63,10 +73,19 @@
                     tools:ignore="ButtonStyle" />
 
                 <Button
+                    android:id="@+id/edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit"
+                    android:layout_gravity="start"
+                    android:backgroundTint="@color/blue"
+                    android:layout_marginHorizontal="15dp"
+                    />
+                <Button
                     android:id="@+id/closePopUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
+                    android:layout_gravity="start"
                     android:text="@string/close"
                     android:layout_marginHorizontal="15dp"
                     tools:ignore="ButtonStyle" />

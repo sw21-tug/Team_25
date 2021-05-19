@@ -14,7 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
-import at.sw21_tug.team_25.expirydates.ui.detailview.ui.DetailViewActivity
+import at.sw21_tug.team_25.expirydates.ui.detailview.ui.DetailView
 import at.sw21_tug.team_25.expirydates.utils.NotificationManager
 import at.sw21_tug.team_25.expirydates.utils.ReminderScheduler
 import at.sw21_tug.team_25.expirydates.misc.Util
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                 val item = dao.getItemByID(it.toLong())
                 if (item != null) {
                     runOnUiThread {
-                        DetailViewActivity.openDetailView(this@MainActivity, item)
+                        DetailView.openDetailView(this@MainActivity, item)
                     }
                 } else {
                     Log.d("MainActivity", "no item found for id $it")

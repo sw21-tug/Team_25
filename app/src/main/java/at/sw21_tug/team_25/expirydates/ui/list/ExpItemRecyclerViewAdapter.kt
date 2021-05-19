@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItem
-import at.sw21_tug.team_25.expirydates.ui.detailview.ui.DetailViewActivity
+import at.sw21_tug.team_25.expirydates.ui.detailview.ui.DetailView
 
 class ExpItemRecyclerViewAdapter(private val activity: FragmentActivity, private val expItems: List<ExpItem>):
     RecyclerView.Adapter<ExpItemRecyclerViewAdapter.ViewHolder>() {
@@ -28,7 +28,7 @@ class ExpItemRecyclerViewAdapter(private val activity: FragmentActivity, private
         val expItemText = expItem.name.capitalize() + "  " + expItem.date
         holder.textView.text = expItemText
         holder.textView.setOnClickListener {
-            DetailViewActivity.openDetailView(activity , expItem)
+            DetailView.openDetailView(activity , expItem)
         }
     }
 
