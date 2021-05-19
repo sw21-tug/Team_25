@@ -24,15 +24,19 @@ class HomeFragmentMapTest {
     @Rule
     @JvmField
     var mGrantPermissionRule =
-            GrantPermissionRule.grant(
-                    "android.permission.ACCESS_FINE_LOCATION")
+        GrantPermissionRule.grant(
+            "android.permission.ACCESS_FINE_LOCATION"
+        )
 
     @Test
     fun homeFragmentMapTest() {
         val view = onView(
-allOf(withContentDescription("Google Map"),
-withParent(withParent(withId(R.id.map))),
-isDisplayed()))
+            allOf(
+                withContentDescription("Google Map"),
+                withParent(withParent(withId(R.id.map))),
+                isDisplayed()
+            )
+        )
         view.check(matches(isDisplayed()))
-        }
     }
+}

@@ -1,14 +1,10 @@
 package at.sw21_tug.team_25.expirydates
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -75,8 +71,6 @@ class MainActivity : AppCompatActivity() {
             ReminderScheduler.ensureNextReminderScheduled(applicationContext)
         }
         navMenu = navView.menu
-
-        // this.requestLocationPermission()
     }
 
 
@@ -94,28 +88,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
-
-//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
-//                                            grantResults: IntArray) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        when (requestCode) {
-//            1 -> {
-//                if (grantResults.isNotEmpty() && grantResults[0] ==
-//                    PackageManager.PERMISSION_GRANTED) {
-//                    if ((ContextCompat.checkSelfPermission(this.applicationContext,
-//                            Manifest.permission.ACCESS_FINE_LOCATION) ==
-//                                PackageManager.PERMISSION_GRANTED)) {
-//                        Toast.makeText(this.applicationContext, "Permission Granted", Toast.LENGTH_SHORT).show()
-//                    }
-//                } else {
-//                    Toast.makeText(this.applicationContext, "Permission Denied", Toast.LENGTH_SHORT).show()
-//                }
-//                return
-//            }
-//        }
-//    }
 
     fun refreshCurrentFragment(){
         val id = navController.currentDestination?.id
