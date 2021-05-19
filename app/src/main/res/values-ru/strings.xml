@@ -10,6 +10,8 @@
     <string name="expiry_notification_body">Продукт %1$s истекает завтра</string>
     <string name="delete">Удалить</string>
     <string name="close">Назад</string>
+    <string name="share">Поделиться</string>
+    <string name="shareMessage">Привет, у меня есть %1s, который мне больше не нужен, срок действия которого истекает %2s. Вы хотите его иметь?</string>
     <string name="edit">редактировать</string>
     <string name="cancel">отменить</string>
     <string name="save">спасти</string>

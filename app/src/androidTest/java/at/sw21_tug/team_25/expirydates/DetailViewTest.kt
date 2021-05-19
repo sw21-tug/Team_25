@@ -12,6 +12,8 @@ import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
@@ -33,6 +35,7 @@ import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -236,6 +239,53 @@ class DetailViewTest {
         )
         textView.check(matches(withText("Hauswurst  " + currentDateFormatted)))
     }
+    @Test
+    fun shareViewTest() {
+        val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+
+        val bottomNavigationItemView = onView(
+                allOf(
+                        withId(R.id.navigation_list), withContentDescription("List"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_view),
+                                        0
+                                ),
+                                2
+                        ),
+                        isDisplayed()
+                )
+        )
+        bottomNavigationItemView.perform(click())
+
+        val shareTextView = onView(
+                allOf(
+                        withId(R.id.item_tv), withText("Tomato  2021-01-02 02:02:02"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.items_rv),
+                                        1
+                                ),
+                                0
+                        ),
+                        isDisplayed()
+                )
+        )
+        shareTextView.perform(click())
+
+        onView(withId(R.id.share)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+
+        Thread.sleep(500)
+        val shareTest = uiDevice.findObject(
+                By.textContains(
+                        "Messages"
+                )
+        )
+        Assert.assertTrue(shareTest != null)
+
+        uiDevice.pressBack()
+    }
+
 
 
     private fun childAtPosition(

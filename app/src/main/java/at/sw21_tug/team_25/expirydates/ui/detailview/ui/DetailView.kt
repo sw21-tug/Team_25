@@ -3,6 +3,7 @@ package at.sw21_tug.team_25.expirydates.ui.detailview.ui
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context.LAYOUT_INFLATER_SERVICE
+import android.content.Intent
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -48,6 +49,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
             val deleteItemButton = popupView.findViewById<Button>(R.id.deleteItem)
             val dateButton = popupView.findViewById<Button>(R.id.exp_date)
             val editButton = popupView.findViewById<Button>(R.id.edit)
+            val shareButton = popupView.findViewById<Button>(R.id.share)
 
             name.text = name_string
             nameEdit.editableText.clear()
@@ -116,6 +118,22 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                     name.text = nameEdit.text.toString()
                 }
             }
+
+
+            // set on-click listener
+            shareButton.setOnClickListener {
+                val share = Intent.createChooser(Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(
+                        Intent.EXTRA_TEXT,
+                        (activity as MainActivity).baseContext.resources.getString(R.string.shareMessage, name_string, date_string)
+                    )
+                    type = "text/plain"
+
+                }, null)
+                (activity as MainActivity).startActivity(share)
+            }
+
 
         }
 

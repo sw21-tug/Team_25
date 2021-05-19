@@ -82,6 +82,16 @@
                     android:layout_marginHorizontal="15dp"
                     />
                 <Button
+                    android:id="@+id/share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginHorizontal="15dp"
+                    android:text="@string/share"
+                    android:backgroundTint="#29971D"
+                    tools:ignore="ButtonStyle" />
+
+                <Button
                     android:id="@+id/closePopUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
