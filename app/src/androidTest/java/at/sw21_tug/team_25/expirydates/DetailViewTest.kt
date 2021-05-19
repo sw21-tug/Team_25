@@ -29,6 +29,7 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
+import org.hamcrest.core.Is
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner

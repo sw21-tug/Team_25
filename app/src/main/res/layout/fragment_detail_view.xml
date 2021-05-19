@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:layout_marginHorizontal="3dp"
+                    android:layout_marginHorizontal="15dp"
                     android:backgroundTint="@color/red"
                     android:text="@string/delete"
                     tools:ignore="ButtonStyle" />
@@ -85,9 +85,10 @@
                     android:id="@+id/share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginHorizontal="3dp"
+                    android:layout_gravity="start"
+                    android:layout_marginHorizontal="15dp"
                     android:text="@string/share"
+                    android:backgroundTint="#29971D"
                     tools:ignore="ButtonStyle" />
 
                 <Button
@@ -96,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:text="@string/close"
-                    android:layout_marginHorizontal="7dp"
+                    android:layout_marginHorizontal="15dp"
                     tools:ignore="ButtonStyle" />
         </LinearLayout>
 
