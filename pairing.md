@@ -1,14 +1,14 @@
 ### Pairing Matrix
-| Dev # |  Name       | Level  | Theme Current Sprint
-| :---  |    :----    | :---:  | :----  
-| Dev 1 | Benjamin G  | senior | 012/002
-| Dev 2 | Matthias    | junior | Research
-| Dev 3 | Benjamin W  | senior | x
-| Dev 4 | Esther      | junior | 015/001
-| Dev 5 | Christopher | senior | 015/001
-| Dev 6 | Florian     | senior | 024
-| Dev 7 | Nico        | junior | 024
-| Dev 8 | Stefan      | senior | 012/002
+| Dev # |  Name       | Level  | Theme Current Sprint | Afternoon
+| :---  |    :----    | :---:  | :----       | :----
+| Dev 1 | Benjamin G  | senior | 012/002     | (idee map fertig machen)
+| Dev 2 | Matthias    | junior | Research    |
+| Dev 3 | Benjamin W  | senior | x           | (refactoring + test optimisation)
+| Dev 4 | Esther      | junior | 015/001     |
+| Dev 5 | Christopher | senior | 015/001     | (idee notification setting fertig machen)
+| Dev 6 | Florian     | senior | 024         | (idee map fertig machen)
+| Dev 7 | Nico        | junior | 024         |
+| Dev 8 | Stefan      | senior | 012/002     | (idee notification setting fertig machen)
 
 ### time spend
 time *: this team should currently pair up
