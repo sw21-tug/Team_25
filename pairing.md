@@ -18,8 +18,8 @@ time *: this team should currently pair up
 | Dev 1       | X           | 07:30       | 06:30       | 14:00       | 02:30       | HH:MM       | HH:MM       | HH:MM *     |
 | Dev 2       | HH:MM       | X           | 13:00       | HH:MM       | 05:30       | HH:MM       | HH:MM       | HH:MM       |
 | Dev 3       | HH:MM       | HH:MM       | X           | 03:30       | HH:MM       | HH:MM       | HH:MM       | HH:MM       |
-| Dev 4       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM       | 03:30       | HH:MM       | 04:00       |
-| Dev 5       | HH:MM       | HH:MM       | HH:MM       | HH:MM *     | X           | 17:00       | HH:MM       | HH:MM       |
+| Dev 4       | HH:MM       | HH:MM       | HH:MM       | X           | HH:MM *     | 03:30       | HH:MM       | 04:00       |
+| Dev 5       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | 17:00       | HH:MM       | HH:MM       |
 | Dev 6       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | 02:30 *     | HH:MM       |
 | Dev 7       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           | 25:30       |
 | Dev 8       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | HH:MM       | X           |
