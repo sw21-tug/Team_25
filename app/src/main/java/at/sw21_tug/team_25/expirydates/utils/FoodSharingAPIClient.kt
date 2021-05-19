@@ -80,7 +80,7 @@ class FoodSharingAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
             val point = FoodSharePoint(id, name, itemLat, itemLon)
             result.add(point)
         }
-        
+
         return result
     }
 
