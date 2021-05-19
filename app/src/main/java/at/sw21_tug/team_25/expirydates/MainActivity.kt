@@ -1,9 +1,13 @@
 package at.sw21_tug.team_25.expirydates
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -24,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navView: BottomNavigationView
     lateinit var updateLayoutList: ArrayList<Int>
     lateinit var navMenu: Menu
+    private val REQUEST_LOCATION = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +71,22 @@ class MainActivity : AppCompatActivity() {
             ReminderScheduler.ensureNextReminderScheduled(applicationContext)
         }
         navMenu = navView.menu
+    }
+
+
+    fun requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this.applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION) != // or look it up Int.equals...
+            PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION)
+            } else {
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION)
+            }
+        }
     }
 
     fun refreshCurrentFragment(){
