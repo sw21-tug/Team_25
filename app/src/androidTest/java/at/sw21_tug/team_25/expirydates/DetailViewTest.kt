@@ -4,6 +4,7 @@ package at.sw21_tug.team_25.expirydates
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -26,9 +27,12 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
+import org.hamcrest.core.Is
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -161,6 +165,75 @@ class DetailViewTest {
 
     }
 
+    @Test
+    fun editItemTest() {
+        val bottomNavigationItemView2 = onView(
+            allOf(
+                withId(R.id.navigation_list), withContentDescription("List"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_view),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        bottomNavigationItemView2.perform(click())
+
+        val materialTextView = onView(
+            allOf(
+                withId(R.id.item_tv), withText("Salami  2021-01-01 01:01:01"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.items_rv),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        materialTextView.perform(click())
+
+        Thread.sleep(1000)
+
+        onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+
+        onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+
+        val materialButton4 = onView(
+            allOf(
+                withId(android.R.id.button1), withText("OK"),
+                childAtPosition(
+                    childAtPosition(
+                        withClassName(Is.`is`("android.widget.ScrollView")),
+                        0
+                    ),
+                    3
+                )
+            )
+        )
+        materialButton4.perform(ViewActions.scrollTo(), click())
+
+        onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+
+        onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+
+        val currentDate = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val currentDateFormatted = currentDate.format(formatter)
+
+        val textView = onView(
+            allOf(
+                withId(R.id.item_tv), withText("Salami  " + currentDateFormatted),
+                withParent(withParent(withId(R.id.items_rv))),
+                isDisplayed()
+            )
+        )
+        textView.check(matches(withText("Salami  " + currentDateFormatted)))
+    }
 
 
     private fun childAtPosition(
