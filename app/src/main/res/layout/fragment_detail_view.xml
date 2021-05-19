@@ -31,14 +31,15 @@
                     android:text="Product"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <EditText
+                <EditText
                     android:id="@+id/product_name_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Product"
+                    android:hint="@string/enter_item_name"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:visibility="gone"
-            />
+                    android:inputType="text"
+                />
 
                 <Button
                     android:id="@+id/exp_date"
@@ -59,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="0dp">
 
                 <Button
@@ -76,15 +77,16 @@
                     android:id="@+id/edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Edit"
-                    android:layout_gravity="left"
+                    android:text="@string/edit"
+                    android:layout_gravity="start"
                     android:backgroundTint="@color/blue"
+                    android:layout_marginHorizontal="15dp"
                     />
                 <Button
                     android:id="@+id/closePopUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
+                    android:layout_gravity="start"
                     android:text="@string/close"
                     android:layout_marginHorizontal="15dp"
                     tools:ignore="ButtonStyle" />

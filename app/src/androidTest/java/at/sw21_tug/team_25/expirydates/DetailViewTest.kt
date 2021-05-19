@@ -217,6 +217,8 @@ class DetailViewTest {
         )
         materialButton4.perform(ViewActions.scrollTo(), click())
 
+        onView(withId(R.id.product_name_edit)).perform(ViewActions.replaceText("Hauswurst"))
+
         onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
 
         onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
@@ -227,12 +229,12 @@ class DetailViewTest {
 
         val textView = onView(
             allOf(
-                withId(R.id.item_tv), withText("Salami  " + currentDateFormatted),
+                withId(R.id.item_tv), withText("Hauswurst  " + currentDateFormatted),
                 withParent(withParent(withId(R.id.items_rv))),
                 isDisplayed()
             )
         )
-        textView.check(matches(withText("Salami  " + currentDateFormatted)))
+        textView.check(matches(withText("Hauswurst  " + currentDateFormatted)))
     }
 
 
