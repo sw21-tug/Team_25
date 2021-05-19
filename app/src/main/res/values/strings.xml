@@ -16,4 +16,6 @@
     <string name="save">Save</string>
     <string name="placeholder">Placeholder</string>
     <string name="maps_api_key" translatable="false">AIzaSyCjufUCy1GthewZAl_YLQOAJ4Vza_TkbMs</string>
+    <string name="preference_file_key" translatable="false">ExpiryDatesPreferences</string>
+    <string name="notification_day_offset_key" translatable="false">ExpiryDatesPreferencesNotificationDayOffset</string>
 </resources>
