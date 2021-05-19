@@ -15,9 +15,14 @@ import androidx.lifecycle.ViewModelProvider
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.misc.Util
+import at.sw21_tug.team_25.expirydates.utils.FoodSharingAPIClient
 import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import java.util.*
 
 
@@ -27,6 +32,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var locationManager: LocationManager
     private val REQUEST_LOCATION = 1
     private lateinit var mapFragment: SupportMapFragment
+    private lateinit var foodSharingApiClient: FoodSharingAPIClient
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,23 +94,36 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         this.locationManager = (activity as MainActivity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val latitude: Double
-        val longitude: Double
+        val myLatitude: Double
+        val myLongitude: Double
         val location = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         if (location == null) {
-            latitude = 47.05875826931372
-            longitude = 15.459148560238393
+            myLatitude = 47.05875826931372
+            myLongitude = 15.459148560238393
         } else {
             val locationGps = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) as Location
-            latitude = locationGps.latitude
-            longitude = locationGps.longitude
+            myLatitude = locationGps.latitude
+            myLongitude = locationGps.longitude
         }
 
-        // TODO: Get closest items with REST API
+        mMap.apply {
+            GlobalScope.async {
+                this@HomeFragment.foodSharingApiClient = FoodSharingAPIClient()
+                val foodSharingPoints = this@HomeFragment.foodSharingApiClient.getNearbyFoodSharePoints(myLatitude, myLongitude)
+                for(foodSharingPoint in foodSharingPoints) {
+                    val foodSharingPointLocation = LatLng(foodSharingPoint.lat, foodSharingPoint.lon)
+                    (activity as MainActivity).runOnUiThread {
+                        this@HomeFragment.mMap.addMarker(
+                            MarkerOptions().position(foodSharingPointLocation).title(foodSharingPoint.name).icon(
+                                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)))
+                    }
+                }
+            }
 
-        val myLocation = LatLng(latitude, longitude)
-        mMap.addMarker(MarkerOptions().position(myLocation).title("Marker at my location"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation))
+            val myLocation = LatLng(myLatitude, myLongitude)
+            mMap.addMarker(MarkerOptions().position(myLocation).title("Marker at my location"))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 13F))
+        }
     }
 
 
