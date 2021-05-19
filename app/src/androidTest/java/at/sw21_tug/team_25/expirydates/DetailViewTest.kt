@@ -1,13 +1,8 @@
 package at.sw21_tug.team_25.expirydates
 
 
-import android.app.Application
-import android.content.ClipboardManager
-import android.content.Context.CLIPBOARD_SERVICE
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
@@ -34,7 +29,6 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
-import org.hamcrest.core.IsInstanceOf
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
@@ -247,7 +241,6 @@ class DetailViewTest {
     @Test
     fun shareViewTest() {
         val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        val appContext = ApplicationProvider.getApplicationContext<Application>()
 
         val bottomNavigationItemView = onView(
                 allOf(
@@ -282,12 +275,12 @@ class DetailViewTest {
         onView(withId(R.id.share)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
 
         Thread.sleep(500)
-        val copyButton = uiDevice.findObject(
-                By.text(
-                        "Copy"
+        val shareTest = uiDevice.findObject(
+                By.textContains(
+                        "Messages"
                 )
         )
-        Assert.assertTrue(copyButton.isClickable)
+        Assert.assertTrue(shareTest != null)
 
         uiDevice.pressBack()
     }
