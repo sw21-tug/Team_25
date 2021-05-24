@@ -28,36 +28,45 @@ object ReminderScheduler {
 
         val workRequest = createWorkerRequest(LocalDateTime.now(), expiredItems)
 
-        WorkManager.getInstance(ctx).enqueueUniqueWork(unique_work_tag, ExistingWorkPolicy.REPLACE, workRequest)
+        WorkManager.getInstance(ctx)
+            .enqueueUniqueWork(unique_work_tag, ExistingWorkPolicy.REPLACE, workRequest)
     }
 
     @VisibleForTesting
-    fun createWorkerRequest(currentDateTime: LocalDateTime, items: List<ExpItem>): OneTimeWorkRequest {
+    fun createWorkerRequest(
+        currentDateTime: LocalDateTime,
+        items: List<ExpItem>
+    ): OneTimeWorkRequest {
         val ids = items.map { it.id }
         val names = items.map { it.name }
 
 
         val data = Data.Builder()
-                .putIntArray("item_ids", ids.toIntArray())
-                .putStringArray("item_names", names.toTypedArray())
-                .build()
+            .putIntArray("item_ids", ids.toIntArray())
+            .putStringArray("item_names", names.toTypedArray())
+            .build()
 
         val timeDelay = calculateNotificationDelayTimeInMillis(currentDateTime, items[0].date)
 
         return OneTimeWorkRequestBuilder<Reminder>()
-                .setInputData(data)
-                .addTag(work_tag)
-                .setInitialDelay(timeDelay, TimeUnit.MILLISECONDS).build()
+            .setInputData(data)
+            .addTag(work_tag)
+            .setInitialDelay(timeDelay, TimeUnit.MILLISECONDS).build()
     }
 
     @VisibleForTesting
-    fun calculateNotificationDelayTimeInMillis(currentDateTime: LocalDateTime, dueDate: String): Long {
+    fun calculateNotificationDelayTimeInMillis(
+        currentDateTime: LocalDateTime,
+        dueDate: String
+    ): Long {
         // "yyyy-MM-dd" -> dueDate
-        var reminderDateTime = LocalDate.parse(dueDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay()
+        var reminderDateTime =
+            LocalDate.parse(dueDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay()
         reminderDateTime = reminderDateTime.minusDays(1)
         reminderDateTime = reminderDateTime.withHour(9)
 
-        return reminderDateTime.toInstant(ZoneOffset.UTC).toEpochMilli() - currentDateTime.toInstant(ZoneOffset.UTC).toEpochMilli()
+        return reminderDateTime.toInstant(ZoneOffset.UTC)
+            .toEpochMilli() - currentDateTime.toInstant(ZoneOffset.UTC).toEpochMilli()
     }
 
 }

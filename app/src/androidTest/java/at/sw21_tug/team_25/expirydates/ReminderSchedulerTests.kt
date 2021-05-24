@@ -15,7 +15,8 @@ class ReminderSchedulerTests {
 
     @Test
     fun generateScheduledWorkTest() {
-        val currentDate = LocalDateTime.parse("2021-04-24T10:15:30", DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        val currentDate =
+            LocalDateTime.parse("2021-04-24T10:15:30", DateTimeFormatter.ISO_LOCAL_DATE_TIME)
 
 
         val item1 = ExpItem("Item1", "2021-04-30")

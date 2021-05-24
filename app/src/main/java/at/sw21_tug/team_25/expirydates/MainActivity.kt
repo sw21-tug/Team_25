@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun refreshCurrentFragment(){
+    fun refreshCurrentFragment() {
         val id = navController.currentDestination?.id
 
         val home = navMenu.findItem(R.id.navigation_home)
@@ -86,15 +86,18 @@ class MainActivity : AppCompatActivity() {
         }
         updateTitle()
 
-        navController.popBackStack(id!!,true)
+        navController.popBackStack(id!!, true)
         navController.navigate(id)
     }
 
     fun updateTitle() {
         when (navController.currentDestination?.id) {
-            R.id.navigation_add -> navController.currentDestination?.label = getString(R.string.title_add)
-            R.id.navigation_home -> navController.currentDestination?.label = getString(R.string.title_home)
-            R.id.navigation_list -> navController.currentDestination?.label = getString(R.string.title_list)
+            R.id.navigation_add -> navController.currentDestination?.label =
+                getString(R.string.title_add)
+            R.id.navigation_home -> navController.currentDestination?.label =
+                getString(R.string.title_home)
+            R.id.navigation_list -> navController.currentDestination?.label =
+                getString(R.string.title_list)
         }
     }
 

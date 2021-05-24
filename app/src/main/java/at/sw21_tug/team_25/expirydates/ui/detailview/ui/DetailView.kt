@@ -23,16 +23,22 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
     companion object {
 
-        private var is_editable : Boolean = false
-        private var product_id : Int = 0
+        private var is_editable: Boolean = false
+        private var product_id: Int = 0
 
-        fun openDetailView(activity: Activity, product: ExpItem){
+        fun openDetailView(activity: Activity, product: ExpItem) {
             openDetailView(activity, product.id, product.name, product.date)
         }
 
-        private fun openDetailView(activity: Activity, itemId: Int, name_string: String, date_string: String) {
+        private fun openDetailView(
+            activity: Activity,
+            itemId: Int,
+            name_string: String,
+            date_string: String
+        ) {
 
-            val inflater: LayoutInflater = activity.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val inflater: LayoutInflater =
+                activity.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val popupView = inflater.inflate(R.layout.fragment_detail_view, null)
 
             product_id = itemId
@@ -66,9 +72,9 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
             }
             // set on-click listener
             closePopUpButton.setOnClickListener {
-                if(!is_editable)
+                if (!is_editable)
                     popupWindow.dismiss()
-                else{
+                else {
                     cancel(editButton, closePopUpButton, activity, nameEdit, name)
                 }
             }
@@ -101,7 +107,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
             editButton.setOnClickListener {
                 is_editable = !is_editable
                 dateButton.isEnabled = is_editable
-                if(is_editable) {
+                if (is_editable) {
                     editButton.text = activity.getString(R.string.save)
                     closePopUpButton.text = activity.getString(R.string.cancel)
 
@@ -110,8 +116,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
                     nameEdit.editableText.clear()
                     nameEdit.editableText.append(name.text)
-                }
-                else {
+                } else {
                     save(nameEdit.text.toString(), dateButton.text.toString(), activity)
                     cancel(editButton, closePopUpButton, activity, nameEdit, name)
 
@@ -126,7 +131,11 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                     action = Intent.ACTION_SEND
                     putExtra(
                         Intent.EXTRA_TEXT,
-                        (activity as MainActivity).baseContext.resources.getString(R.string.shareMessage, name_string, date_string)
+                        (activity as MainActivity).baseContext.resources.getString(
+                            R.string.shareMessage,
+                            name_string,
+                            date_string
+                        )
                     )
                     type = "text/plain"
 
@@ -149,7 +158,13 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
         }
 
 
-        private fun cancel(editButton: Button, closePopUpButton : Button, activity: Activity, nameEdit : EditText, name : TextView) {
+        private fun cancel(
+            editButton: Button,
+            closePopUpButton: Button,
+            activity: Activity,
+            nameEdit: EditText,
+            name: TextView
+        ) {
             editButton.text = activity.getString(R.string.edit)
             closePopUpButton.text = activity.getString(R.string.close)
             nameEdit.visibility = View.GONE
@@ -157,10 +172,12 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
             is_editable = false
         }
     }
+
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-        this.view.findViewById<TextView>(R.id.exp_date).text = LocalDate.of(year, month + 1, dayOfMonth).format(formatter)
+        this.view.findViewById<TextView>(R.id.exp_date).text =
+            LocalDate.of(year, month + 1, dayOfMonth).format(formatter)
     }
 
 }

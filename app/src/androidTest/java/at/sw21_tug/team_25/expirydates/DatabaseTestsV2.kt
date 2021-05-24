@@ -136,7 +136,7 @@ class DatabaseTestsV2 {
         Assert.assertEquals(items.size, 0)
     }
 
-    private fun <T>checkLiveData(data: LiveData<T>, lambda: (b: T) -> Unit) {
+    private fun <T> checkLiveData(data: LiveData<T>, lambda: (b: T) -> Unit) {
         val lifecycleOwner: LifecycleOwner = mockLifecycleOwner()
         val observer = Observer<T>(lambda)
         data.observe(lifecycleOwner, observer)

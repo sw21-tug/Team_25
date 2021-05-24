@@ -11,5 +11,5 @@ class ListViewModel : ViewModel() {
         value = ""
     }
     val text: LiveData<String> = _text
-    var expItems: LiveData<List<ExpItem>>?=null
+    var expItems: LiveData<List<ExpItem>>? = null
 }

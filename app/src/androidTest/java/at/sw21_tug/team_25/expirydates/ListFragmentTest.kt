@@ -62,14 +62,15 @@ class ListFragmentTest {
     @Before
     fun initializeDb() {
         val expItemDao = ExpItemDatabase.getDatabase(
-                InstrumentationRegistry.getInstrumentation().targetContext).expItemDao()
+            InstrumentationRegistry.getInstrumentation().targetContext
+        ).expItemDao()
         expItemDao.deleteAllItems()
         for (i in 10..30) {
             GlobalScope.async {
-            // yyyy-MM-dd hh:mm:ss
-            val date = "20$i-05-01 20:$i:45"
-            val expItem = ExpItem("Salami $i", date)
-            expItemDao.insertItem(expItem)
+                // yyyy-MM-dd hh:mm:ss
+                val date = "20$i-05-01 20:$i:45"
+                val expItem = ExpItem("Salami $i", date)
+                expItemDao.insertItem(expItem)
             }
         }
     }
@@ -77,27 +78,27 @@ class ListFragmentTest {
     @Test
     fun listFragmentTest() {
         val bottomNavigationItemView = onView(
-                allOf(
-                        withId(R.id.navigation_list), withContentDescription("List"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.nav_view),
-                                        0
-                                ),
-                                2
-                        ),
-                        isDisplayed()
-                )
+            allOf(
+                withId(R.id.navigation_list), withContentDescription("List"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_view),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
         )
         bottomNavigationItemView.perform(click())
 
         onView(withId(R.id.items_rv))
-                .check(matches(isDisplayed()))
+            .check(matches(isDisplayed()))
         onView(withId(R.id.items_rv)).check(RecyclerViewItemCountAssertion(21))
     }
 
     private fun childAtPosition(
-            parentMatcher: Matcher<View>, position: Int
+        parentMatcher: Matcher<View>, position: Int
     ): Matcher<View> {
 
         return object : TypeSafeMatcher<View>() {

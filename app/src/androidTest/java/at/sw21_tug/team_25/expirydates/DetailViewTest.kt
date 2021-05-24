@@ -71,7 +71,8 @@ class DetailViewTest {
     @Before
     fun initializeDb() {
         val expItemDao = ExpItemDatabase.getDatabase(
-            InstrumentationRegistry.getInstrumentation().targetContext).expItemDao()
+            InstrumentationRegistry.getInstrumentation().targetContext
+        ).expItemDao()
         expItemDao.deleteAllItems()
         GlobalScope.async {
             expItemDao.insertItem(ExpItem("Salami", "2021-01-01 01:01:01"))
@@ -112,9 +113,12 @@ class DetailViewTest {
         )
         materialTextViewSalami.perform(click())
 
-        onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup()).check((matches(isDisplayed())))
-        onView(withId(R.id.product_name)).inRoot(RootMatchers.isPlatformPopup()).check(matches(withText("Salami")))
-        onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup()).check(matches(withText("2021-01-01 01:01:01")))
+        onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup())
+            .check((matches(isDisplayed())))
+        onView(withId(R.id.product_name)).inRoot(RootMatchers.isPlatformPopup())
+            .check(matches(withText("Salami")))
+        onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
+            .check(matches(withText("2021-01-01 01:01:01")))
         onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         onView(withId(R.id.detail_view_popup)).check(doesNotExist())
     }
@@ -152,9 +156,12 @@ class DetailViewTest {
         )
         materialTextViewSalami.perform(click())
 
-        onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup()).check((matches(isDisplayed())))
-        onView(withId(R.id.product_name)).inRoot(RootMatchers.isPlatformPopup()).check(matches(withText("Tomato")))
-        onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup()).check(matches(withText("2021-01-02 02:02:02")))
+        onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup())
+            .check((matches(isDisplayed())))
+        onView(withId(R.id.product_name)).inRoot(RootMatchers.isPlatformPopup())
+            .check(matches(withText("Tomato")))
+        onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
+            .check(matches(withText("2021-01-02 02:02:02")))
         onView(withId(R.id.deleteItem)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         onView(withId(R.id.detail_view_popup)).check(doesNotExist())
 
@@ -234,37 +241,38 @@ class DetailViewTest {
         )
         textView.check(matches(withText("Hauswurst  $currentDateFormatted")))
     }
+
     @Test
     fun shareViewTest() {
         val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
         val bottomNavigationItemView = onView(
-                allOf(
-                        withId(R.id.navigation_list), withContentDescription("List"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.nav_view),
-                                        0
-                                ),
-                                2
-                        ),
-                        isDisplayed()
-                )
+            allOf(
+                withId(R.id.navigation_list), withContentDescription("List"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_view),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
         )
         bottomNavigationItemView.perform(click())
 
         val shareTextView = onView(
-                allOf(
-                        withId(R.id.item_tv), withText("Tomato  2021-01-02 02:02:02"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.items_rv),
-                                        1
-                                ),
-                                0
-                        ),
-                        isDisplayed()
-                )
+            allOf(
+                withId(R.id.item_tv), withText("Tomato  2021-01-02 02:02:02"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.items_rv),
+                        1
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
         )
         shareTextView.perform(click())
 
@@ -272,9 +280,9 @@ class DetailViewTest {
 
         Thread.sleep(500)
         val shareTest = uiDevice.findObject(
-                By.textContains(
-                        "Messages"
-                )
+            By.textContains(
+                "Messages"
+            )
         )
         Assert.assertTrue(shareTest != null)
 
@@ -282,9 +290,8 @@ class DetailViewTest {
     }
 
 
-
     private fun childAtPosition(
-            parentMatcher: Matcher<View>, position: Int
+        parentMatcher: Matcher<View>, position: Int
     ): Matcher<View> {
 
         return object : TypeSafeMatcher<View>() {

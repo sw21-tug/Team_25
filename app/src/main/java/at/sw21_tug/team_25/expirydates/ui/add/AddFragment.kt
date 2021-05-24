@@ -68,7 +68,7 @@ class AddFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         addViewModel =
-                ViewModelProvider(this).get(AddViewModel::class.java)
+            ViewModelProvider(this).get(AddViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_add, container, false)
         val textView: TextView = root.findViewById(R.id.text_add)
         val button: Button = root.findViewById(R.id.button)
@@ -81,7 +81,7 @@ class AddFragment : Fragment() {
 
         button.setOnClickListener {
 
-            val newDate : Calendar = Calendar.getInstance()
+            val newDate: Calendar = Calendar.getInstance()
             newDate.set(calender.year, calender.month, calender.dayOfMonth)
 
             when (addViewModel.saveValues(
@@ -144,8 +144,10 @@ class AddFragment : Fragment() {
                         )
                         toast.show()
                     }
-                    val toast = Toast.makeText(activity, "Input: " + addViewModel.text + "\n" +
-                            "Date: " + dateString, Toast.LENGTH_SHORT)
+                    val toast = Toast.makeText(
+                        activity, "Input: " + addViewModel.text + "\n" +
+                                "Date: " + dateString, Toast.LENGTH_SHORT
+                    )
                     toast.show()
                     GlobalScope.async {
                         ReminderScheduler.ensureNextReminderScheduled(this@AddFragment.requireContext())

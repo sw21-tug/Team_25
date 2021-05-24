@@ -9,19 +9,19 @@ import java.util.*
 
 class Util {
     companion object {
-        fun convertDateToString(long: Long) : String {
+        fun convertDateToString(long: Long): String {
             val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY)
             return formatter.format(long)
         }
 
 
-        fun getLanguage(activity: Activity): Locale{
+        fun getLanguage(activity: Activity): Locale {
             val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
             val languageCode = sharedPref.getString("ExpiryDate.language_preferences", "en")
             return Locale(languageCode!!)
         }
 
-        fun setLanguage(languageCode: String, activity: Activity){
+        fun setLanguage(languageCode: String, activity: Activity) {
             val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return
             with(sharedPref.edit()) {
                 putString("ExpiryDate.language_preferences", languageCode)

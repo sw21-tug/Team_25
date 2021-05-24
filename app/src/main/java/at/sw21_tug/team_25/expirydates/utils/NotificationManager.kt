@@ -66,7 +66,7 @@ object NotificationManager {
     private fun constructChannel(ctx: Context) {
         with(NotificationManagerCompat.from(ctx)) {
 
-            if(getNotificationChannel(channel_id) == null) {
+            if (getNotificationChannel(channel_id) == null) {
                 val name = "ExpiryDates Notifications"
                 val descriptionText = "Notifications about expiring products."
                 val importance = AndroidNotificationManager.IMPORTANCE_DEFAULT

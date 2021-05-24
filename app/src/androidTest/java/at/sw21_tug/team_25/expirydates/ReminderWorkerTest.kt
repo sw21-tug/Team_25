@@ -49,7 +49,7 @@ class ReminderWorkerTest {
             .build()
 
         val worker = TestListenableWorkerBuilder<Reminder>(
-                context = context
+            context = context
         ).setInputData(data).build()
 
         runBlocking {

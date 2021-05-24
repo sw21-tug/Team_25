@@ -45,7 +45,11 @@ class NotificationTests {
         Thread.sleep(500)
         clearAllNotifications()
         Thread.sleep(500)
-        NotificationManager.displayNotification("Hello", "Hello World", ApplicationProvider.getApplicationContext())
+        NotificationManager.displayNotification(
+            "Hello",
+            "Hello World",
+            ApplicationProvider.getApplicationContext()
+        )
         Thread.sleep(2000)
         device.openNotification()
         Thread.sleep(500)
@@ -100,14 +104,14 @@ class NotificationTests {
 
         Espresso.onView(ViewMatchers.withId(R.id.detail_view_popup))
             .inRoot(RootMatchers.isPlatformPopup()).check(
-            (ViewAssertions.matches(
-                ViewMatchers.isDisplayed()
-            ))
-        )
+                (ViewAssertions.matches(
+                    ViewMatchers.isDisplayed()
+                ))
+            )
         Espresso.onView(ViewMatchers.withId(R.id.product_name))
             .inRoot(RootMatchers.isPlatformPopup()).check(
-            ViewAssertions.matches(ViewMatchers.withText(name))
-        )
+                ViewAssertions.matches(ViewMatchers.withText(name))
+            )
         Espresso.onView(ViewMatchers.withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
             .check(
                 ViewAssertions.matches(
