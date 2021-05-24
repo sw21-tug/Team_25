@@ -17,7 +17,6 @@ import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.utils.FoodSharingAPIClient
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -30,7 +29,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mMap: GoogleMap
     private lateinit var locationManager: LocationManager
-    private val REQUEST_LOCATION = 1
+    private val requestLocation = 1
     private lateinit var mapFragment: SupportMapFragment
     private lateinit var foodSharingApiClient: FoodSharingAPIClient
 
@@ -85,7 +84,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
-        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION)
+        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), requestLocation)
 
         return root
     }
@@ -129,8 +128,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
                                             grantResults: IntArray) {
-        if(requestCode == this.REQUEST_LOCATION) {
-            if (grantResults.isNotEmpty() && grantResults[0].equals(PackageManager.PERMISSION_GRANTED)) {
+        if(requestCode == this.requestLocation) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mapFragment.getMapAsync(this)
             }
         }

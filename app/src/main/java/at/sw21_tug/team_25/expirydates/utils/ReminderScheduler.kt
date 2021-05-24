@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.work.*
 import at.sw21_tug.team_25.expirydates.data.ExpItem
-import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -15,7 +14,7 @@ import java.util.concurrent.TimeUnit
 object ReminderScheduler {
 
     var work_tag = "expiry_reminders_queue"
-    var unique_work_tag = "remind_next_expiry_date_job"
+    private var unique_work_tag = "remind_next_expiry_date_job"
 
     suspend fun ensureNextReminderScheduled(ctx: Context) {
         val db = ExpItemDatabase.getDatabase(ctx).expItemDao()
@@ -41,7 +40,7 @@ object ReminderScheduler {
         val data = Data.Builder()
                 .putIntArray("item_ids", ids.toIntArray())
                 .putStringArray("item_names", names.toTypedArray())
-                .build();
+                .build()
 
         val timeDelay = calculateNotificationDelayTimeInMillis(currentDateTime, items[0].date)
 

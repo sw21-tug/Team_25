@@ -17,13 +17,11 @@ import androidx.test.uiautomator.UiDevice
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
-import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.setMain
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -43,11 +41,9 @@ import java.time.format.DateTimeFormatter
 class DetailViewTest {
 
     companion object {
-        lateinit var expItemDao: ExpItemDao
-        lateinit var db: ExpItemDatabase
-        lateinit var repository: ExpItemRepository
+        private lateinit var expItemDao: ExpItemDao
+        private lateinit var db: ExpItemDatabase
         private val testDispatcher = TestCoroutineDispatcher()
-        private val testScope = TestCoroutineScope(testDispatcher)
 
         @BeforeClass
         @JvmStatic
@@ -58,7 +54,6 @@ class DetailViewTest {
             db = ExpItemDatabase.getDatabase(context)
 
             expItemDao = db.expItemDao()
-            repository = ExpItemRepository(expItemDao)
         }
 //        - - - - - INFO: Causes errors in following test, that also use ExpItemDatabase - - - -
 //        @AfterClass
@@ -232,12 +227,12 @@ class DetailViewTest {
 
         val textView = onView(
             allOf(
-                withId(R.id.item_tv), withText("Hauswurst  " + currentDateFormatted),
+                withId(R.id.item_tv), withText("Hauswurst  $currentDateFormatted"),
                 withParent(withParent(withId(R.id.items_rv))),
                 isDisplayed()
             )
         )
-        textView.check(matches(withText("Hauswurst  " + currentDateFormatted)))
+        textView.check(matches(withText("Hauswurst  $currentDateFormatted")))
     }
     @Test
     fun shareViewTest() {

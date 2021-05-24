@@ -15,13 +15,11 @@ import androidx.test.rule.ActivityTestRule
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
-import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.setMain
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -41,11 +39,9 @@ import org.mockito.junit.MockitoJUnitRunner
 class ListFragmentTest {
 
     companion object {
-        lateinit var expItemDao: ExpItemDao
-        lateinit var db: ExpItemDatabase
-        lateinit var repository: ExpItemRepository
+        private lateinit var expItemDao: ExpItemDao
+        private lateinit var db: ExpItemDatabase
         private val testDispatcher = TestCoroutineDispatcher()
-        private val testScope = TestCoroutineScope(testDispatcher)
 
         @BeforeClass
         @JvmStatic
@@ -56,7 +52,6 @@ class ListFragmentTest {
             db = ExpItemDatabase.getDatabase(context)
 
             expItemDao = db.expItemDao()
-            repository = ExpItemRepository(expItemDao)
         }
     }
 
@@ -72,9 +67,8 @@ class ListFragmentTest {
         for (i in 10..30) {
             GlobalScope.async {
             // yyyy-MM-dd hh:mm:ss
-            var date = "20" + i.toString()
-            date = date + "-05-01 20:43:45"
-            var expItem = ExpItem("Salami " + i.toString(), date)
+            val date = "20$i-05-01 20:$i:45"
+            val expItem = ExpItem("Salami $i", date)
             expItemDao.insertItem(expItem)
             }
         }

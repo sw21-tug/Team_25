@@ -21,7 +21,7 @@ assignees: ''
 # Acceptance criteria
 - [ ] runs local without errors
 - [ ] commit message contains issue abbreviations
-- [ ] commits are squased
+- [ ] commits are squashed
 - [ ] tests written for it
 
 

@@ -7,7 +7,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
-import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asExecutor
@@ -33,8 +32,7 @@ class DatabaseTestsV2 {
 
     companion object {
         lateinit var expItemDao: ExpItemDao
-        lateinit var db: ExpItemDatabase
-        lateinit var repository: ExpItemRepository
+        private lateinit var db: ExpItemDatabase
         private val testDispatcher = TestCoroutineDispatcher()
         private val testScope = TestCoroutineScope(testDispatcher)
 
@@ -49,7 +47,6 @@ class DatabaseTestsV2 {
                 .setQueryExecutor(testDispatcher.asExecutor()).build()
 
             expItemDao = db.expItemDao()
-            repository = ExpItemRepository(expItemDao)
         }
 
         @AfterClass

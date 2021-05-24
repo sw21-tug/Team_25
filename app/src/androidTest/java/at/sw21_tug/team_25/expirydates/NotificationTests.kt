@@ -9,7 +9,6 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.By
@@ -18,7 +17,6 @@ import androidx.test.uiautomator.UiObject2
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.utils.NotificationManager
-import com.android.dx.command.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import org.junit.Assert.assertTrue

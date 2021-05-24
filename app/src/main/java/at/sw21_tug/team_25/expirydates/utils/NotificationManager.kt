@@ -63,7 +63,7 @@ object NotificationManager {
         }
     }
 
-    fun constructChannel(ctx: Context) {
+    private fun constructChannel(ctx: Context) {
         with(NotificationManagerCompat.from(ctx)) {
 
             if(getNotificationChannel(channel_id) == null) {
