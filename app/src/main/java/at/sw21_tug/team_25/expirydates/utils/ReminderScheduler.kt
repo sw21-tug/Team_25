@@ -11,6 +11,8 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
 
+data class NotificationTimeSettings(val dayOffset: Int, val hour: Int, val minutes: Int)
+
 object ReminderScheduler {
 
     var work_tag = "expiry_reminders_queue"
@@ -18,6 +20,11 @@ object ReminderScheduler {
 
     suspend fun ensureNextReminderScheduled(ctx: Context) {
         val db = ExpItemDatabase.getDatabase(ctx).expItemDao()
+        val settings = NotificationTimeSettings(
+            GlobalSettings.getNotificationDayOffset(ctx),
+            GlobalSettings.getNotificationHour(ctx),
+            GlobalSettings.getNotificationMinutes(ctx)
+        )
 
         val expiredItems = db.getNextExpiringItems()
 
@@ -26,7 +33,7 @@ object ReminderScheduler {
             return
         }
 
-        val workRequest = createWorkerRequest(LocalDateTime.now(), expiredItems)
+        val workRequest = createWorkerRequest(LocalDateTime.now(), expiredItems, settings)
 
         WorkManager.getInstance(ctx)
             .enqueueUniqueWork(unique_work_tag, ExistingWorkPolicy.REPLACE, workRequest)
@@ -34,8 +41,9 @@ object ReminderScheduler {
 
     @VisibleForTesting
     fun createWorkerRequest(
-        currentDateTime: LocalDateTime,
-        items: List<ExpItem>
+            currentDateTime: LocalDateTime,
+            items: List<ExpItem>,
+            settings: NotificationTimeSettings
     ): OneTimeWorkRequest {
         val ids = items.map { it.id }
         val names = items.map { it.name }
@@ -46,7 +54,7 @@ object ReminderScheduler {
             .putStringArray("item_names", names.toTypedArray())
             .build()
 
-        val timeDelay = calculateNotificationDelayTimeInMillis(currentDateTime, items[0].date)
+        val timeDelay = calculateNotificationDelayTimeInMillis(currentDateTime, items[0].date, settings)
 
         return OneTimeWorkRequestBuilder<Reminder>()
             .setInputData(data)
@@ -57,13 +65,14 @@ object ReminderScheduler {
     @VisibleForTesting
     fun calculateNotificationDelayTimeInMillis(
         currentDateTime: LocalDateTime,
-        dueDate: String
+        dueDate: String,
+        settings: NotificationTimeSettings
     ): Long {
         // "yyyy-MM-dd" -> dueDate
-        var reminderDateTime =
-            LocalDate.parse(dueDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay()
-        reminderDateTime = reminderDateTime.minusDays(1)
-        reminderDateTime = reminderDateTime.withHour(9)
+        var reminderDateTime = LocalDate.parse(dueDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay()
+        reminderDateTime = reminderDateTime.minusDays(settings.dayOffset.toLong())
+        reminderDateTime = reminderDateTime.withHour(settings.hour)
+        reminderDateTime = reminderDateTime.withMinute(settings.minutes)
 
         return reminderDateTime.toInstant(ZoneOffset.UTC)
             .toEpochMilli() - currentDateTime.toInstant(ZoneOffset.UTC).toEpochMilli()
