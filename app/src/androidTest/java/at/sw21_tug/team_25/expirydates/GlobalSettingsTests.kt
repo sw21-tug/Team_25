@@ -26,4 +26,32 @@ class GlobalSettingsTests {
 
     }
 
+    @Test
+    fun canGetAndSetNotificationHourTest() {
+        GlobalSettings.setNotificationHour(mActivityTestRule.activity, 10)
+        var hour = GlobalSettings.getNotificationHour(mActivityTestRule.activity)
+
+        Assert.assertEquals(10, hour)
+
+        GlobalSettings.setNotificationHour(mActivityTestRule.activity, 4)
+        hour = GlobalSettings.getNotificationHour(mActivityTestRule.activity)
+
+        Assert.assertEquals(4, hour)
+
+    }
+
+    @Test
+    fun canGetAndSetNotificationMinutesTest() {
+        GlobalSettings.setNotificationMinutes(mActivityTestRule.activity, 35)
+        var minutes = GlobalSettings.getNotificationMinutes(mActivityTestRule.activity)
+
+        Assert.assertEquals(35, minutes)
+
+        GlobalSettings.setNotificationMinutes(mActivityTestRule.activity, 45)
+        minutes = GlobalSettings.getNotificationMinutes(mActivityTestRule.activity)
+
+        Assert.assertEquals(45, minutes)
+
+    }
+
 }

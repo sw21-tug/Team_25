@@ -18,4 +18,6 @@
     <string name="maps_api_key" translatable="false">AIzaSyCjufUCy1GthewZAl_YLQOAJ4Vza_TkbMs</string>
     <string name="preference_file_key" translatable="false">ExpiryDatesPreferences</string>
     <string name="notification_day_offset_key" translatable="false">ExpiryDatesPreferencesNotificationDayOffset</string>
+    <string name="notification_hour_key" translatable="false">ExpiryDatesPreferencesNotificationHour</string>
+    <string name="notification_minutes_key" translatable="false">ExpiryDatesPreferencesNotificationMinutes</string>
 </resources>
