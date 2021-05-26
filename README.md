@@ -40,5 +40,9 @@
 |EXPDAT-004   | Notification of upcoming expiry date | -  | Stefan  | Nico  |
 |EXPDAT-025   | Hotfix dissmis action of delete button runs in main thread | -  | Stefan  | -  |
 |EXPDAT-020   | app icon | -  | Christopher  | Benjamin G  |
+|EXPDAT-012/001   | api request | -  | Stefan  | Esther  |
+|EXPDAT-012/002   | map display | -  | Benjamin G   | Benjamin W  |
+|EXPDAT-013   | share product | -  | Stefan  | Florian  |
+|EXPDAT-024   | edit saved product | -  | Nico  | Florian  |
 
 
