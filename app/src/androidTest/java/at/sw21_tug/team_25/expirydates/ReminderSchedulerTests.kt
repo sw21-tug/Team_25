@@ -1,6 +1,7 @@
 package at.sw21_tug.team_25.expirydates
 
 import at.sw21_tug.team_25.expirydates.data.ExpItem
+import at.sw21_tug.team_25.expirydates.utils.NotificationTimeSettings
 import at.sw21_tug.team_25.expirydates.utils.ReminderScheduler
 import org.junit.Assert
 import org.junit.Test
@@ -23,16 +24,17 @@ class ReminderSchedulerTests {
         val item2 = ExpItem("Item2", "2021-04-30")
 
         val items = listOf(item1, item2)
+        val settings = NotificationTimeSettings(2, 7,15)
 
-        val req = ReminderScheduler.createWorkerRequest(currentDate, items)
+        val req = ReminderScheduler.createWorkerRequest(currentDate, items, settings)
 
         Assert.assertTrue(req.tags.contains(ReminderScheduler.work_tag))
 
         val ids = req.workSpec.input.getIntArray("item_ids")
         Assert.assertArrayEquals(ids, items.map { it.id }.toIntArray())
 
-        //val expectedReminderDate = LocalDateTime.parse("2021-04-29T09:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-        val expectedDelay: Long = 427470 * 1000
+        //val expectedReminderDate = LocalDateTime.parse("2021-04-28T07:15:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        val expectedDelay: Long = (427470 - 26*3600 + 15*60) * 1000
         val timeDelay = req.workSpec.initialDelay
 
         Assert.assertEquals(expectedDelay, timeDelay)
