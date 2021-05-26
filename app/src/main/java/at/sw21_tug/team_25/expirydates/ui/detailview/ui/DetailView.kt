@@ -52,6 +52,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
             val name = popupView.findViewById<TextView>(R.id.product_name)
             val nameEdit = popupView.findViewById<EditText>(R.id.product_name_edit)
             val closePopUpButton = popupView.findViewById<Button>(R.id.closePopUp)
+            val popupBackgroundButton = popupView.findViewById<ImageButton>(R.id.popupBackgroundButton)
             val deleteItemButton = popupView.findViewById<Button>(R.id.deleteItem)
             val dateButton = popupView.findViewById<Button>(R.id.exp_date)
             val editButton = popupView.findViewById<Button>(R.id.edit)
@@ -72,6 +73,14 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
             }
             // set on-click listener
             closePopUpButton.setOnClickListener {
+                if (!is_editable)
+                    popupWindow.dismiss()
+                else {
+                    cancel(editButton, closePopUpButton, activity, nameEdit, name)
+                }
+            }
+            // set on-click listener
+            popupBackgroundButton.setOnClickListener {
                 if (!is_editable)
                     popupWindow.dismiss()
                 else {
