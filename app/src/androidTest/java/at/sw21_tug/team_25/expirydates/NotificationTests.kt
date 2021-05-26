@@ -9,7 +9,6 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.By
@@ -18,7 +17,6 @@ import androidx.test.uiautomator.UiObject2
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.utils.NotificationManager
-import com.android.dx.command.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import org.junit.Assert.assertTrue
@@ -47,7 +45,11 @@ class NotificationTests {
         Thread.sleep(500)
         clearAllNotifications()
         Thread.sleep(500)
-        NotificationManager.displayNotification("Hello", "Hello World", ApplicationProvider.getApplicationContext())
+        NotificationManager.displayNotification(
+            "Hello",
+            "Hello World",
+            ApplicationProvider.getApplicationContext()
+        )
         Thread.sleep(2000)
         device.openNotification()
         Thread.sleep(500)
@@ -102,14 +104,14 @@ class NotificationTests {
 
         Espresso.onView(ViewMatchers.withId(R.id.detail_view_popup))
             .inRoot(RootMatchers.isPlatformPopup()).check(
-            (ViewAssertions.matches(
-                ViewMatchers.isDisplayed()
-            ))
-        )
+                (ViewAssertions.matches(
+                    ViewMatchers.isDisplayed()
+                ))
+            )
         Espresso.onView(ViewMatchers.withId(R.id.product_name))
             .inRoot(RootMatchers.isPlatformPopup()).check(
-            ViewAssertions.matches(ViewMatchers.withText(name))
-        )
+                ViewAssertions.matches(ViewMatchers.withText(name))
+            )
         Espresso.onView(ViewMatchers.withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
             .check(
                 ViewAssertions.matches(

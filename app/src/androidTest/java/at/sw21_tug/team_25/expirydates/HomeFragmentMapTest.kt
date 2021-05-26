@@ -23,7 +23,7 @@ class HomeFragmentMapTest {
 
     @Rule
     @JvmField
-    var mGrantPermissionRule =
+    var mGrantPermissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(
             "android.permission.ACCESS_FINE_LOCATION"
         )

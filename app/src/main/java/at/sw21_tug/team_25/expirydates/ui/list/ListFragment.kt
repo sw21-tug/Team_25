@@ -57,21 +57,23 @@ class ListFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         listViewModel =
-                ViewModelProvider(this).get(ListViewModel::class.java)
+            ViewModelProvider(this).get(ListViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_list, container, false)
 
         val itemsRecyclerView = root.findViewById<RecyclerView>(R.id.items_rv)
         itemsRecyclerView.layoutManager = LinearLayoutManager((activity as MainActivity))
 
-        listViewModel.expItems = ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItems()
+        listViewModel.expItems =
+            ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItems()
         listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                itemsRecyclerView.adapter = ExpItemRecyclerViewAdapter((this.activity as FragmentActivity), it)
+                itemsRecyclerView.adapter =
+                    ExpItemRecyclerViewAdapter((this.activity as FragmentActivity), it)
             }
         })
         return root

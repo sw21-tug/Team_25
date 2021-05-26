@@ -40,83 +40,93 @@ class LanguageUITest {
         Locale.setDefault(Locale("en)"))
 
         val bottomNavigationItemView = onView(
-                allOf(
-                        withId(R.id.navigation_add), withContentDescription("Add"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.nav_view),
-                                        0
-                                ),
-                                1
-                        ),
-                        isDisplayed()
-                )
+            allOf(
+                withId(R.id.navigation_add), withContentDescription("Add"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_view),
+                        0
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
         )
         bottomNavigationItemView.perform(click())
 
         val overflowMenuButton = onView(
-                allOf(
-                        withContentDescription("More options"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.action_bar),
-                                        1
-                                ),
-                                0
-                        ),
-                        isDisplayed()
-                )
+            allOf(
+                withContentDescription("More options"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.action_bar),
+                        1
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
         )
         overflowMenuButton.perform(click())
 
         val materialTextView = onView(
-                allOf(
-                        withId(R.id.title), withText("RU"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.content),
-                                        0
-                                ),
-                                0
-                        ),
-                        isDisplayed()
-                )
+            allOf(
+                withId(R.id.title), withText("RU"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.content),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
         )
         materialTextView.perform(click())
 
         // TODO: should show russian
         val button = onView(
-                allOf(
-                        withId(R.id.button), withText("Сохранить Дату"),
-                        withParent(withParent(withId(R.id.nav_host_fragment))),
-                        isDisplayed()
-                )
+            allOf(
+                withId(R.id.button), withText("Сохранить Дату"),
+                withParent(withParent(withId(R.id.nav_host_fragment))),
+                isDisplayed()
+            )
         )
         button.check(matches(isDisplayed()))
 
         val overflowMenuButton2 = onView(
-                allOf(withContentDescription("More options"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.action_bar),
-                                        1),
-                                0),
-                        isDisplayed()))
+            allOf(
+                withContentDescription("More options"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.action_bar),
+                        1
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
         overflowMenuButton2.perform(click())
 
         val materialTextView2 = onView(
-                allOf(withId(R.id.title), withText("EN"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()))
+            allOf(
+                withId(R.id.title), withText("EN"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.content),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
         materialTextView2.perform(click())
     }
 
     private fun childAtPosition(
-            parentMatcher: Matcher<View>, position: Int
+        parentMatcher: Matcher<View>, position: Int
     ): Matcher<View> {
 
         return object : TypeSafeMatcher<View>() {

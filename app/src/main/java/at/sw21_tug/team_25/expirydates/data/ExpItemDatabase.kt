@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [ExpItem::class], version = 2, exportSchema = false)
-public abstract class ExpItemDatabase: RoomDatabase() {
+abstract class ExpItemDatabase : RoomDatabase() {
 
     abstract fun expItemDao(): ExpItemDao
 
@@ -16,7 +16,7 @@ public abstract class ExpItemDatabase: RoomDatabase() {
 
         fun getDatabase(context: Context): ExpItemDatabase {
             val tempInstance = this.INSTANCE
-            if(tempInstance != null) {
+            if (tempInstance != null) {
                 return tempInstance
             }
             synchronized(this) {

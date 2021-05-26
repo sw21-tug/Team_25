@@ -26,6 +26,6 @@ interface ExpItemDao {
     @Query("DELETE FROM items WHERE id = :itemId")
     suspend fun deleteItemById(itemId: Int)
 
-    @Update()
+    @Update
     suspend fun updateItem(item: ExpItem)
 }

@@ -17,7 +17,6 @@ import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.utils.FoodSharingAPIClient
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -30,7 +29,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mMap: GoogleMap
     private lateinit var locationManager: LocationManager
-    private val REQUEST_LOCATION = 1
+    private val requestLocation = 1
     private lateinit var mapFragment: SupportMapFragment
     private lateinit var foodSharingApiClient: FoodSharingAPIClient
 
@@ -75,17 +74,17 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
+            ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
-        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION)
+        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), requestLocation)
 
         return root
     }
@@ -93,7 +92,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        this.locationManager = (activity as MainActivity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        this.locationManager =
+            (activity as MainActivity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val myLatitude: Double
         val myLongitude: Double
         val location = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
@@ -101,7 +101,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             myLatitude = 47.05875826931372
             myLongitude = 15.459148560238393
         } else {
-            val locationGps = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) as Location
+            val locationGps =
+                this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) as Location
             myLatitude = locationGps.latitude
             myLongitude = locationGps.longitude
         }
@@ -109,13 +110,21 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         mMap.apply {
             GlobalScope.async {
                 this@HomeFragment.foodSharingApiClient = FoodSharingAPIClient()
-                val foodSharingPoints = this@HomeFragment.foodSharingApiClient.getNearbyFoodSharePoints(myLatitude, myLongitude)
-                for(foodSharingPoint in foodSharingPoints) {
-                    val foodSharingPointLocation = LatLng(foodSharingPoint.lat, foodSharingPoint.lon)
+                val foodSharingPoints =
+                    this@HomeFragment.foodSharingApiClient.getNearbyFoodSharePoints(
+                        myLatitude,
+                        myLongitude
+                    )
+                for (foodSharingPoint in foodSharingPoints) {
+                    val foodSharingPointLocation =
+                        LatLng(foodSharingPoint.lat, foodSharingPoint.lon)
                     (activity as MainActivity).runOnUiThread {
                         this@HomeFragment.mMap.addMarker(
-                            MarkerOptions().position(foodSharingPointLocation).title(foodSharingPoint.name).icon(
-                                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)))
+                            MarkerOptions().position(foodSharingPointLocation)
+                                .title(foodSharingPoint.name).icon(
+                                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)
+                            )
+                        )
                     }
                 }
             }
@@ -127,10 +136,12 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
-                                            grantResults: IntArray) {
-        if(requestCode == this.REQUEST_LOCATION) {
-            if (grantResults.isNotEmpty() && grantResults[0].equals(PackageManager.PERMISSION_GRANTED)) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == this.requestLocation) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mapFragment.getMapAsync(this)
             }
         }

@@ -34,7 +34,7 @@ class FoodSharingApiClientTests {
         val server = MockWebServer()
 
         server.enqueue(
-                MockResponse().setBody("{}").setHeader("Set-Cookie", "$dummyCsrfTokenCookie; Path=/")
+            MockResponse().setBody("{}").setHeader("Set-Cookie", "$dummyCsrfTokenCookie; Path=/")
         )
 
         val apiClient = FoodSharingAPIClient(server.url("/api").toString())
@@ -49,7 +49,8 @@ class FoodSharingApiClientTests {
         Assert.assertEquals(reqData.getString("password"), FoodSharingAPIClient.PASSWORD)
 
         server.enqueue(
-                MockResponse().setBody("""
+            MockResponse().setBody(
+                """
 [
    {
       "id":1773,
@@ -78,7 +79,9 @@ class FoodSharingApiClientTests {
       "picture":"picture/5ee4af2ea0b81.jpg"
    }
 ]
-        """.trimMargin()))
+        """.trimMargin()
+            )
+        )
 
         val result = apiClient.getNearbyFoodSharePoints(47.070713, 15.439504)
 
@@ -91,7 +94,10 @@ class FoodSharingApiClientTests {
         Assert.assertNotNull(request1)
 
         val usedPath = request2!!.path.toString()
-        Assert.assertEquals("/api/foodSharePoints/nearby?lat=47.070713&lon=15.439504&distance=20", usedPath)
+        Assert.assertEquals(
+            "/api/foodSharePoints/nearby?lat=47.070713&lon=15.439504&distance=20",
+            usedPath
+        )
 
         Assert.assertEquals(dummyCsrfTokenCookie, request2.getHeader("Cookie"))
 

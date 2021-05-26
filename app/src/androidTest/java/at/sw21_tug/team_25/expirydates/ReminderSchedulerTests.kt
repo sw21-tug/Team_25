@@ -1,6 +1,5 @@
 package at.sw21_tug.team_25.expirydates
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.utils.ReminderScheduler
 import org.junit.Assert
@@ -12,12 +11,12 @@ import java.time.format.DateTimeFormatter
 
 @RunWith(MockitoJUnitRunner::class)
 class ReminderSchedulerTests {
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
 
     @Test
     fun generateScheduledWorkTest() {
-        val currentDate = LocalDateTime.parse("2021-04-24T10:15:30", DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        val currentDate =
+            LocalDateTime.parse("2021-04-24T10:15:30", DateTimeFormatter.ISO_LOCAL_DATE_TIME)
 
 
         val item1 = ExpItem("Item1", "2021-04-30")

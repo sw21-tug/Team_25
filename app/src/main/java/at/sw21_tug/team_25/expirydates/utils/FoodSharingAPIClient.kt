@@ -39,9 +39,9 @@ class FoodSharingAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
         val body = requestData.toString().toRequestBody(jsonMediaType)
 
         val req = Request.Builder()
-                .post(body)
-                .url(String.format("%s/user/login", baseUrl))
-                .build()
+            .post(body)
+            .url(String.format("%s/user/login", baseUrl))
+            .build()
 
         val resp = client.newCall(req).execute()
         if (!resp.isSuccessful) {
@@ -50,13 +50,23 @@ class FoodSharingAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
     }
 
 
-    fun getNearbyFoodSharePoints(lat: Double, lon: Double, distance: String = "20"): List<FoodSharePoint> {
+    fun getNearbyFoodSharePoints(
+        lat: Double,
+        lon: Double,
+        distance: String = "20"
+    ): List<FoodSharePoint> {
         val result = mutableListOf<FoodSharePoint>()
 
         val req = Request.Builder()
-                .url(
-                        String.format("%s/foodSharePoints/nearby?lat=%s&lon=%s&distance=%s", baseUrl, lat, lon, distance)
-                ).build()
+            .url(
+                String.format(
+                    "%s/foodSharePoints/nearby?lat=%s&lon=%s&distance=%s",
+                    baseUrl,
+                    lat,
+                    lon,
+                    distance
+                )
+            ).build()
 
         val resp = client.newCall(req).execute()
 

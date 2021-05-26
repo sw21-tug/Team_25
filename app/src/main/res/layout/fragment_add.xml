@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.add.AddFragment"
-    android:id = "@+id/linearLayout">
+    tools:context=".ui.add.AddFragment">
 
 
     <DatePicker

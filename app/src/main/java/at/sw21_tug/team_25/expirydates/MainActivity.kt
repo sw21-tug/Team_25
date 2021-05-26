@@ -1,23 +1,19 @@
 package at.sw21_tug.team_25.expirydates
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.ui.detailview.ui.DetailView
 import at.sw21_tug.team_25.expirydates.utils.NotificationManager
 import at.sw21_tug.team_25.expirydates.utils.ReminderScheduler
-import at.sw21_tug.team_25.expirydates.misc.Util
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -27,8 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var navView: BottomNavigationView
     lateinit var updateLayoutList: ArrayList<Int>
-    lateinit var navMenu: Menu
-    private val REQUEST_LOCATION = 1
+    private lateinit var navMenu: Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,22 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun requestLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this.applicationContext,
-                Manifest.permission.ACCESS_FINE_LOCATION) != // or look it up Int.equals...
-            PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION)
-            } else {
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION)
-            }
-        }
-    }
-
-    fun refreshCurrentFragment(){
+    fun refreshCurrentFragment() {
         val id = navController.currentDestination?.id
 
         val home = navMenu.findItem(R.id.navigation_home)
@@ -106,15 +86,18 @@ class MainActivity : AppCompatActivity() {
         }
         updateTitle()
 
-        navController.popBackStack(id!!,true)
+        navController.popBackStack(id!!, true)
         navController.navigate(id)
     }
 
     fun updateTitle() {
         when (navController.currentDestination?.id) {
-            R.id.navigation_add -> navController.currentDestination?.label = getString(R.string.title_add)
-            R.id.navigation_home -> navController.currentDestination?.label = getString(R.string.title_home)
-            R.id.navigation_list -> navController.currentDestination?.label = getString(R.string.title_list)
+            R.id.navigation_add -> navController.currentDestination?.label =
+                getString(R.string.title_add)
+            R.id.navigation_home -> navController.currentDestination?.label =
+                getString(R.string.title_home)
+            R.id.navigation_list -> navController.currentDestination?.label =
+                getString(R.string.title_list)
         }
     }
 

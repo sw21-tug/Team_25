@@ -10,7 +10,10 @@ import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.ui.detailview.ui.DetailView
 
-class ExpItemRecyclerViewAdapter(private val activity: FragmentActivity, private val expItems: List<ExpItem>):
+class ExpItemRecyclerViewAdapter(
+    private val activity: FragmentActivity,
+    private val expItems: List<ExpItem>
+) :
     RecyclerView.Adapter<ExpItemRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -28,7 +31,7 @@ class ExpItemRecyclerViewAdapter(private val activity: FragmentActivity, private
         val expItemText = expItem.name.capitalize() + "  " + expItem.date
         holder.textView.text = expItemText
         holder.textView.setOnClickListener {
-            DetailView.openDetailView(activity , expItem)
+            DetailView.openDetailView(activity, expItem)
         }
     }
 

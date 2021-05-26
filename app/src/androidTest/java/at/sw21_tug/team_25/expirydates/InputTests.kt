@@ -5,7 +5,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
-import at.sw21_tug.team_25.expirydates.data.ExpItemRepository
 import at.sw21_tug.team_25.expirydates.ui.add.AddViewModel
 import at.sw21_tug.team_25.expirydates.ui.errorhandling.ErrorCode
 import junit.framework.TestCase
@@ -31,24 +30,20 @@ class ExampleInstrumentedTest {
 }
 
 @RunWith(AndroidJUnit4::class)
-class EXPDAT_002_test_01  : TestCase() {
+class InputForItemTest : TestCase() {
     private lateinit var viewModel: AddViewModel
     private var today: Long = Calendar.getInstance().timeInMillis
 
     private lateinit var expItemDao: ExpItemDao
     private lateinit var db: ExpItemDatabase
-    private lateinit var repository: ExpItemRepository
     private lateinit var context: Context
 
     @Before
     public override fun setUp() {
         context = InstrumentationRegistry.getInstrumentation().targetContext
-        //context = ApplicationProvider.getApplicationContext<Context>()
         viewModel = AddViewModel()
         db = ExpItemDatabase.getDatabase(context)
-        //Room.databaseBuilder(context, ExpItemDatabase::class.java, "expitem-database").build()
         expItemDao = db.expItemDao()
-        repository = ExpItemRepository(expItemDao)
     }
 
     @Test
@@ -69,8 +64,12 @@ class EXPDAT_002_test_01  : TestCase() {
 
     @Test
     fun testMax() {
-        val success = viewModel.saveValues("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", today, expItemDao)
+        val success = viewModel.saveValues(
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+                    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            today,
+            expItemDao
+        )
         assertEquals(success, ErrorCode.INPUT_ERROR)
         assertEquals(viewModel.text, "")
         assertEquals(viewModel.date, 0)

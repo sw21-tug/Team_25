@@ -46,10 +46,10 @@ class ReminderWorkerTest {
         val data = Data.Builder()
             .putIntArray("item_ids", ids.toIntArray())
             .putStringArray("item_names", names.toTypedArray())
-            .build();
+            .build()
 
         val worker = TestListenableWorkerBuilder<Reminder>(
-                context = context
+            context = context
         ).setInputData(data).build()
 
         runBlocking {
@@ -57,7 +57,7 @@ class ReminderWorkerTest {
             Thread.sleep(500)
             device.openNotification()
             Thread.sleep(500)
-            val clearButton = NotificationTests.getClearButton();
+            val clearButton = NotificationTests.getClearButton()
 
             Assert.assertTrue(clearButton != null)
             clearButton?.click()
