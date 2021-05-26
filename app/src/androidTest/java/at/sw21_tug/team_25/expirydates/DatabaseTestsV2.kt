@@ -4,9 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.*
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
-import at.sw21_tug.team_25.expirydates.data.ExpItem
-import at.sw21_tug.team_25.expirydates.data.ExpItemDao
-import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.data.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asExecutor
@@ -173,6 +171,74 @@ class DatabaseTestsV2 {
 
         checkLiveData(items) {
             Assert.assertEquals(0, it.size)
+        }
+    }
+
+    @Test
+    fun readAllItemsSortedDateASC(): Unit = testScope.runBlockingTest {
+        val sampleItem = ExpItem("Tomato", "2021-01-01 01:01:01")
+        sampleItem.id = 123
+        expItemDao.insertItem(sampleItem)
+
+        val sampleItem2 = ExpItem("Potato", "2020-01-01 01:01:01")
+        sampleItem2.id = 124
+        expItemDao.insertItem(sampleItem2)
+
+        val items = expItemDao.readAllItemsSorted(SortOrder.asc, SortBy.date)
+        checkLiveData(items) {
+            Assert.assertEquals(2, it.size)
+            Assert.assertEquals(it[0].id, 124)
+        }
+    }
+
+    @Test
+    fun readAllItemsSortedDateDESC(): Unit = testScope.runBlockingTest {
+        val sampleItem = ExpItem("Tomato", "2021-01-01 01:01:01")
+        sampleItem.id = 123
+        expItemDao.insertItem(sampleItem)
+
+        val sampleItem2 = ExpItem("Potato", "2020-01-01 01:01:01")
+        sampleItem2.id = 124
+        expItemDao.insertItem(sampleItem2)
+
+        val items = expItemDao.readAllItemsSorted(SortOrder.desc, SortBy.date)
+        checkLiveData(items) {
+            Assert.assertEquals(2, it.size)
+            Assert.assertEquals(it[1].id, 124)
+        }
+    }
+
+    @Test
+    fun readAllItemsSortedNameASC(): Unit = testScope.runBlockingTest {
+        val sampleItem = ExpItem("Tomato", "2021-01-01 01:01:01")
+        sampleItem.id = 123
+        expItemDao.insertItem(sampleItem)
+
+        val sampleItem2 = ExpItem("Potato", "2020-01-01 01:01:01")
+        sampleItem2.id = 124
+        expItemDao.insertItem(sampleItem2)
+
+        val items = expItemDao.readAllItemsSorted(SortOrder.asc, SortBy.name)
+        checkLiveData(items) {
+            Assert.assertEquals(2, it.size)
+            Assert.assertEquals(it[0].id, 124)
+        }
+    }
+
+    @Test
+    fun readAllItemsSortedNameDESC(): Unit = testScope.runBlockingTest {
+        val sampleItem = ExpItem("Tomato", "2021-01-01 01:01:01")
+        sampleItem.id = 123
+        expItemDao.insertItem(sampleItem)
+
+        val sampleItem2 = ExpItem("Potato", "2020-01-01 01:01:01")
+        sampleItem2.id = 124
+        expItemDao.insertItem(sampleItem2)
+
+        val items = expItemDao.readAllItemsSorted(SortOrder.desc, SortBy.name)
+        checkLiveData(items) {
+            Assert.assertEquals(2, it.size)
+            Assert.assertEquals(it[1].id, 124)
         }
     }
 }
