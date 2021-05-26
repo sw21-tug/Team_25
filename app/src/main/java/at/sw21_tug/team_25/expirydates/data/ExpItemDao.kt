@@ -3,6 +3,16 @@ package at.sw21_tug.team_25.expirydates.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
+object SortBy {
+    const val name: String = "name"
+    const val date: String = "date"
+}
+
+object SortOrder {
+    const val desc: Int = 0
+    const val asc: Int = 1
+}
+
 @Dao
 interface ExpItemDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -25,6 +35,15 @@ interface ExpItemDao {
 
     @Query("DELETE FROM items WHERE id = :itemId")
     suspend fun deleteItemById(itemId: Int)
+
+    @Query(
+        "SELECT * FROM items ORDER BY " +
+                "CASE WHEN :sort_by = 'name' AND :sort = 0 THEN name END DESC, " +
+                "CASE WHEN :sort_by = 'name' AND :sort = 1 THEN name END ASC, " +
+                "CASE WHEN :sort_by = 'date' AND :sort = 0 THEN date END DESC, " +
+                "CASE WHEN :sort_by = 'date' AND :sort = 1 THEN date END ASC"
+    )
+    fun readAllItemsSorted(sort: Int, sort_by: String): LiveData<List<ExpItem>>
 
     @Update
     suspend fun updateItem(item: ExpItem)
