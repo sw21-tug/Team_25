@@ -107,6 +107,7 @@
                 android:layout_gravity="start"
                 android:layout_marginHorizontal="15dp"
                 android:text="@string/close"
+                android:textColor="@color/green_app_darker"
                 tools:ignore="ButtonStyle" />
         </LinearLayout>
     </FrameLayout>
