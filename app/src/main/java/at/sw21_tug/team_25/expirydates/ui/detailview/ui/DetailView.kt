@@ -80,14 +80,13 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 else {
                     cancel(editButton, closePopUpButton, activity, nameEdit, name)
                 }
+                MainActivity.hideKeyboard(activity, popupView)
             }
             // set on-click listener
             popupBackgroundButton.setOnClickListener {
-                if (!is_editable)
-                    popupWindow.dismiss()
-                else {
-                    cancel(editButton, closePopUpButton, activity, nameEdit, name)
-                }
+                cancel(editButton, closePopUpButton, activity, nameEdit, name)
+                popupWindow.dismiss()
+                MainActivity.hideKeyboard(activity, popupView)
             }
 
             // set on-click listener
@@ -99,6 +98,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                         popupWindow.dismiss()
                     }
                 }
+                MainActivity.hideKeyboard(activity, popupView)
             }
 
             dateButton.setOnClickListener {
@@ -113,6 +113,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 datePicker.datePicker.minDate = Calendar.getInstance().timeInMillis
                 datePicker.datePicker.maxDate = Long.MAX_VALUE
                 datePicker.show()
+                MainActivity.hideKeyboard(activity, popupView)
             }
 
             editButton.setOnClickListener {
@@ -131,11 +132,9 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                     save(nameEdit.text.toString(), dateButton.text.toString(), activity)
                     cancel(editButton, closePopUpButton, activity, nameEdit, name)
 
-                    val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(popupView.applicationWindowToken, 0)
-
                     name.text = nameEdit.text.toString()
                 }
+                MainActivity.hideKeyboard(activity, popupView)
             }
 
 
@@ -155,9 +154,9 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
                 }, null)
                 (activity as MainActivity).startActivity(share)
+
+                MainActivity.hideKeyboard(activity, popupView)
             }
-
-
         }
 
         private fun save(productName: String, date: String, activity: Activity) {
