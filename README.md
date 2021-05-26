@@ -15,7 +15,7 @@
 | Scrum Master | Benedikt |
 | Developer |  Benjamin G |
 | Developer | Benjamin W |
-| Developer | v |
+| Developer | Christopher |
 | Developer | Esther |
 | Developer | Florian |
 | Developer | Matthias |
