@@ -121,11 +121,6 @@ class DetailViewTest {
             .check(matches(withText("2021-01-01 01:01:01")))
         onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         onView(withId(R.id.detail_view_popup)).check(doesNotExist())
-
-        //test popup background button
-        materialTextViewSalami.perform(click())
-        onView(withId(R.id.popupBackgroundButton)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
-        onView(withId(R.id.detail_view_popup)).check(doesNotExist())
     }
 
 
