@@ -49,9 +49,12 @@ object NotificationManager {
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
 
+        val color = ctx.getColor(R.color.green_app)
         val builder = Notification.Builder(ctx, channel_id)
             .setContentTitle(title)
             .setContentText(body)
+            .setColor(color)
+            .setColorized(true)
             .setSmallIcon(R.drawable.ic_home_black_24dp)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
