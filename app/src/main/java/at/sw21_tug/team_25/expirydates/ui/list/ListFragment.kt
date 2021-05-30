@@ -115,7 +115,7 @@ class ListFragment : Fragment() {
         this.itemsRecyclerView.layoutManager = LinearLayoutManager((activity as MainActivity))
 
         listViewModel.expItems =
-            ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItems()
+            ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItemsSorted(1, "date")
         listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 this.itemsRecyclerView.adapter =
