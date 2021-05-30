@@ -84,7 +84,7 @@ class LanguageUITest {
         )
         materialTextView.perform(click())
 
-        // TODO: should show russian
+        // Should show russian
         val button = onView(
             allOf(
                 withId(R.id.button), withText("Сохранить Дату"),

@@ -15,4 +15,8 @@
     <string name="cancel">отменить</string>
     <string name="save">спасти</string>
     <string name="placeholder">заполнитель</string>
+    <string name="name_asc">имя по возрастанию</string>
+    <string name="name_desc">имя по убыванию</string>
+    <string name="exp_asc">срок годности по возрастанию</string>
+    <string name="exp_desc">дата истечения срока по убыванию</string>
 </resources>

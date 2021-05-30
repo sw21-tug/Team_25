@@ -24,6 +24,6 @@
     <string name="name_desc">Name Descending</string>
     <string name="exp_asc">Expires First</string>
     <string name="exp_desc">Expires Last</string>
-    <string name="en">EN</string>
-    <string name="ru">RU</string>
+    <string name="en" translatable="false">EN</string>  <!-- Should be international -->
+    <string name="ru" translatable="false">RU</string>  <!-- Should be international -->
 </resources>
