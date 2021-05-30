@@ -7,17 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.ViewAssertion
-import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import androidx.test.rule.GrantPermissionRule
 import androidx.test.runner.AndroidJUnit4
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.ui.list.ExpItemRecyclerViewAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -67,7 +67,7 @@ class ListSortingTest {
         expItemDao.deleteAllItems()
         GlobalScope.async {
             expItemDao.insertItem(ExpItem("B", "2021-09-01 01:01:01"))
-            expItemDao.insertItem(ExpItem("A", "2021-09-02 01:01:01"))
+            expItemDao.insertItem(ExpItem("A", "2021-09-02 01:01:03"))
             expItemDao.insertItem(ExpItem("D", "2021-09-04 01:01:01"))
             expItemDao.insertItem(ExpItem("E", "2021-09-02 01:01:01"))
             expItemDao.insertItem(ExpItem("C", "2021-09-05 01:01:01"))
@@ -76,20 +76,184 @@ class ListSortingTest {
 
     @Test
     fun listSortingTest() {
-        val textView = onView(
+        val bottomNavigationItemView = onView(
             allOf(
-                withId(R.id.item_tv), childAtPosition(
+                withId(R.id.navigation_list), withContentDescription("List"),
+                childAtPosition(
                     childAtPosition(
-                        withId(R.id.items_rv),
+                        withId(R.id.nav_view),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        bottomNavigationItemView.perform(ViewActions.click())
+
+        // Make sure RecyclerView is displayed
+        onView(withId(R.id.items_rv))
+            .check(matches(isDisplayed()))
+
+
+        // Expect Items to be sorted expiry date ascending
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(0, "B"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(1, "E"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(2, "A"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(3, "D"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(4, "C"))
+
+        // Let's test Sorting: Name ascending
+        val actionMenuItemView = onView(
+            allOf(
+                withId(R.id.sort_by_name_menu),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.action_bar),
+                        1
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
+        )
+        actionMenuItemView.perform(ViewActions.click())
+
+        val materialTextView = onView(
+            allOf(
+                withId(R.id.title), withText("Name Ascending"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.content),
                         0
                     ),
                     0
                 ),
-                withParent(withParent(withId(R.id.items_rv))),
                 isDisplayed()
             )
         )
-        textView.check(matches(withText("B  2021-09-01")))
+        materialTextView.perform(ViewActions.click())
+
+        // Expect Items to be sorted by name ascending
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(0, "A"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(1, "B"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(2, "C"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(3, "D"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(4, "E"))
+
+        // Let's test Sorting: Name descending
+        val actionMenuItemView2 = onView(
+            allOf(
+                withId(R.id.sort_by_name_menu),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.action_bar),
+                        1
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
+        )
+        actionMenuItemView2.perform(ViewActions.click())
+
+        val materialTextView2 = onView(
+            allOf(
+                withId(R.id.title), withText("Name Descending"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.content),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        materialTextView2.perform(ViewActions.click())
+
+        // Expect Items to be sorted by name ascending
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(0, "E"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(1, "D"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(2, "C"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(3, "B"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(4, "A"))
+
+        // Let's test Sorting: Expires first
+        val actionMenuItemView3 = onView(
+            allOf(
+                withId(R.id.sortByDateMenu),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.action_bar),
+                        1
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        actionMenuItemView3.perform(ViewActions.click())
+
+        val materialTextView3 = onView(
+            allOf(
+                withId(R.id.title), withText("Expires First"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.content),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        materialTextView3.perform(ViewActions.click())
+
+        // Expect Items to be sorted expiry date ascending
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(0, "B"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(1, "E"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(2, "A"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(3, "D"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(4, "C"))
+
+        // Let's test Sorting: Expires last
+        val actionMenuItemView4 = onView(
+            allOf(
+                withId(R.id.sortByDateMenu),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.action_bar),
+                        1
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        actionMenuItemView4.perform(ViewActions.click())
+
+        val materialTextView4 = onView(
+            allOf(
+                withId(R.id.title), withText("Expires Last"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.content),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        materialTextView4.perform(ViewActions.click())
+
+        // Expect Items to be sorted expiry date ascending
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(0, "C"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(1, "D"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(2, "A"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(3, "E"))
+        onView(withId(R.id.items_rv)).check(RecyclerViewItemAtPositionAssertion(4, "B"))
     }
 
     private fun childAtPosition(
@@ -110,15 +274,17 @@ class ListSortingTest {
         }
     }
 
-    class RecyclerViewItemCountAssertion(private val expectedCount: Int) : ViewAssertion {
+    class RecyclerViewItemAtPositionAssertion(
+        private val expectedIndex: Int,
+        private val expectedName: String
+    ) : ViewAssertion {
         override fun check(view: View, noViewFoundException: NoMatchingViewException?) {
             if (noViewFoundException != null) {
                 throw noViewFoundException
             }
             val recyclerView = view as RecyclerView
-
-            val adapter = recyclerView.adapter
-            assertThat(adapter!!.itemCount, `is`(expectedCount))
+            val expItemAdapter = recyclerView.adapter as ExpItemRecyclerViewAdapter
+            assertThat(expItemAdapter.getExpItems()[expectedIndex].name, `is`(expectedName))
         }
     }
 }
