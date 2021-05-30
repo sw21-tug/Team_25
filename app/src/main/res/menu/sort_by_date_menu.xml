@@ -3,18 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/language_menu"
-        android:icon="@android:drawable/ic_menu_preferences"
+        android:id="@+id/sortByDateMenu"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title=""
         app:showAsAction="always">
         <menu>
+
             <item
-                android:id="@+id/language_en"
-                android:title="@string/en" />
+                android:id="@+id/sort_exp_asc"
+                android:title="@string/exp_asc"/>
+
             <item
-                android:id="@+id/language_ru"
-                android:title="@string/ru" />
+                android:id="@+id/sort_exp_desc"
+                android:title="@string/exp_desc"/>
+
         </menu>
+
     </item>
 
 </menu>
