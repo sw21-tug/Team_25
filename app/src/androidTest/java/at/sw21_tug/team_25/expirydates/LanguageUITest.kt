@@ -56,7 +56,7 @@ class LanguageUITest {
 
         val overflowMenuButton = onView(
             allOf(
-                withContentDescription("More options"),
+                withContentDescription("Language Settings"),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.action_bar),
@@ -96,7 +96,7 @@ class LanguageUITest {
 
         val overflowMenuButton2 = onView(
             allOf(
-                withContentDescription("More options"),
+                withContentDescription("Language Settings"),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.action_bar),
