@@ -232,8 +232,8 @@ class DetailViewTest {
 
         onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
 
-        assertKeyboardOpen(false)
         onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        assertKeyboardOpen(false)
 
         val currentDate = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
