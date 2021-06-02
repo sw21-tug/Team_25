@@ -28,4 +28,8 @@
     <string name="no_recipe_found">Извините, рецепта не найдено.</string>
     <string name="suggestion">предложение:</string>
     <string name="settings_string" translatable="false">настройки</string>
+    <string name="header_language_select">Выбор языка</string>
+    <string name="header_notification_interval">Интервал уведомления до даты истечения срока действия</string>
+    <string name="enter_days">Введите дни до уведомления</string>
+    <string name="select_time">Выберите время для получения уведомления</string>
 </resources>
