@@ -19,6 +19,7 @@
     <string name="name_desc">имя по убыванию</string>
     <string name="exp_asc">срок годности по возрастанию</string>
     <string name="exp_desc">дата истечения срока по убыванию</string>
+    <string name="show_recipe">показать рецепт</string>
     <string name="map_label">Ближайшие точки фудшеринга:</string>
     <string name="invalidInput">Недействительный ввод (должен содержать от 1 до 255 символов)</string>
     <string name="invalidDate">Недействительная дата (не должна быть прошедшей датой)</string>
