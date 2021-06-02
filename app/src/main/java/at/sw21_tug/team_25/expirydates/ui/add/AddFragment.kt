@@ -155,6 +155,8 @@ class AddFragment : Fragment() {
                 }
             }
             textView.text = ""
+
+            MainActivity.hideKeyboard(this.activity as MainActivity, root)
         }
         return root
     }

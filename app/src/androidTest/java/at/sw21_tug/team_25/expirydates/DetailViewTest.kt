@@ -1,8 +1,10 @@
 package at.sw21_tug.team_25.expirydates
 
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
@@ -121,6 +123,8 @@ class DetailViewTest {
             .check(matches(withText("2021-01-01 01:01:01")))
         onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         onView(withId(R.id.detail_view_popup)).check(doesNotExist())
+
+        assertKeyboardOpen(false)
     }
 
 
@@ -164,6 +168,8 @@ class DetailViewTest {
             .check(matches(withText("2021-01-02 02:02:02")))
         onView(withId(R.id.deleteItem)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         onView(withId(R.id.detail_view_popup)).check(doesNotExist())
+
+        assertKeyboardOpen(false)
 
         onView(withId(R.id.items_rv)).check(ListFragmentTest.RecyclerViewItemCountAssertion(2))
 
@@ -227,6 +233,7 @@ class DetailViewTest {
         onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
 
         onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        assertKeyboardOpen(false)
 
         val currentDate = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
@@ -306,5 +313,13 @@ class DetailViewTest {
                         && view == parent.getChildAt(position)
             }
         }
+    }
+
+    private fun assertKeyboardOpen(is_open: Boolean) {
+        val imm: InputMethodManager =
+            InstrumentationRegistry.getInstrumentation().targetContext.getSystemService(
+                Context.INPUT_METHOD_SERVICE
+            ) as InputMethodManager
+        Assert.assertEquals(imm.isAcceptingText, is_open)
     }
 }
