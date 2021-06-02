@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/detail_view_popup"
     android:layout_width="fill_parent"
@@ -66,7 +67,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="224dp"
+            android:layout_height="180dp"
             android:layout_gravity="bottom"
             android:orientation="vertical"
             android:padding="0dp">
@@ -90,25 +91,34 @@
                 android:backgroundTint="@color/blue"
                 android:text="@string/edit" />
 
-            <Button
-                android:id="@+id/share"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginHorizontal="15dp"
-                android:backgroundTint="#29971D"
-                android:text="@string/share"
-                tools:ignore="ButtonStyle" />
+                android:layout_gravity="bottom">
 
-            <Button
-                android:id="@+id/closePopUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginHorizontal="15dp"
-                android:text="@string/close"
-                android:textColor="@color/green_app_darker"
-                tools:ignore="ButtonStyle" />
+                <Button
+                    android:id="@+id/closePopUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginHorizontal="15dp"
+                    android:text="@string/close"
+                    android:textColor="@color/green_app_darker"
+                    tools:ignore="ButtonStyle" />
+
+                <ImageButton
+                    android:id="@+id/share"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:layout_marginHorizontal="15dp"
+                    android:backgroundTint="#4CAF50"
+                    android:scaleType="fitCenter"
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@drawable/ic_share" />
+
+            </FrameLayout>
+
         </LinearLayout>
     </FrameLayout>
 
