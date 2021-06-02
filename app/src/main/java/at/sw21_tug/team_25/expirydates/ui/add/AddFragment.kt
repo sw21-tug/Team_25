@@ -12,6 +12,7 @@ import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.ui.errorhandling.ErrorCode
+import at.sw21_tug.team_25.expirydates.ui.settings.SettingsView
 import at.sw21_tug.team_25.expirydates.utils.ReminderScheduler
 import at.sw21_tug.team_25.expirydates.utils.Util
 import at.sw21_tug.team_25.expirydates.utils.Util.Companion.hideKeyboard
@@ -31,27 +32,16 @@ class AddFragment : Fragment() {
 
     // add other menu items in language_choice_menu / choose different menu to show here
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.language_choice_menu, menu)
+        inflater.inflate(R.menu.settings, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
-            R.id.language_en -> {
-                Util.setLanguage("en", requireActivity())
-                Util.setLocale(requireActivity(), Locale("en"))
-
-                (this.activity as MainActivity).refreshCurrentFragment()
-            }
-
-            R.id.language_ru -> {
-                Util.setLanguage("ru", requireActivity())
-                Util.setLocale(requireActivity(), Locale("ru"))
-
-                (this.activity as MainActivity).refreshCurrentFragment()
+            R.id.settings_menu -> {
+                SettingsView.openSettingsView(this.activity as MainActivity)
             }
         }
-
-        (this.activity as MainActivity).requestUpdates(R.id.navigation_add)
         return false
     }
 

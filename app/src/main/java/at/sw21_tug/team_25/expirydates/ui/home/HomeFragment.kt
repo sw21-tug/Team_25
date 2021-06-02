@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
+import at.sw21_tug.team_25.expirydates.ui.settings.SettingsView
 import at.sw21_tug.team_25.expirydates.utils.FoodSharingAPIClient
 import at.sw21_tug.team_25.expirydates.utils.Util
 import com.google.android.gms.maps.*
@@ -41,7 +42,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     // add other menu items in language_choice_menu / choose different menu to show here
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.language_choice_menu, menu)
+        inflater.inflate(R.menu.settings, menu)
     }
 
     override fun onResume() {
@@ -53,23 +54,12 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
-            R.id.language_en -> {
-
-                Util.setLanguage("en", requireActivity())
-                Util.setLocale(requireActivity(), Locale("en"))
-
-                (this.activity as MainActivity).refreshCurrentFragment()
-            }
-
-            R.id.language_ru -> {
-                Util.setLanguage("ru", requireActivity())
-                Util.setLocale(requireActivity(), Locale("ru"))
-
-                (this.activity as MainActivity).refreshCurrentFragment()
+            R.id.settings_menu -> {
+                SettingsView.openSettingsView(this.activity as MainActivity)
             }
         }
-        (this.activity as MainActivity).requestUpdates(R.id.navigation_home)
         return false
     }
 
