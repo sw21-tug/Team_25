@@ -26,9 +26,10 @@
     <string name="exp_desc">Expires Last</string>
     <string name="en" translatable="false">EN</string>  <!-- Should be international -->
     <string name="ru" translatable="false">RU</string>  <!-- Should be international -->
-    <string name="language_settings" translatable="false">Language Settings</string>
-    <string name="show_recipe">Show Recipe</string>  <!-- Should be international -->
     <string name="language_settings" translatable="false">Language Settings</string>  <!-- Should be international -->
+    <string name="show_recipe">Show Recipe</string>  <!-- Should be international -->
+    <string name="loading">Loading</string>
+    <string name="no_recipe_found">Sorry, no recipe found.</string>
     <string name="map_label">Nearest foodsharing locations:</string>
     <string name="invalidInput">Invalid Input (Must be between 1 and 255 characters long)</string>
     <string name="invalidDate">Invalid Date (Must not be a past date)</string>

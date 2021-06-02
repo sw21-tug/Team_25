@@ -19,6 +19,7 @@ import at.sw21_tug.team_25.expirydates.utils.RecipeAPIClient
 import at.sw21_tug.team_25.expirydates.utils.RecipeInfo
 import at.sw21_tug.team_25.expirydates.utils.Util.Companion.hideKeyboard
 import at.sw21_tug.team_25.expirydates.utils.Util.Companion.showToast
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import java.time.LocalDate
@@ -87,20 +88,36 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
             }
 
             val updateRecipeSuggestion: (String) -> Unit = { itemName: String ->
+                activity.runOnUiThread {
+                    // Show loading screen
+                    recipeName.text = activity.getString(R.string.loading)
+                    recipeImage.visibility = View.GONE
+                    recipeImage.setImageResource(0)
+                    recipeButton.visibility = View.GONE
+                }
+
                 GlobalScope.async {
                     val api = RecipeAPIClient()
                     val recipeList = api.getRecipeForIngredient(itemName)
                     activity.runOnUiThread {
                         if (recipeList.isEmpty()) {
-                            recipeName.text = "No recipe found"
-                            recipeButton.visibility = View.GONE
+                            recipeName.text = activity.getString(R.string.no_recipe_found)
                         } else {
                             recipe = recipeList[0]
                             recipeName.text = recipe!!.title
+                            recipeButton.visibility = View.VISIBLE
                             recipeButton.setOnClickListener {
                                 val uri = Uri.parse(recipe!!.recipeURL)
                                 val intent = Intent(Intent.ACTION_VIEW, uri)
                                 startActivity(activity, intent, null)
+                            }
+                            if (recipe!!.imageURL != "") {
+                                recipeImage.visibility = View.VISIBLE
+                                Picasso.get()
+                                        .load(recipe!!.imageURL)
+                                        .resize(300, 300)
+                                        .centerCrop()
+                                        .into(recipeImage)
                             }
                         }
                     }

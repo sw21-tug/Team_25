@@ -23,4 +23,6 @@
     <string name="map_label">Ближайшие точки фудшеринга:</string>
     <string name="invalidInput">Недействительный ввод (должен содержать от 1 до 255 символов)</string>
     <string name="invalidDate">Недействительная дата (не должна быть прошедшей датой)</string>
+    <string name="loading">Загрузка</string>
+    <string name="no_recipe_found">Извините, рецепта не найдено.</string>
 </resources>
