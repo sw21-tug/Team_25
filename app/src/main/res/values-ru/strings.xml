@@ -19,4 +19,5 @@
     <string name="name_desc">имя по убыванию</string>
     <string name="exp_asc">срок годности по возрастанию</string>
     <string name="exp_desc">дата истечения срока по убыванию</string>
+    <string name="map_label">Ближайшие точки фудшеринга:</string>
 </resources>

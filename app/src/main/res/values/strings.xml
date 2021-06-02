@@ -27,4 +27,5 @@
     <string name="en" translatable="false">EN</string>  <!-- Should be international -->
     <string name="ru" translatable="false">RU</string>  <!-- Should be international -->
     <string name="language_settings" translatable="false">Language Settings</string>  <!-- Should be international -->
+    <string name="map_label">Nearest foodsharing locations:</string>
 </resources>
