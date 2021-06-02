@@ -20,24 +20,26 @@ class RecipeAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
 
     fun getRecipeForIngredient(ingredient: String, numItems: Int = 1): List<RecipeInfo> {
 
-        val ingredientEncoded = URLEncoder.encode(ingredient)
+        val ingredientEncoded = URLEncoder.encode(ingredient, "utf-8")
         val request = Request.Builder()
-                .url("${baseUrl}findByIngredients?ingredients=$ingredientEncoded&number=$numItems&ignorePantry=true&ranking=1&apiKey=$API_KEY")
-                .get()
-                .build()
+            .url("${baseUrl}findByIngredients?ingredients=$ingredientEncoded&number=$numItems&ignorePantry=true&ranking=1&apiKey=$API_KEY")
+            .get()
+            .build()
 
         val resp = client.newCall(request).execute()
+        val result = mutableListOf<RecipeInfo>()
 
         if (!resp.isSuccessful) {
-            throw Exception("unable to getRecipeForIngredient")
+            return result
+//            throw Exception("unable to getRecipeForIngredient")
         }
 
         if (resp.body == null) {
-            throw Exception("Server responded without body")
+            return result
+//            throw Exception("Server responded without body")
         }
 
         val responseBody = JSONArray(resp.body!!.string())
-        val result = mutableListOf<RecipeInfo>()
 
         for (i in 0 until responseBody.length()) {
             val item = responseBody.getJSONObject(i)
@@ -55,18 +57,20 @@ class RecipeAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
 
     fun getRecipeUrl(id: Int): String {
         val request = Request.Builder()
-                .url("${baseUrl}$id/information?apiKey=$API_KEY")
-                .get()
-                .build()
+            .url("${baseUrl}$id/information?apiKey=$API_KEY")
+            .get()
+            .build()
 
         val resp = client.newCall(request).execute()
 
         if (!resp.isSuccessful) {
-            throw Exception("unable to getRecipeUrl")
+            return ""
+//            throw Exception("unable to getRecipeUrl")
         }
 
         if (resp.body == null) {
-            throw Exception("Server responded without body")
+            return ""
+//            throw Exception("Server responded without body")
         }
 
         val responseBody = JSONObject(resp.body!!.string())
