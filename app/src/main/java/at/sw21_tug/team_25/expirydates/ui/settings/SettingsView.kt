@@ -46,6 +46,9 @@ class SettingsView(private val view: View) : TimePickerDialog.OnTimeSetListener 
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
             }
 
+            popupWindow.elevation = 10.0F
+            popupWindow.isFocusable = true
+
             val dayEdit = popupView.findViewById<EditText>(R.id.day_selection)
             val closeSettingsButton = popupView.findViewById<Button>(R.id.closeSettings)
             val saveSettingsButton = popupView.findViewById<Button>(R.id.saveSettings)
@@ -70,13 +73,15 @@ class SettingsView(private val view: View) : TimePickerDialog.OnTimeSetListener 
             enLanguageButton.setOnClickListener {
                 Util.setLanguage("en", activity)
                 Util.setLocale(activity, Locale("en"))
-                (activity as MainActivity).refreshCurrentFragment()
+                activity.refreshCurrentFragment()
+                popupWindow.dismiss()
             }
 
             ruLanguageButton.setOnClickListener {
                 Util.setLanguage("ru", activity)
                 Util.setLocale(activity, Locale("ru"))
-                (activity as MainActivity).refreshCurrentFragment()
+                activity.refreshCurrentFragment()
+                popupWindow.dismiss()
             }
 
             saveSettingsButton.setOnClickListener {
@@ -96,25 +101,6 @@ class SettingsView(private val view: View) : TimePickerDialog.OnTimeSetListener 
             closeSettingsButton.setOnClickListener {
                 popupWindow.dismiss()
             }
-
-            //(activity as MainActivity).requestUpdates(R.id.navigation_list)
-
-            dayEdit.editableText.clear()
-            //nameEdit.editableText.append("test")
-
-            popupWindow.elevation = 10.0F
-            popupWindow.isFocusable = true
-            // set on-click listener
-
-            /*            nameEdit.setOnClickListener {
-+
-+                    nameEdit.editableText.append(activity.getString(R.string.save))
-+            }*/
-
-        }
-
-        private fun save(productName: String, date: String, activity: Activity) {
-
         }
 
     }
