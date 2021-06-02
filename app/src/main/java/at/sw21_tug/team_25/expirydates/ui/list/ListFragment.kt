@@ -13,6 +13,7 @@ import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.utils.Util
 import at.sw21_tug.team_25.expirydates.utils.Util.Companion.hideKeyboard
+import at.sw21_tug.team_25.expirydates.ui.settings.SettingsView
 import java.util.*
 
 class ListFragment : Fragment() {
@@ -29,6 +30,7 @@ class ListFragment : Fragment() {
         inflater.inflate(R.menu.language_choice_menu, menu)
         inflater.inflate(R.menu.sort_by_name_menu, menu)
         inflater.inflate(R.menu.sort_by_date_menu, menu)
+        inflater.inflate(R.menu.settings, menu)
     }
 
 
@@ -42,6 +44,14 @@ class ListFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.settings_menu -> {
+                SettingsView.openSettingsView(this.activity as MainActivity)
+            }
+        }
+
+        /*
         when (item.itemId) {
             R.id.language_en -> {
                 Util.setLanguage("en", requireActivity())
@@ -103,7 +113,7 @@ class ListFragment : Fragment() {
             }
 
         }
-        (this.activity as MainActivity).requestUpdates(R.id.navigation_list)
+        (this.activity as MainActivity).requestUpdates(R.id.navigation_list)*/
 
         return false
     }
