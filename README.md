@@ -43,6 +43,11 @@
 |EXPDAT-012/001   | api request | -  | Stefan  | Esther  |
 |EXPDAT-012/002   | map display | -  | Benjamin G   | Benjamin W  |
 |EXPDAT-013   | share product | -  | Stefan  | Florian  |
-|EXPDAT-024   | edit saved product | -  | Nico  | Florian  |
+|EXPDAT-052   | hidden tabs when in edit mode | -  | Matthias  | Florian  |
+|EXPDAT-014/001   | db sort query | -  | Stefan  | Benjamin W  |
+|EXPDAT-014/002   | sort by options | -  | Nico  | Benjamin G  |
+|EXPDAT-054   | Adjusted color schemes | -  | Benjamin W  | Benjamin G  |
+|EXPDAT-053   | keyboard closes after save | -  | Matthias  | Florian  |
+|EXPDAT-007/001   | API for food recipies retrievment backend | -  | Stefan  | Florian  |
 
 
