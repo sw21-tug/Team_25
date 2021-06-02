@@ -32,7 +32,7 @@ class SettingsTest {
 
         val settingsButton = Espresso.onView(
             Matchers.allOf(
-                ViewMatchers.withContentDescription("More options"),
+                ViewMatchers.withContentDescription("settings"),
                 childAtPosition(
                     childAtPosition(
                         ViewMatchers.withId(R.id.action_bar),

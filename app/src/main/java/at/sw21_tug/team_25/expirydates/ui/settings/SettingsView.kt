@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.content.Intent
+import android.provider.Settings
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -51,6 +52,21 @@ class SettingsView(private val view: View) : TimePickerDialog.OnTimeSetListener 
             val enLanguageButton = popupView.findViewById<Button>(R.id.bt_lang_en)
             val ruLanguageButton = popupView.findViewById<Button>(R.id.bt_lang_ru)
 
+            dayEdit.hint = (activity as MainActivity).baseContext.resources.getString(
+                R.string.enter_days,
+                GlobalSettings.getNotificationDayOffset(activity).toString()
+            )
+
+
+            popupView.findViewById<TextView>(R.id.select_time).text = (activity as MainActivity).baseContext.resources.getString(
+                R.string.select_time,
+                GlobalSettings.getNotificationHour(activity).toString(),
+                GlobalSettings.getNotificationMinutes(activity).toString()
+            )
+
+            val time: TimePicker = popupView.findViewById(R.id.timePicker)
+
+
             enLanguageButton.setOnClickListener {
                 Util.setLanguage("en", activity)
                 Util.setLocale(activity, Locale("en"))
@@ -67,8 +83,13 @@ class SettingsView(private val view: View) : TimePickerDialog.OnTimeSetListener 
                 //TODO save values
                 var days = dayEdit.text.toString()
                 if (days.equals(""))
-                    days = "0"
+                    days = "1"
                 GlobalSettings.setNotificationDayOffset(activity, days.toInt())
+
+                val hour = time.hour.toString()
+                val min = time.minute.toString()
+                GlobalSettings.setNotificationHour(activity, hour.toInt())
+                GlobalSettings.setNotificationMinutes(activity, min.toInt())
                 popupWindow.dismiss()
             }
 

@@ -30,6 +30,6 @@
     <string name="settings_string" translatable="false">настройки</string>
     <string name="header_language_select">Выбор языка</string>
     <string name="header_notification_interval">Интервал уведомления до даты истечения срока действия</string>
-    <string name="enter_days">Введите дни до уведомления</string>
-    <string name="select_time">Выберите время для получения уведомления</string>
+    <string name="enter_days">Введите количество дней до уведомления, текущее: %1s</string>
+    <string name="select_time">Выберите время для получения уведомления, текущее: %1s:%2s</string>
 </resources>

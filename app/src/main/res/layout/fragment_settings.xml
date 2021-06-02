@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:hint="@string/enter_days"
+            android:hint=""
             android:textAlignment="center"
             android:textSize="20sp"
             android:inputType="number"/>
@@ -67,10 +67,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="@string/select_time"
+            android:text=""
             android:gravity="center"/>
         <TimePicker
-            android:id="@+id/datePicker"
+            android:id="@+id/timePicker"
             android:layout_width="match_parent"
             android:layout_height="362dp"
             android:layout_gravity="top"
