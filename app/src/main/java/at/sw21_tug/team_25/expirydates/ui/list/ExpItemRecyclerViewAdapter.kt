@@ -40,4 +40,8 @@ class ExpItemRecyclerViewAdapter(
         return expItems.size
     }
 
+    fun getExpItems(): List<ExpItem> {
+        return this.expItems
+    }
+
 }

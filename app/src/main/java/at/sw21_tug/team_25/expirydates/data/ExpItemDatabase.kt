@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [ExpItem::class], version = 2, exportSchema = false)
-abstract class ExpItemDatabase : RoomDatabase() {
+abstract class ExpItemDatabase: RoomDatabase() {
 
     abstract fun expItemDao(): ExpItemDao
 

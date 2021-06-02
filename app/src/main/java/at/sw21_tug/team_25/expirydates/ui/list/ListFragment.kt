@@ -16,16 +16,20 @@ import java.util.*
 
 class ListFragment : Fragment() {
     private lateinit var listViewModel: ListViewModel
+    private lateinit var itemsRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    // add other menu items in language_choice_menu / choose different menu to show here
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        // add other menu items in language_choice_menu / choose different menu to show here
         inflater.inflate(R.menu.language_choice_menu, menu)
+        inflater.inflate(R.menu.sort_by_name_menu, menu)
+        inflater.inflate(R.menu.sort_by_date_menu, menu)
     }
+
 
     override fun onResume() {
         if ((this.activity as MainActivity).updateLayoutList.contains(R.id.navigation_list)) {
@@ -50,6 +54,48 @@ class ListFragment : Fragment() {
 
                 (this.activity as MainActivity).refreshCurrentFragment()
             }
+
+            R.id.sort_name_asc -> {
+                listViewModel.expItems =
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItemsSorted(1, "name")
+                listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        this.itemsRecyclerView.adapter =
+                            ExpItemRecyclerViewAdapter((this.activity as FragmentActivity), it)
+                    }
+                })
+            }
+            R.id.sort_name_desc -> {
+                listViewModel.expItems =
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItemsSorted(0, "name")
+                listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        this.itemsRecyclerView.adapter =
+                            ExpItemRecyclerViewAdapter((this.activity as FragmentActivity), it)
+                    }
+                })
+            }
+            R.id.sort_exp_asc -> {
+                listViewModel.expItems =
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItemsSorted(1, "date")
+                listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        this.itemsRecyclerView.adapter =
+                            ExpItemRecyclerViewAdapter((this.activity as FragmentActivity), it)
+                    }
+                })
+            }
+            R.id.sort_exp_desc -> {
+                listViewModel.expItems =
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItemsSorted(0, "date")
+                listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        this.itemsRecyclerView.adapter =
+                            ExpItemRecyclerViewAdapter((this.activity as FragmentActivity), it)
+                    }
+                })
+            }
+
         }
         (this.activity as MainActivity).requestUpdates(R.id.navigation_list)
 
@@ -65,14 +111,14 @@ class ListFragment : Fragment() {
             ViewModelProvider(this).get(ListViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_list, container, false)
 
-        val itemsRecyclerView = root.findViewById<RecyclerView>(R.id.items_rv)
-        itemsRecyclerView.layoutManager = LinearLayoutManager((activity as MainActivity))
+        this.itemsRecyclerView = root.findViewById<RecyclerView>(R.id.items_rv)
+        this.itemsRecyclerView.layoutManager = LinearLayoutManager((activity as MainActivity))
 
         listViewModel.expItems =
-            ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItems()
+            ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItemsSorted(1, "date")
         listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                itemsRecyclerView.adapter =
+                this.itemsRecyclerView.adapter =
                     ExpItemRecyclerViewAdapter((this.activity as FragmentActivity), it)
             }
         })

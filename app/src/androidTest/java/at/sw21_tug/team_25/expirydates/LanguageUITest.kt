@@ -56,7 +56,7 @@ class LanguageUITest {
 
         val overflowMenuButton = onView(
             allOf(
-                withContentDescription("More options"),
+                withContentDescription("Language Settings"),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.action_bar),
@@ -84,7 +84,7 @@ class LanguageUITest {
         )
         materialTextView.perform(click())
 
-        // TODO: should show russian
+        // Should show russian
         val button = onView(
             allOf(
                 withId(R.id.button), withText("Сохранить Дату"),
@@ -96,7 +96,7 @@ class LanguageUITest {
 
         val overflowMenuButton2 = onView(
             allOf(
-                withContentDescription("More options"),
+                withContentDescription("Language Settings"),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.action_bar),
