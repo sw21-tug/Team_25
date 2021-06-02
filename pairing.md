@@ -5,7 +5,7 @@
 | Dev 2 | Matthias    | junior |            |
 | Dev 3 | Benjamin W  | senior |            | 
 | Dev 4 | Esther      | junior |            |
-| Dev 5 | Christopher | senior |            | 
+| Dev 5 | Christopher | junior |            | 
 | Dev 6 | Florian     | senior |            | 
 | Dev 7 | Nico        | junior |            |
 | Dev 8 | Stefan      | senior |            | 
