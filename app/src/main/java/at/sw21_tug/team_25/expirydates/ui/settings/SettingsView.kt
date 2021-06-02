@@ -14,6 +14,9 @@ import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.misc.Util
+import at.sw21_tug.team_25.expirydates.ui.detailview.ui.DetailView
+import at.sw21_tug.team_25.expirydates.utils.GlobalSettings
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import java.time.LocalDate
@@ -36,22 +39,50 @@ class SettingsView(private val view: View) : TimePickerDialog.OnTimeSetListener 
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT
             )
-            /*
-        val name = popupView.findViewById<TextView>(R.id.product_name)
-        val nameEdit = popupView.findViewById<EditText>(R.id.product_name_edit)
-        val closePopUpButton = popupView.findViewById<Button>(R.id.closePopUp)
-
-        nameEdit.editableText.clear()
-        //nameEdit.editableText.append("test")*/
-
-            popupWindow.elevation = 10.0F
-            popupWindow.isFocusable = true
 
             activity.findViewById<View>(android.R.id.content).post {
                 val view = activity.findViewById<View>(android.R.id.content).rootView
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
-
             }
+
+            val dayEdit = popupView.findViewById<EditText>(R.id.day_selection)
+            val closeSettingsButton = popupView.findViewById<Button>(R.id.closeSettings)
+            val saveSettingsButton = popupView.findViewById<Button>(R.id.saveSettings)
+            val enLanguageButton = popupView.findViewById<Button>(R.id.bt_lang_en)
+            val ruLanguageButton = popupView.findViewById<Button>(R.id.bt_lang_ru)
+
+            enLanguageButton.setOnClickListener {
+                Util.setLanguage("en", activity)
+                Util.setLocale(activity, Locale("en"))
+                (activity as MainActivity).refreshCurrentFragment()
+            }
+
+            ruLanguageButton.setOnClickListener {
+                Util.setLanguage("ru", activity)
+                Util.setLocale(activity, Locale("ru"))
+                (activity as MainActivity).refreshCurrentFragment()
+            }
+
+            saveSettingsButton.setOnClickListener {
+                //TODO save values
+                var days = dayEdit.text.toString()
+                if (days.equals(""))
+                    days = "0"
+                GlobalSettings.setNotificationDayOffset(activity, days.toInt())
+                popupWindow.dismiss()
+            }
+
+            closeSettingsButton.setOnClickListener {
+                popupWindow.dismiss()
+            }
+
+            //(activity as MainActivity).requestUpdates(R.id.navigation_list)
+
+            dayEdit.editableText.clear()
+            //nameEdit.editableText.append("test")
+
+            popupWindow.elevation = 10.0F
+            popupWindow.isFocusable = true
             // set on-click listener
 
             /*            nameEdit.setOnClickListener {
@@ -70,4 +101,4 @@ class SettingsView(private val view: View) : TimePickerDialog.OnTimeSetListener 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         TODO("Not yet implemented")
     }
-}
+}

@@ -5,7 +5,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <ImageView
         android:layout_width="match_parent"
@@ -58,7 +59,8 @@
             android:layout_margin="2dp"
             android:hint="@string/enter_days"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:inputType="number"/>
 
         <TextView
             android:id="@+id/select_time"
@@ -83,7 +85,7 @@
     android:gravity="end">
 
     <Button
-        android:id="@+id/save_button"
+        android:id="@+id/saveSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
@@ -94,7 +96,7 @@
         style="?android:attr/buttonBarButtonStyle" />
 
     <Button
-        android:id="@+id/back_button"
+        android:id="@+id/closeSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
