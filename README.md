@@ -1,6 +1,6 @@
-
 # Team_25
 
+<img src="https://user-images.githubusercontent.com/29690863/120486940-ccf46e00-c3b5-11eb-8182-fa34dc320728.png" width="200">
   
 **EXPIRY DATES** - app that manages your expiry dates
 
