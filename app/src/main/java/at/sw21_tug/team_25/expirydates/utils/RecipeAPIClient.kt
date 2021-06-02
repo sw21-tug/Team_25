@@ -12,8 +12,8 @@ data class RecipeInfo(val id: Int, val title: String, val imageURL: String, val 
 class RecipeAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
 
     companion object {
-        const val DEFAULT_API_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/"
-        const val API_KEY = "XX"
+        const val DEFAULT_API_URL = "https://api.spoonacular.com/recipes/"
+        const val API_KEY = "6f3d772af5a447369c4d716db641ab18"
     }
 
     private var client: OkHttpClient = OkHttpClient.Builder().build()
@@ -22,10 +22,8 @@ class RecipeAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
 
         val ingredientEncoded = URLEncoder.encode(ingredient)
         val request = Request.Builder()
-                .url("${baseUrl}findByIngredients?ingredients=$ingredientEncoded&number=$numItems&ignorePantry=true&ranking=1")
+                .url("${baseUrl}findByIngredients?ingredients=$ingredientEncoded&number=$numItems&ignorePantry=true&ranking=1&apiKey=$API_KEY")
                 .get()
-                .addHeader("x-rapidapi-key", API_KEY)
-                .addHeader("x-rapidapi-host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com")
                 .build()
 
         val resp = client.newCall(request).execute()
@@ -57,10 +55,8 @@ class RecipeAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
 
     fun getRecipeUrl(id: Int): String {
         val request = Request.Builder()
-                .url("${baseUrl}$id/information")
+                .url("${baseUrl}$id/information?apiKey=$API_KEY")
                 .get()
-                .addHeader("x-rapidapi-key", API_KEY)
-                .addHeader("x-rapidapi-host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com")
                 .build()
 
         val resp = client.newCall(request).execute()
@@ -74,11 +70,15 @@ class RecipeAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
         }
 
         val responseBody = JSONObject(resp.body!!.string())
-
-        val url = responseBody.getString("sourceUrl")
-
         resp.close()
 
-        return url
+        if (responseBody.has("spoonacularSourceUrl")) {
+            return responseBody.getString("spoonacularSourceUrl")
+        }
+        if (responseBody.has("sourceUrl")) {
+            return responseBody.getString("sourceUrl")
+        }
+
+        return ""
     }
 }

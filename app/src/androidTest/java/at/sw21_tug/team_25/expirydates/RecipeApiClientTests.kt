@@ -13,9 +13,18 @@ import java.util.concurrent.TimeUnit
 @RunWith(AndroidJUnit4::class)
 class RecipeApiClientTests {
 
+    /*
+    @Test
+    fun canQueryRealServer() {
+        val api = RecipeAPIClient()
+        val items = api.getRecipeForIngredient("tomato", 2)
+        Assert.assertNotNull(items)
+    }
+    */
+
     @Test
     fun canRequestUrlForRecipe() {
-        
+
         val server = MockWebServer()
 
         server.enqueue(
@@ -36,9 +45,8 @@ class RecipeApiClientTests {
         val request1 = server.takeRequest(5, TimeUnit.SECONDS)
         Assert.assertNotNull(request1)
 
-        Assert.assertEquals("/5/information", request1!!.path.toString())
-        Assert.assertEquals(RecipeAPIClient.API_KEY, request1.getHeader("x-rapidapi-key"))
-        Assert.assertEquals("SOURCE_URL", url)
+        Assert.assertEquals("/5/information?apiKey=${RecipeAPIClient.API_KEY}", request1!!.path.toString())
+        Assert.assertEquals("SPOONACULAR_SOURCE_URL", url)
 
         server.shutdown()
     }
@@ -78,16 +86,13 @@ class RecipeApiClientTests {
         val request1 = server.takeRequest(5, TimeUnit.SECONDS)
         Assert.assertNotNull(request1)
 
-        Assert.assertEquals("/findByIngredients?ingredients=tomato&number=1&ignorePantry=true&ranking=1", request1!!.path.toString())
-
-        Assert.assertEquals(RecipeAPIClient.API_KEY, request1.getHeader("x-rapidapi-key"))
+        Assert.assertEquals("/findByIngredients?ingredients=tomato&number=1&ignorePantry=true&ranking=1&apiKey=${RecipeAPIClient.API_KEY}", request1!!.path.toString())
 
         Assert.assertEquals(1, infos.size)
         Assert.assertEquals(5, infos[0].id)
         Assert.assertEquals("DemoRecipe", infos[0].title)
         Assert.assertEquals("IMAGE_URL", infos[0].imageURL)
-        Assert.assertEquals("SOURCE_URL", infos[0].recipeURL)
-
+        Assert.assertEquals("SPOONACULAR_SOURCE_URL", infos[0].recipeURL)
 
         server.shutdown()
     }
