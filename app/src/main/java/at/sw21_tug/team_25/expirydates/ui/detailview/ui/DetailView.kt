@@ -85,6 +85,29 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
 
             }
+
+            val updateRecipeSuggestion: (String) -> Unit = { itemName: String ->
+                GlobalScope.async {
+                    val api = RecipeAPIClient()
+                    val recipeList = api.getRecipeForIngredient(itemName)
+                    activity.runOnUiThread {
+                        if (recipeList.isEmpty()) {
+                            recipeName.text = "No recipe found"
+                            recipeButton.visibility = View.GONE
+                        } else {
+                            recipe = recipeList[0]
+                            recipeName.text = recipe!!.title
+                            recipeButton.setOnClickListener {
+                                val uri = Uri.parse(recipe!!.recipeURL)
+                                val intent = Intent(Intent.ACTION_VIEW, uri)
+                                startActivity(activity, intent, null)
+                            }
+                        }
+                    }
+                }
+            }
+
+
             // set on-click listener
             closePopUpButton.setOnClickListener {
                 if (!is_editable)
@@ -148,6 +171,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                     save(text, dateButton.text.toString(), activity)
                     cancel(editButton, closePopUpButton, activity, nameEdit, name)
                     name.text = text
+                    updateRecipeSuggestion(text)
                     hideKeyboard(activity, popupView)
                 }
                 dateButton.isEnabled = is_editable
@@ -173,26 +197,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
                 hideKeyboard(activity, popupView)
             }
-
-
-            GlobalScope.async {
-                val api = RecipeAPIClient()
-                val recipeList = api.getRecipeForIngredient(name_string)
-                activity.runOnUiThread {
-                    if (recipeList.isEmpty()) {
-                        recipeName.text = "No recipe found"
-                        recipeButton.visibility = View.GONE
-                    } else {
-                        recipe = recipeList[0]
-                        recipeName.text = recipe!!.title
-                        recipeButton.setOnClickListener {
-                            val uri = Uri.parse(recipe!!.recipeURL)
-                            val intent = Intent(Intent.ACTION_VIEW, uri)
-                            startActivity(activity, intent, null)
-                        }
-                    }
-                }
-            }
+            updateRecipeSuggestion(name_string)
         }
 
         private fun save(productName: String, date: String, activity: Activity) {
