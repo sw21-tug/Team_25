@@ -1,9 +1,10 @@
-package at.sw21_tug.team_25.expirydates.misc
+package at.sw21_tug.team_25.expirydates.utils
 
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.widget.Toast
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,5 +40,13 @@ class Util {
             resources.updateConfiguration(config, resources.displayMetrics)
         }
 
+        fun showToast(activity: Activity, text: String) {
+            val toast = Toast.makeText(
+                activity,
+                text,
+                Toast.LENGTH_SHORT
+            )
+            toast.show()
+        }
     }
 }

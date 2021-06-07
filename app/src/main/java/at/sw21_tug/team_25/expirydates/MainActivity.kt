@@ -14,10 +14,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
-import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.ui.detailview.ui.DetailView
 import at.sw21_tug.team_25.expirydates.utils.NotificationManager
 import at.sw21_tug.team_25.expirydates.utils.ReminderScheduler
+import at.sw21_tug.team_25.expirydates.utils.Util
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async

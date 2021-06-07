@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
-import at.sw21_tug.team_25.expirydates.misc.Util
+import at.sw21_tug.team_25.expirydates.utils.Util
 import java.util.*
 
 class ListFragment : Fragment() {
@@ -57,7 +57,8 @@ class ListFragment : Fragment() {
 
             R.id.sort_name_asc -> {
                 listViewModel.expItems =
-                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItemsSorted(1, "name")
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao()
+                        .readAllItemsSorted(1, "name")
                 listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
                     if (it != null) {
                         this.itemsRecyclerView.adapter =
@@ -67,7 +68,8 @@ class ListFragment : Fragment() {
             }
             R.id.sort_name_desc -> {
                 listViewModel.expItems =
-                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItemsSorted(0, "name")
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao()
+                        .readAllItemsSorted(0, "name")
                 listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
                     if (it != null) {
                         this.itemsRecyclerView.adapter =
@@ -77,7 +79,8 @@ class ListFragment : Fragment() {
             }
             R.id.sort_exp_asc -> {
                 listViewModel.expItems =
-                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItemsSorted(1, "date")
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao()
+                        .readAllItemsSorted(1, "date")
                 listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
                     if (it != null) {
                         this.itemsRecyclerView.adapter =
@@ -87,7 +90,8 @@ class ListFragment : Fragment() {
             }
             R.id.sort_exp_desc -> {
                 listViewModel.expItems =
-                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItemsSorted(0, "date")
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao()
+                        .readAllItemsSorted(0, "date")
                 listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
                     if (it != null) {
                         this.itemsRecyclerView.adapter =
@@ -115,7 +119,8 @@ class ListFragment : Fragment() {
         this.itemsRecyclerView.layoutManager = LinearLayoutManager((activity as MainActivity))
 
         listViewModel.expItems =
-            ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao().readAllItemsSorted(1, "date")
+            ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao()
+                .readAllItemsSorted(1, "date")
         listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 this.itemsRecyclerView.adapter =
