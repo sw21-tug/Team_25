@@ -85,35 +85,7 @@ class DetailViewTest {
 
     @Test
     fun detailViewTest() {
-        val bottomNavigationItemView = onView(
-            allOf(
-                withId(R.id.navigation_list), withContentDescription("List"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.nav_view),
-                        0
-                    ),
-                    2
-                ),
-                isDisplayed()
-            )
-        )
-        bottomNavigationItemView.perform(click())
-
-        val materialTextViewSalami = onView(
-            allOf(
-                withId(R.id.item_tv), withText("Salami  2021-01-01 01:01:01"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.items_rv),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        materialTextViewSalami.perform(click())
+        openSalamiItem()
 
         onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup())
             .check((matches(isDisplayed())))
@@ -127,45 +99,42 @@ class DetailViewTest {
         assertKeyboardOpen(false)
     }
 
+    @Test
+    fun inputTest(){
+        openSalamiItem()
+
+        Thread.sleep(1000)
+
+        onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+
+        onView(withId(R.id.product_name_edit)).perform(ViewActions.replaceText(""))
+        onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+
+        assertKeyboardOpen(true)
+        onView(withId(R.id.product_name_edit)).check((matches(isDisplayed())))
+
+        val longText =  "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+
+        onView(withId(R.id.product_name_edit)).perform(ViewActions.replaceText(longText))
+        onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+
+        assertKeyboardOpen(true)
+        onView(withId(R.id.product_name_edit)).check((matches(isDisplayed())))
+
+
+    }
 
     @Test
     fun deleteItemTest() {
-        val bottomNavigationItemView = onView(
-            allOf(
-                withId(R.id.navigation_list), withContentDescription("List"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.nav_view),
-                        0
-                    ),
-                    2
-                ),
-                isDisplayed()
-            )
-        )
-        bottomNavigationItemView.perform(click())
-
-        val materialTextViewSalami = onView(
-            allOf(
-                withId(R.id.item_tv), withText("Tomato  2021-01-02 02:02:02"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.items_rv),
-                        1
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        materialTextViewSalami.perform(click())
+        openSalamiItem()
 
         onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup())
             .check((matches(isDisplayed())))
         onView(withId(R.id.product_name)).inRoot(RootMatchers.isPlatformPopup())
-            .check(matches(withText("Tomato")))
+            .check(matches(withText("Salami")))
         onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
-            .check(matches(withText("2021-01-02 02:02:02")))
+            .check(matches(withText("2021-01-01 01:01:01")))
         onView(withId(R.id.deleteItem)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         onView(withId(R.id.detail_view_popup)).check(doesNotExist())
 
@@ -178,35 +147,7 @@ class DetailViewTest {
 
     @Test
     fun editItemTest() {
-        val bottomNavigationItemView2 = onView(
-            allOf(
-                withId(R.id.navigation_list), withContentDescription("List"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.nav_view),
-                        0
-                    ),
-                    2
-                ),
-                isDisplayed()
-            )
-        )
-        bottomNavigationItemView2.perform(click())
-
-        val materialTextView = onView(
-            allOf(
-                withId(R.id.item_tv), withText("Salami  2021-01-01 01:01:01"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.items_rv),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        materialTextView.perform(click())
+        openSalamiItem()
 
         Thread.sleep(1000)
 
@@ -253,6 +194,22 @@ class DetailViewTest {
     fun shareViewTest() {
         val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
+        openSalamiItem()
+
+        onView(withId(R.id.share)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+
+        Thread.sleep(500)
+        val shareTest = uiDevice.findObject(
+            By.textContains(
+                "Messages"
+            )
+        )
+        Assert.assertTrue(shareTest != null)
+
+        uiDevice.pressBack()
+    }
+
+    private fun openSalamiItem(){
         val bottomNavigationItemView = onView(
             allOf(
                 withId(R.id.navigation_list), withContentDescription("List"),
@@ -268,34 +225,22 @@ class DetailViewTest {
         )
         bottomNavigationItemView.perform(click())
 
-        val shareTextView = onView(
+
+        val materialTextViewSalami = onView(
             allOf(
-                withId(R.id.item_tv), withText("Tomato  2021-01-02 02:02:02"),
+                withId(R.id.item_tv), withText("Salami  2021-01-01 01:01:01"),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.items_rv),
-                        1
+                        0
                     ),
                     0
                 ),
                 isDisplayed()
             )
         )
-        shareTextView.perform(click())
-
-        onView(withId(R.id.share)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
-
-        Thread.sleep(500)
-        val shareTest = uiDevice.findObject(
-            By.textContains(
-                "Messages"
-            )
-        )
-        Assert.assertTrue(shareTest != null)
-
-        uiDevice.pressBack()
+        materialTextViewSalami.perform(click())
     }
-
 
     private fun childAtPosition(
         parentMatcher: Matcher<View>, position: Int

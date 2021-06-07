@@ -126,6 +126,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
                     nameEdit.editableText.clear()
                     nameEdit.editableText.append(name.text)
+                    is_editable = !is_editable
                 } else {
                     val text = nameEdit.text.toString()
                     if (text.isEmpty() || text.length > 255) {
@@ -137,7 +138,6 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                     name.text = text
                     MainActivity.hideKeyboard(activity, popupView)
                 }
-                is_editable = !is_editable
                 dateButton.isEnabled = is_editable
             }
 
