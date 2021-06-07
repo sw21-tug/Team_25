@@ -29,6 +29,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
         fun openDetailView(activity: Activity, product: ExpItem) {
             openDetailView(activity, product.id, product.name, product.date)
+            is_editable = false
         }
 
         private fun openDetailView(

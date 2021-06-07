@@ -241,18 +241,12 @@ class DetailViewTest {
         ).check(matches(isDisplayed()))
         assertKeyboardOpen(true)
 
+        onView(withId(R.id.product_name_edit)).perform(ViewActions.replaceText("Hauswurst"))
 
-//        onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
-//        assertKeyboardOpen(false)
-//
-//        val textView = onView(
-//            allOf(
-//                withId(R.id.item_tv), withText("Test  2021-01-01 01:01:01"),
-//                withParent(withParent(withId(R.id.items_rv))),
-//                isDisplayed()
-//            )
-//        )
-//        textView.check(matches(withText("Test  2021-01-01 01:01:01")))
+        onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+
+        onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        assertKeyboardOpen(false)
     }
 
 

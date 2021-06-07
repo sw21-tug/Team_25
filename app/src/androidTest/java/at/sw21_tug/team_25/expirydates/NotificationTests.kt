@@ -108,20 +108,24 @@ class NotificationTests {
                     ViewMatchers.isDisplayed()
                 ))
             )
+        Thread.sleep(500)
         Espresso.onView(ViewMatchers.withId(R.id.product_name))
             .inRoot(RootMatchers.isPlatformPopup()).check(
                 ViewAssertions.matches(ViewMatchers.withText(name))
             )
+        Thread.sleep(500)
         Espresso.onView(ViewMatchers.withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
             .check(
                 ViewAssertions.matches(
                     ViewMatchers.withText(date)
                 )
             )
+        Thread.sleep(500)
         Espresso.onView(ViewMatchers.withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup())
             .perform(
                 ViewActions.click()
             )
+        Thread.sleep(500)
         Espresso.onView(ViewMatchers.withId(R.id.detail_view_popup))
             .check(ViewAssertions.doesNotExist())
     }
