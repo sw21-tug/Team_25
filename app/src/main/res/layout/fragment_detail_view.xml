@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:orientation="vertical"
-            android:padding="25dp">
+            android:padding="50dp">
 
             <TextView
                 android:id="@+id/product_name"
@@ -57,7 +57,8 @@
                 android:id="@+id/exp_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false" />
+                android:enabled="false"
+                android:layout_marginTop="20dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
