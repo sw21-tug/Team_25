@@ -12,6 +12,7 @@ import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.utils.Util
+import at.sw21_tug.team_25.expirydates.utils.Util.Companion.hideKeyboard
 import java.util.*
 
 class ListFragment : Fragment() {
@@ -36,6 +37,7 @@ class ListFragment : Fragment() {
             (this.activity as MainActivity).updateLayoutList.remove(R.id.navigation_list)
             (this.activity as MainActivity).refreshCurrentFragment()
         }
+        hideKeyboard(this.activity as MainActivity, itemsRecyclerView)
         super.onResume()
     }
 

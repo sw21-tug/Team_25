@@ -1,12 +1,8 @@
 package at.sw21_tug.team_25.expirydates
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -111,14 +107,5 @@ class MainActivity : AppCompatActivity() {
         updateLayoutList.add(R.id.navigation_add)
         updateLayoutList.add(R.id.navigation_list)
         updateLayoutList.remove(fragToIgnore)
-    }
-
-
-    companion object {
-        fun hideKeyboard(activity: Activity, view: View) {
-
-            val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
-        }
     }
 }

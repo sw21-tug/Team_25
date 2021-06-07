@@ -14,6 +14,7 @@ import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
 import at.sw21_tug.team_25.expirydates.ui.errorhandling.ErrorCode
 import at.sw21_tug.team_25.expirydates.utils.ReminderScheduler
 import at.sw21_tug.team_25.expirydates.utils.Util
+import at.sw21_tug.team_25.expirydates.utils.Util.Companion.hideKeyboard
 import at.sw21_tug.team_25.expirydates.utils.Util.Companion.showToast
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -113,7 +114,7 @@ class AddFragment : Fragment() {
                         ReminderScheduler.ensureNextReminderScheduled(this@AddFragment.requireContext())
                     }
                     textView.text = ""
-                    MainActivity.hideKeyboard(this.activity as MainActivity, root)
+                    hideKeyboard(this.activity as MainActivity, root)
                 }
             }
 

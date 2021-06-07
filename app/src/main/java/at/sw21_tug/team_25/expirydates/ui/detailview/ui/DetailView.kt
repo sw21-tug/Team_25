@@ -13,6 +13,7 @@ import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.utils.Util.Companion.hideKeyboard
 import at.sw21_tug.team_25.expirydates.utils.Util.Companion.showToast
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -81,13 +82,13 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 else {
                     cancel(editButton, closePopUpButton, activity, nameEdit, name)
                 }
-                MainActivity.hideKeyboard(activity, popupView)
+                hideKeyboard(activity, popupView)
             }
             // set on-click listener
             popupBackgroundButton.setOnClickListener {
                 cancel(editButton, closePopUpButton, activity, nameEdit, name)
                 popupWindow.dismiss()
-                MainActivity.hideKeyboard(activity, popupView)
+                hideKeyboard(activity, popupView)
             }
 
             // set on-click listener
@@ -99,7 +100,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                         popupWindow.dismiss()
                     }
                 }
-                MainActivity.hideKeyboard(activity, popupView)
+                hideKeyboard(activity, popupView)
             }
 
             dateButton.setOnClickListener {
@@ -114,7 +115,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 datePicker.datePicker.minDate = Calendar.getInstance().timeInMillis
                 datePicker.datePicker.maxDate = Long.MAX_VALUE
                 datePicker.show()
-                MainActivity.hideKeyboard(activity, popupView)
+                hideKeyboard(activity, popupView)
             }
 
             editButton.setOnClickListener {
@@ -137,7 +138,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                     save(text, dateButton.text.toString(), activity)
                     cancel(editButton, closePopUpButton, activity, nameEdit, name)
                     name.text = text
-                    MainActivity.hideKeyboard(activity, popupView)
+                    hideKeyboard(activity, popupView)
                 }
                 dateButton.isEnabled = is_editable
             }
@@ -160,7 +161,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 }, null)
                 (activity as MainActivity).startActivity(share)
 
-                MainActivity.hideKeyboard(activity, popupView)
+                hideKeyboard(activity, popupView)
             }
         }
 

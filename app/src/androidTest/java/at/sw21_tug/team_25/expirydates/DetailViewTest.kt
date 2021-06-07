@@ -17,6 +17,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
+import at.sw21_tug.team_25.expirydates.Util.Companion.assertKeyboardOpen
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
@@ -194,35 +195,7 @@ class DetailViewTest {
 
     @Test
     fun editItemTestNull() {
-        val bottomNavigationItemView2 = onView(
-            allOf(
-                withId(R.id.navigation_list), withContentDescription("List"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.nav_view),
-                        0
-                    ),
-                    2
-                ),
-                isDisplayed()
-            )
-        )
-        bottomNavigationItemView2.perform(click())
-
-        val materialTextView = onView(
-            allOf(
-                withId(R.id.item_tv), withText("Salami  2021-01-01 01:01:01"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.items_rv),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        materialTextView.perform(click())
+        openSalamiItem()
 
         Thread.sleep(1000)
 
@@ -268,6 +241,39 @@ class DetailViewTest {
 
         uiDevice.pressBack()
     }
+
+    @Test
+    fun cancelCloseTest(){
+        openSalamiItem()
+        //edit
+        onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        onView(withId(R.id.product_name_edit)).check(matches(isDisplayed()))
+        //cancel
+        onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        onView(withId(R.id.product_name_edit)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+
+        //edit
+        onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        onView(withId(R.id.product_name_edit)).check(matches(isDisplayed()))
+        onView(withId(R.id.product_name_edit)).perform(ViewActions.replaceText("Hauswurst"))
+
+        //cancel
+        onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        onView(withId(R.id.product_name_edit)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.product_name)).check(matches(isDisplayed()))
+        onView(withId(R.id.product_name)).check(matches(withText("Salami")))
+
+        //close
+        onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        onView(withId(R.id.detail_view_popup)).check(doesNotExist())
+        assertKeyboardOpen(false)
+
+        openSalamiItem()
+        onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        onView(withId(R.id.product_name_edit)).check(matches(isDisplayed()))
+
+    }
+
 
     private fun openSalamiItem(){
         val bottomNavigationItemView = onView(
@@ -320,11 +326,4 @@ class DetailViewTest {
         }
     }
 
-    private fun assertKeyboardOpen(is_open: Boolean) {
-        val imm: InputMethodManager =
-            InstrumentationRegistry.getInstrumentation().targetContext.getSystemService(
-                Context.INPUT_METHOD_SERVICE
-            ) as InputMethodManager
-        Assert.assertEquals(imm.isAcceptingText, is_open)
-    }
 }
