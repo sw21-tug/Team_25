@@ -60,7 +60,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
             val deleteItemButton = popupView.findViewById<Button>(R.id.deleteItem)
             val dateButton = popupView.findViewById<Button>(R.id.exp_date)
             val editButton = popupView.findViewById<Button>(R.id.edit)
-            val shareButton = popupView.findViewById<Button>(R.id.share)
+            val shareButton = popupView.findViewById<ImageButton>(R.id.share)
 
             name.text = name_string
             nameEdit.editableText.clear()
