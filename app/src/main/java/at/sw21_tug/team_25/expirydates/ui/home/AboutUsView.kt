@@ -48,15 +48,6 @@ class AboutUsView(private val view: View)  {
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
 
             }
-
-/*            val closePopUpButton = popupView.findViewById<Button>(R.id.closePopUp)
-
-
-            // set on-click listener
-            closePopUpButton.setOnClickListener {
-
-                popupWindow.dismiss()
-            }*/
         }
     }
 
