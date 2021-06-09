@@ -38,7 +38,6 @@ class AboutUsUITest {
 
     @Test
     fun aboutUsUITest() {
-
         val materialButton = onView(
             allOf(
                 withId(R.id.about_us_button), withText("About Us"),
@@ -47,7 +46,7 @@ class AboutUsUITest {
                         withClassName(`is`("android.widget.FrameLayout")),
                         0
                     ),
-                    1
+                    2
                 ),
                 isDisplayed()
             )
@@ -56,6 +55,7 @@ class AboutUsUITest {
 
         onView(withId(R.id.aboutus_pop_up)).inRoot(RootMatchers.isPlatformPopup())
             .check((ViewAssertions.matches(isDisplayed())))
+
     }
 
     private fun childAtPosition(
