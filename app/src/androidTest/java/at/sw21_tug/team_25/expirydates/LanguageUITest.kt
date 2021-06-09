@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -69,29 +71,13 @@ class LanguageUITest {
         )
         overflowMenuButton.perform(click())
 
-        val materialTextView = onView(
-            allOf(
-                withId(R.id.title), withText("RU"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.content),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        materialTextView.perform(click())
+        onView(withId(R.id.bt_lang_ru)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+
+        onView(withId(R.id.settings_popup)).check(ViewAssertions.doesNotExist())
+        Thread.sleep(500)
 
         // Should show russian
-        val button = onView(
-            allOf(
-                withId(R.id.button), withText("Сохранить Дату"),
-                withParent(withParent(withId(R.id.nav_host_fragment))),
-                isDisplayed()
-            )
-        )
+        val button = onView(withText("Сохранить Дату"))
         button.check(matches(isDisplayed()))
 
         val overflowMenuButton2 = onView(
@@ -109,20 +95,7 @@ class LanguageUITest {
         )
         overflowMenuButton2.perform(click())
 
-        val materialTextView2 = onView(
-            allOf(
-                withId(R.id.title), withText("EN"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.content),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        materialTextView2.perform(click())
+        onView(withId(R.id.bt_lang_en)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
     }
 
     private fun childAtPosition(
