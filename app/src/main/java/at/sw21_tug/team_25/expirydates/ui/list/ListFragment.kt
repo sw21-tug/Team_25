@@ -46,7 +46,55 @@ class ListFragment : Fragment() {
             R.id.settings_menu -> {
                 SettingsView.openSettingsView(this.activity as MainActivity)
             }
+
+            R.id.sort_name_asc -> {
+                listViewModel.expItems =
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao()
+                        .readAllItemsSorted(1, "name")
+                listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        this.itemsRecyclerView.adapter =
+                            ExpItemRecyclerViewAdapter((this.activity as FragmentActivity), it)
+                    }
+                })
+            }
+            R.id.sort_name_desc -> {
+                listViewModel.expItems =
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao()
+                        .readAllItemsSorted(0, "name")
+                listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        this.itemsRecyclerView.adapter =
+                            ExpItemRecyclerViewAdapter((this.activity as FragmentActivity), it)
+                    }
+                })
+            }
+            R.id.sort_exp_asc -> {
+                listViewModel.expItems =
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao()
+                        .readAllItemsSorted(1, "date")
+                listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        this.itemsRecyclerView.adapter =
+                            ExpItemRecyclerViewAdapter((this.activity as FragmentActivity), it)
+                    }
+                })
+            }
+            R.id.sort_exp_desc -> {
+                listViewModel.expItems =
+                    ExpItemDatabase.getDatabase((activity as MainActivity)).expItemDao()
+                        .readAllItemsSorted(0, "date")
+                listViewModel.expItems?.observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        this.itemsRecyclerView.adapter =
+                            ExpItemRecyclerViewAdapter((this.activity as FragmentActivity), it)
+                    }
+                })
+            }
+
         }
+        (this.activity as MainActivity).requestUpdates(R.id.navigation_list)
+
         return false
     }
 
