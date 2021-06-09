@@ -13,7 +13,7 @@ import java.util.*
 class Util {
     companion object {
         fun convertDateToString(long: Long): String {
-            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY)
+            val formatter = SimpleDateFormat("dd.MM.YYYY", Locale.GERMANY)
             return formatter.format(long)
         }
 
