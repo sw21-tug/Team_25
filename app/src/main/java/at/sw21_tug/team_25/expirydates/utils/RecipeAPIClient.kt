@@ -60,12 +60,10 @@ class RecipeAPIClient(
 
         if (!resp.isSuccessful) {
             return result
-//            throw Exception("unable to getRecipeForIngredient")
         }
 
         if (resp.body == null) {
             return result
-//            throw Exception("Server responded without body")
         }
 
         val responseBody = JSONArray(resp.body!!.string())
@@ -99,12 +97,10 @@ class RecipeAPIClient(
 
         if (!resp.isSuccessful) {
             return ""
-//            throw Exception("unable to getRecipeUrl")
         }
 
         if (resp.body == null) {
             return ""
-//            throw Exception("Server responded without body")
         }
 
         val responseBody = JSONObject(resp.body!!.string())

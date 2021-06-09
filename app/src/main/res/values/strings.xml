@@ -34,4 +34,5 @@
     <string name="map_label">Nearest foodsharing locations:</string>
     <string name="invalidInput">Invalid Input (Must be between 1 and 255 characters long)</string>
     <string name="invalidDate">Invalid Date (Must not be a past date)</string>
+    <string name="suggestion">suggestion:</string>
 </resources>
