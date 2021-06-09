@@ -60,7 +60,8 @@
             android:hint=""
             android:textAlignment="center"
             android:textSize="20sp"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:maxLength="3"/>
 
         <TextView
             android:id="@+id/select_time"

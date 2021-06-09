@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package at.sw21_tug.team_25.expirydates
 
 
@@ -58,7 +56,7 @@ class LanguageUITest {
 
         val overflowMenuButton = onView(
             allOf(
-                withContentDescription("Language Settings"),
+                withContentDescription("settings"),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.action_bar),
@@ -82,7 +80,7 @@ class LanguageUITest {
 
         val overflowMenuButton2 = onView(
             allOf(
-                withContentDescription("Language Settings"),
+                withContentDescription("настройки"),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.action_bar),
@@ -116,4 +114,3 @@ class LanguageUITest {
         }
     }
 }
-
