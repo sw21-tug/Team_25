@@ -40,7 +40,7 @@ class RecipeApiClientTests {
             )
         )
 
-        val apiClient = RecipeAPIClient(server.url("").toString())
+        val apiClient = RecipeAPIClient(server.url("").toString(), true)
         Assert.assertNotNull(apiClient)
 
         val url = apiClient.getRecipeUrl(5)
@@ -135,7 +135,7 @@ class RecipeApiClientTests {
             )
         )
 
-        val apiClient = RecipeAPIClient(server.url("").toString())
+        val apiClient = RecipeAPIClient(server.url("").toString(), true)
         Assert.assertNotNull(apiClient)
 
         val infos = apiClient.getRecipeForIngredient("tomato", 1)

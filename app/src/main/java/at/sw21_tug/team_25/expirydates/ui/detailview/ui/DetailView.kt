@@ -4,22 +4,28 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.content.Intent
+import android.net.Uri
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.utils.RecipeAPIClient
+import at.sw21_tug.team_25.expirydates.utils.RecipeInfo
 import at.sw21_tug.team_25.expirydates.utils.Util.Companion.hideKeyboard
 import at.sw21_tug.team_25.expirydates.utils.Util.Companion.showToast
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
+
 
 class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
@@ -27,6 +33,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
         private var is_editable: Boolean = false
         private var product_id: Int = 0
+        private var recipe: RecipeInfo? = null
 
         fun openDetailView(activity: Activity, product: ExpItem) {
             openDetailView(activity, product.id, product.name, product.date)
@@ -62,6 +69,10 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
             val editButton = popupView.findViewById<Button>(R.id.edit)
             val shareButton = popupView.findViewById<ImageButton>(R.id.share)
 
+            val recipeImage = popupView.findViewById<ImageView>(R.id.recipe_image)
+            val recipeName = popupView.findViewById<TextView>(R.id.recipe_name)
+            val recipeButton = popupView.findViewById<Button>(R.id.recipe_button)
+
             name.text = name_string
             nameEdit.editableText.clear()
             nameEdit.editableText.append(name_string)
@@ -75,6 +86,45 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
 
             }
+
+            val updateRecipeSuggestion: (String) -> Unit = { itemName: String ->
+                activity.runOnUiThread {
+                    // Show loading screen
+                    recipeName.text = activity.getString(R.string.loading)
+                    recipeImage.visibility = View.GONE
+                    recipeImage.setImageResource(0)
+                    recipeButton.visibility = View.GONE
+                }
+
+                GlobalScope.async {
+                    val api = RecipeAPIClient()
+                    val recipeList = api.getRecipeForIngredient(itemName)
+                    activity.runOnUiThread {
+                        if (recipeList.isEmpty()) {
+                            recipeName.text = activity.getString(R.string.no_recipe_found)
+                        } else {
+                            recipe = recipeList[0]
+                            recipeName.text = recipe!!.title
+                            recipeButton.visibility = View.VISIBLE
+                            recipeButton.setOnClickListener {
+                                val uri = Uri.parse(recipe!!.recipeURL)
+                                val intent = Intent(Intent.ACTION_VIEW, uri)
+                                startActivity(activity, intent, null)
+                            }
+                            if (recipe!!.imageURL != "") {
+                                recipeImage.visibility = View.VISIBLE
+                                Picasso.get()
+                                        .load(recipe!!.imageURL)
+                                        .resize(300, 300)
+                                        .centerCrop()
+                                        .into(recipeImage)
+                            }
+                        }
+                    }
+                }
+            }
+
+
             // set on-click listener
             closePopUpButton.setOnClickListener {
                 if (!is_editable)
@@ -138,6 +188,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                     save(text, dateButton.text.toString(), activity)
                     cancel(editButton, closePopUpButton, activity, nameEdit, name)
                     name.text = text
+                    updateRecipeSuggestion(text)
                     hideKeyboard(activity, popupView)
                 }
                 dateButton.isEnabled = is_editable
@@ -163,6 +214,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
                 hideKeyboard(activity, popupView)
             }
+            updateRecipeSuggestion(name_string)
         }
 
         private fun save(productName: String, date: String, activity: Activity) {
