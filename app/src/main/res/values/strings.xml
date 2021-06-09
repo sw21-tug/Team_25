@@ -40,4 +40,5 @@
     <string name="header_notification_interval">Notification Interval before Expiration Dates</string>
     <string name="enter_days">Enter days before Notification, current: %1s</string>
     <string name="select_time">Select time to be notified, current: %1s:%2s</string>
+    <string name="about_button">About Us</string>  <!-- Should be international -->
 </resources>

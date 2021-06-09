@@ -32,4 +32,5 @@
     <string name="header_notification_interval">Интервал уведомления до даты истечения срока действия</string>
     <string name="enter_days">Введите количество дней до уведомления, текущее: %1s</string>
     <string name="select_time">Выберите время для получения уведомления, текущее: %1s:%2s</string>
+    <string name="about_button">около</string>
 </resources>
