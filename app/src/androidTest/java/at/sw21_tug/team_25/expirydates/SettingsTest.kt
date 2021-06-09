@@ -20,7 +20,6 @@ import org.hamcrest.core.IsInstanceOf
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import java.util.*
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
