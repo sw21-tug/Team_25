@@ -28,20 +28,20 @@ class AboutUsView(private val view: View)  {
         private var is_editable: Boolean = false
         private var product_id: Int = 0
 
-        fun openDetailView(activity: Activity) {
+        fun openAboutUs(activity: Activity) {
 
-/*            val inflater: LayoutInflater =
+            val inflater: LayoutInflater =
                 activity.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val popupView = inflater.inflate(R.layout.fragment_detail_view, null)
+            val popupView = inflater.inflate(R.layout.fragment_aboutus, null)
 
-            val popupWindow = PopupWindow(
+/*            val popupWindow = PopupWindow(
                 popupView,
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
-            )
+            )*/
 
 
-            val closePopUpButton = popupView.findViewById<Button>(R.id.closePopUp)
+/*            val closePopUpButton = popupView.findViewById<Button>(R.id.closePopUp)
 
 
             // set on-click listener
