@@ -246,7 +246,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY")
         this.view.findViewById<TextView>(R.id.exp_date).text =
             LocalDate.of(year, month + 1, dayOfMonth).format(formatter)
     }
