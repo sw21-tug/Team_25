@@ -16,7 +16,6 @@ import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.ui.settings.SettingsView
 import at.sw21_tug.team_25.expirydates.utils.FoodSharingAPIClient
-import at.sw21_tug.team_25.expirydates.utils.Util
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
@@ -42,7 +41,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     // add other menu items in language_choice_menu / choose different menu to show here
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.settings, menu)
+        inflater.inflate(R.menu.settings_menu, menu)
     }
 
     override fun onResume() {

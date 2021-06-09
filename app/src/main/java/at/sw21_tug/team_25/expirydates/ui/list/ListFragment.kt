@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
-import at.sw21_tug.team_25.expirydates.utils.Util
 import at.sw21_tug.team_25.expirydates.utils.Util.Companion.hideKeyboard
 import at.sw21_tug.team_25.expirydates.ui.settings.SettingsView
-import java.util.*
 
 class ListFragment : Fragment() {
     private lateinit var listViewModel: ListViewModel
@@ -27,10 +25,9 @@ class ListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         // add other menu items in language_choice_menu / choose different menu to show here
-        inflater.inflate(R.menu.language_choice_menu, menu)
         inflater.inflate(R.menu.sort_by_name_menu, menu)
         inflater.inflate(R.menu.sort_by_date_menu, menu)
-        inflater.inflate(R.menu.settings, menu)
+        inflater.inflate(R.menu.settings_menu, menu)
     }
 
 

@@ -32,7 +32,7 @@ class AddFragment : Fragment() {
 
     // add other menu items in language_choice_menu / choose different menu to show here
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.settings, menu)
+        inflater.inflate(R.menu.settings_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

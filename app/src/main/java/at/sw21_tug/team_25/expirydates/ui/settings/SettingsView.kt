@@ -1,27 +1,16 @@
 package at.sw21_tug.team_25.expirydates.ui.settings
 
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context.LAYOUT_INFLATER_SERVICE
-import android.content.Intent
-import android.provider.Settings
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
-import at.sw21_tug.team_25.expirydates.data.ExpItem
-import at.sw21_tug.team_25.expirydates.data.ExpItemDao
-import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
-import at.sw21_tug.team_25.expirydates.misc.Util
-import at.sw21_tug.team_25.expirydates.ui.detailview.ui.DetailView
 import at.sw21_tug.team_25.expirydates.utils.GlobalSettings
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import at.sw21_tug.team_25.expirydates.utils.Util
 import java.util.*
 
 class SettingsView(private val view: View) : TimePickerDialog.OnTimeSetListener {
@@ -85,7 +74,6 @@ class SettingsView(private val view: View) : TimePickerDialog.OnTimeSetListener 
             }
 
             saveSettingsButton.setOnClickListener {
-                //TODO save values
                 var days = dayEdit.text.toString()
                 if (days.equals(""))
                     days = "1"
