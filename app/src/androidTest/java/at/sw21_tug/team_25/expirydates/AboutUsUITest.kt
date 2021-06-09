@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -51,6 +53,9 @@ class AboutUsUITest {
             )
         )
         materialButton.perform(click())
+
+        onView(withId(R.id.aboutus_pop_up)).inRoot(RootMatchers.isPlatformPopup())
+            .check((ViewAssertions.matches(isDisplayed())))
     }
 
     private fun childAtPosition(
