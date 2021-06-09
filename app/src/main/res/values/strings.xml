@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ExpiryDate</string>
     <string name="title_home">Home</string>
@@ -50,8 +51,8 @@
     <string name="string_devs"> Developers </string>
     <string name="product_owner" translatable="false"> Fabio Gandolfi </string> <!-- Should be international -->
     <string name="scrum_master" translatable="false"> Benedikt Bruenner </string> <!-- Should be international -->
-    <string name="developers" translatable="false"> Benjamin Gaal<br/>Benjamin Wunderling<br/>
-        Christopher Fartek<br/> Esther Isimekhai <br/> Florian Marcher <br/> Matthias Zojer
-        <br/> Nico Schmid <br/> Stefan Schintler </string> <!-- Should be international -->
+    <string name="developers" translatable="false"> Benjamin Gaal\nBenjamin Wunderling\n
+        Christopher Fartek\n Esther Isimekhai \n Florian Marcher \n Matthias Zojer
+        \n Nico Schmid \n Stefan Schintler </string> <!-- Should be international -->
 </resources>
 
