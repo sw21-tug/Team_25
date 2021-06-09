@@ -79,9 +79,9 @@ class DetailViewTest {
         ).expItemDao()
         expItemDao.deleteAllItems()
         GlobalScope.async {
-            expItemDao.insertItem(ExpItem("Salami", "2021-01-01 01:01:01"))
-            expItemDao.insertItem(ExpItem("Tomato", "2021-01-02 02:02:02"))
-            expItemDao.insertItem(ExpItem("Bread", "2021-01-03 03:03:03"))
+            expItemDao.insertItem(ExpItem("Salami", "01.01.2021 01:01:01"))
+            expItemDao.insertItem(ExpItem("Tomato", "02.02.2021 02:02:02"))
+            expItemDao.insertItem(ExpItem("Bread", "03.03.2021 03:03:03"))
         }
     }
 
@@ -94,7 +94,7 @@ class DetailViewTest {
         onView(withId(R.id.product_name)).inRoot(RootMatchers.isPlatformPopup())
             .check(matches(withText("Salami")))
         onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
-            .check(matches(withText("2021-01-01 01:01:01")))
+            .check(matches(withText("01.01.2021 01:01:01")))
 
         onView(withId(R.id.recipe_name)).inRoot(RootMatchers.isPlatformPopup())
             .check(matches(withText(mActivityTestRule.activity.getString(R.string.no_recipe_found))))
@@ -117,27 +117,27 @@ class DetailViewTest {
         bottomNavigationItemView.perform(click())
 
         val materialTextViewTomato = onView(
-                allOf(
-                        withId(R.id.item_tv), withText("Tomato  2021-01-02 02:02:02"), isDisplayed()
-                )
+            allOf(
+                withId(R.id.item_tv), withText("Tomato  02.02.2021 02:02:02"), isDisplayed()
+            )
         )
         materialTextViewTomato.perform(click())
 
         onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup())
-                .check((matches(isDisplayed())))
+            .check((matches(isDisplayed())))
         onView(withId(R.id.product_name)).inRoot(RootMatchers.isPlatformPopup())
-                .check(matches(withText("Tomato")))
+            .check(matches(withText("Tomato")))
         onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
-                .check(matches(withText("2021-01-02 02:02:02")))
+            .check(matches(withText("02.02.2021 02:02:02")))
 
         onView(withId(R.id.recipe_name)).inRoot(RootMatchers.isPlatformPopup())
-                .check(matches(withText("TomatoDummyRecipe")))
+            .check(matches(withText("TomatoDummyRecipe")))
 
         onView(withId(R.id.recipe_image)).inRoot(RootMatchers.isPlatformPopup())
-                .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
 
         onView(withId(R.id.recipe_button)).inRoot(RootMatchers.isPlatformPopup())
-                .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
 
         onView(withId(R.id.recipe_button)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
@@ -157,7 +157,7 @@ class DetailViewTest {
     }
 
     @Test
-    fun inputTest(){
+    fun inputTest() {
         openSalamiItem()
 
         Thread.sleep(1000)
@@ -170,8 +170,9 @@ class DetailViewTest {
         assertKeyboardOpen(true)
         onView(withId(R.id.product_name_edit)).check((matches(isDisplayed())))
 
-        val longText =  "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        val longText =
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+                    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
         onView(withId(R.id.product_name_edit)).perform(ViewActions.replaceText(longText))
         onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
@@ -191,7 +192,7 @@ class DetailViewTest {
         onView(withId(R.id.product_name)).inRoot(RootMatchers.isPlatformPopup())
             .check(matches(withText("Salami")))
         onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
-            .check(matches(withText("2021-01-01 01:01:01")))
+            .check(matches(withText("01.01.2021 01:01:01")))
         onView(withId(R.id.deleteItem)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         onView(withId(R.id.detail_view_popup)).check(doesNotExist())
 
@@ -234,7 +235,7 @@ class DetailViewTest {
         assertKeyboardOpen(false)
 
         val currentDate = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY")
         val currentDateFormatted = currentDate.format(formatter)
 
         val textView = onView(
@@ -297,7 +298,7 @@ class DetailViewTest {
     }
 
     @Test
-    fun cancelCloseTest(){
+    fun cancelCloseTest() {
         openSalamiItem()
         //edit
         onView(withId(R.id.edit)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
@@ -329,7 +330,7 @@ class DetailViewTest {
     }
 
 
-    private fun openSalamiItem(){
+    private fun openSalamiItem() {
         val bottomNavigationItemView = onView(
             allOf(
                 withId(R.id.navigation_list), withContentDescription("List"),
@@ -348,7 +349,7 @@ class DetailViewTest {
 
         val materialTextViewSalami = onView(
             allOf(
-                withId(R.id.item_tv), withText("Salami  2021-01-01 01:01:01"),
+                withId(R.id.item_tv), withText("Salami  01.01.2021 01:01:01"),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.items_rv),
