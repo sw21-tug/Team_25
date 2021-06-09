@@ -1,5 +1,8 @@
 package at.sw21_tug.team_25.expirydates.utils
 
+import androidx.room.Room
+import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.data.ExpItemMigrations
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray
@@ -18,7 +21,24 @@ class RecipeAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
 
     private var client: OkHttpClient = OkHttpClient.Builder().build()
 
+    fun inDebugMode(): Boolean {
+        return try {
+            Class.forName("at.sw21_tug.team_25.expirydates.RecipeApiClientTests")
+            true
+        } catch (e: ClassNotFoundException) {
+            false
+        }
+    }
+
     fun getRecipeForIngredient(ingredient: String, numItems: Int = 1): List<RecipeInfo> {
+        val result = mutableListOf<RecipeInfo>()
+
+        if (inDebugMode()) {
+            if (ingredient == "Tomato") {
+                result.add(RecipeInfo(5, "TomatoDummyRecipe", "https://upload.wikimedia.org/wikipedia/commons/3/3a/Tomato_Ketchup.png", "https://de.wikipedia.org/wiki/Tomate"))
+            }
+            return result
+        }
 
         val ingredientEncoded = URLEncoder.encode(ingredient, "utf-8")
         val request = Request.Builder()
@@ -27,7 +47,6 @@ class RecipeAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
             .build()
 
         val resp = client.newCall(request).execute()
-        val result = mutableListOf<RecipeInfo>()
 
         if (!resp.isSuccessful) {
             return result
@@ -56,6 +75,11 @@ class RecipeAPIClient(private val baseUrl: String = DEFAULT_API_URL) {
     }
 
     fun getRecipeUrl(id: Int): String {
+
+        if (inDebugMode()) {
+            return ""
+        }
+
         val request = Request.Builder()
             .url("${baseUrl}$id/information?apiKey=$API_KEY")
             .get()

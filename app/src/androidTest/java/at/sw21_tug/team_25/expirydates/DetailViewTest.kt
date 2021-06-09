@@ -2,6 +2,7 @@ package at.sw21_tug.team_25.expirydates
 
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -17,6 +18,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.Until
 import at.sw21_tug.team_25.expirydates.Util.Companion.assertKeyboardOpen
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
@@ -35,6 +37,8 @@ import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.core.Is
 import org.junit.*
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.argThat
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -96,6 +100,61 @@ class DetailViewTest {
             .check(matches(withText("Salami")))
         onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
             .check(matches(withText("2021-01-01 01:01:01")))
+
+        onView(withId(R.id.recipe_name)).inRoot(RootMatchers.isPlatformPopup())
+            .check(matches(withText(mActivityTestRule.activity.getString(R.string.no_recipe_found))))
+
+        onView(withId(R.id.recipe_image)).inRoot(RootMatchers.isPlatformPopup())
+            .check(matches(withEffectiveVisibility(Visibility.GONE)))
+
+        onView(withId(R.id.recipe_button)).inRoot(RootMatchers.isPlatformPopup())
+            .check(matches(withEffectiveVisibility(Visibility.GONE)))
+
+        onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        onView(withId(R.id.detail_view_popup)).check(doesNotExist())
+
+        assertKeyboardOpen(false)
+    }
+
+    @Test
+    fun detailViewWithRecipeTest() {
+        val bottomNavigationItemView = onView(withId(R.id.navigation_list))
+        bottomNavigationItemView.perform(click())
+
+        val materialTextViewTomato = onView(
+                allOf(
+                        withId(R.id.item_tv), withText("Tomato  2021-01-02 02:02:02"), isDisplayed()
+                )
+        )
+        materialTextViewTomato.perform(click())
+
+        onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup())
+                .check((matches(isDisplayed())))
+        onView(withId(R.id.product_name)).inRoot(RootMatchers.isPlatformPopup())
+                .check(matches(withText("Tomato")))
+        onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
+                .check(matches(withText("2021-01-02 02:02:02")))
+
+        onView(withId(R.id.recipe_name)).inRoot(RootMatchers.isPlatformPopup())
+                .check(matches(withText("TomatoDummyRecipe")))
+
+        onView(withId(R.id.recipe_image)).inRoot(RootMatchers.isPlatformPopup())
+                .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+
+        onView(withId(R.id.recipe_button)).inRoot(RootMatchers.isPlatformPopup())
+                .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+
+        onView(withId(R.id.recipe_button)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        Thread.sleep(500)
+
+        val chrome = uiDevice.wait(Until.findObject(By.pkg("com.android.chrome")), 1000)
+
+        Assert.assertNotNull(chrome)
+
+        uiDevice.pressBack()
+        Thread.sleep(500)
+
         onView(withId(R.id.closePopUp)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         onView(withId(R.id.detail_view_popup)).check(doesNotExist())
 
