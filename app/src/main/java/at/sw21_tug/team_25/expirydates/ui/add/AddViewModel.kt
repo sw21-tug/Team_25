@@ -3,8 +3,8 @@ package at.sw21_tug.team_25.expirydates.ui.add
 import androidx.lifecycle.ViewModel
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
-import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.ui.errorhandling.ErrorCode
+import at.sw21_tug.team_25.expirydates.utils.Util
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import java.util.*

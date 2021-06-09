@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
-import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.utils.FoodSharingAPIClient
+import at.sw21_tug.team_25.expirydates.utils.Util
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
@@ -122,8 +122,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                         this@HomeFragment.mMap.addMarker(
                             MarkerOptions().position(foodSharingPointLocation)
                                 .title(foodSharingPoint.name).icon(
-                                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)
-                            )
+                                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)
+                                )
                         )
                     }
                 }

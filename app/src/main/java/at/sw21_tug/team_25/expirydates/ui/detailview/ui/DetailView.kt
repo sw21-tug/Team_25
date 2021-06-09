@@ -2,19 +2,19 @@ package at.sw21_tug.team_25.expirydates.ui.detailview.ui
 
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.Context
 import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.content.Intent
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItem
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
+import at.sw21_tug.team_25.expirydates.utils.Util.Companion.hideKeyboard
+import at.sw21_tug.team_25.expirydates.utils.Util.Companion.showToast
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import java.time.LocalDate
@@ -30,6 +30,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
         fun openDetailView(activity: Activity, product: ExpItem) {
             openDetailView(activity, product.id, product.name, product.date)
+            is_editable = false
         }
 
         private fun openDetailView(
@@ -54,7 +55,8 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
             val name = popupView.findViewById<TextView>(R.id.product_name)
             val nameEdit = popupView.findViewById<EditText>(R.id.product_name_edit)
             val closePopUpButton = popupView.findViewById<Button>(R.id.closePopUp)
-            val popupBackgroundButton = popupView.findViewById<ImageButton>(R.id.popupBackgroundButton)
+            val popupBackgroundButton =
+                popupView.findViewById<ImageButton>(R.id.popupBackgroundButton)
             val deleteItemButton = popupView.findViewById<Button>(R.id.deleteItem)
             val dateButton = popupView.findViewById<Button>(R.id.exp_date)
             val editButton = popupView.findViewById<Button>(R.id.edit)
@@ -80,13 +82,13 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 else {
                     cancel(editButton, closePopUpButton, activity, nameEdit, name)
                 }
-                MainActivity.hideKeyboard(activity, popupView)
+                hideKeyboard(activity, popupView)
             }
             // set on-click listener
             popupBackgroundButton.setOnClickListener {
                 cancel(editButton, closePopUpButton, activity, nameEdit, name)
                 popupWindow.dismiss()
-                MainActivity.hideKeyboard(activity, popupView)
+                hideKeyboard(activity, popupView)
             }
 
             // set on-click listener
@@ -98,7 +100,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                         popupWindow.dismiss()
                     }
                 }
-                MainActivity.hideKeyboard(activity, popupView)
+                hideKeyboard(activity, popupView)
             }
 
             dateButton.setOnClickListener {
@@ -113,13 +115,11 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 datePicker.datePicker.minDate = Calendar.getInstance().timeInMillis
                 datePicker.datePicker.maxDate = Long.MAX_VALUE
                 datePicker.show()
-                MainActivity.hideKeyboard(activity, popupView)
+                hideKeyboard(activity, popupView)
             }
 
             editButton.setOnClickListener {
-                is_editable = !is_editable
-                dateButton.isEnabled = is_editable
-                if (is_editable) {
+                if (!is_editable) {
                     editButton.text = activity.getString(R.string.save)
                     closePopUpButton.text = activity.getString(R.string.cancel)
 
@@ -128,13 +128,19 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
 
                     nameEdit.editableText.clear()
                     nameEdit.editableText.append(name.text)
+                    is_editable = !is_editable
                 } else {
-                    save(nameEdit.text.toString(), dateButton.text.toString(), activity)
+                    val text = nameEdit.text.toString()
+                    if (text.isEmpty() || text.length > 255) {
+                        showToast(activity, activity.getString(R.string.invalidInput))
+                        return@setOnClickListener
+                    }
+                    save(text, dateButton.text.toString(), activity)
                     cancel(editButton, closePopUpButton, activity, nameEdit, name)
-
-                    name.text = nameEdit.text.toString()
+                    name.text = text
+                    hideKeyboard(activity, popupView)
                 }
-                MainActivity.hideKeyboard(activity, popupView)
+                dateButton.isEnabled = is_editable
             }
 
 
@@ -155,7 +161,7 @@ class DetailView(private val view: View) : DatePickerDialog.OnDateSetListener {
                 }, null)
                 (activity as MainActivity).startActivity(share)
 
-                MainActivity.hideKeyboard(activity, popupView)
+                hideKeyboard(activity, popupView)
             }
         }
 

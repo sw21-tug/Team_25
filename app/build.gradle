@@ -84,7 +84,7 @@ dependencies {
     androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.1")
 
     // Optional -- Mockito framework
-    def mockito_version = 'latest.release'
+    def mockito_version = '3.10.0'
     // For local unit tests on your development machine
     testImplementation "org.mockito:mockito-core:$mockito_version"
     // For instrumentation tests on Android devices and emulators

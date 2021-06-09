@@ -5,16 +5,17 @@ import android.view.*
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItemDao
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
-import at.sw21_tug.team_25.expirydates.misc.Util
 import at.sw21_tug.team_25.expirydates.ui.errorhandling.ErrorCode
 import at.sw21_tug.team_25.expirydates.utils.ReminderScheduler
+import at.sw21_tug.team_25.expirydates.utils.Util
+import at.sw21_tug.team_25.expirydates.utils.Util.Companion.hideKeyboard
+import at.sw21_tug.team_25.expirydates.utils.Util.Companion.showToast
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import java.util.*
@@ -90,73 +91,33 @@ class AddFragment : Fragment() {
                 expItemDao
             )) {
                 ErrorCode.INPUT_ERROR -> {
-                    if (Util.getLanguage(this.activity as MainActivity) == Locale("en")) {
-                        val toast = Toast.makeText(
-                            activity,
-                            "Invalid Input (Must be between 1 and 255 characters long)",
-                            Toast.LENGTH_SHORT
-                        )
-                        toast.show()
-                    } else if (Util.getLanguage(this.activity as MainActivity) == Locale("ru")) {
-                        val toast = Toast.makeText(
-                            activity,
-                            "Недействительный ввод (должен содержать от 1 до 255 символов)",
-                            Toast.LENGTH_SHORT
-                        )
-                        toast.show()
-                    }
-
+                    showToast(this.activity as MainActivity, getString(R.string.invalidInput))
                 }
                 ErrorCode.DATE_ERROR -> {
-                    if (Util.getLanguage(this.activity as MainActivity) == Locale("en")) {
-                        val toast = Toast.makeText(
-                            activity,
-                            "Invalid Date (Must not be a past date)",
-                            Toast.LENGTH_SHORT
-                        )
-                        toast.show()
-                    } else if (Util.getLanguage(this.activity as MainActivity) == Locale("ru")) {
-                        val toast = Toast.makeText(
-                            activity,
-                            "Недействительная дата (не должна быть прошедшей датой)",
-                            Toast.LENGTH_SHORT
-                        )
-                        toast.show()
-                    }
+                    showToast(this.activity as MainActivity, getString(R.string.invalidDate))
                 }
                 ErrorCode.OK -> {
                     val dateString = Util.convertDateToString(newDate.timeInMillis)
 
                     if (Util.getLanguage(this.activity as MainActivity) == Locale("en")) {
-                        val toast = Toast.makeText(
-                            activity,
-                            "Input: " + addViewModel.text + "\n" +
-                                    "Date: " + dateString,
-                            Toast.LENGTH_SHORT
+                        showToast(
+                            this.activity as MainActivity,
+                            "Input: ${addViewModel.text}\nDate: $dateString"
                         )
-                        toast.show()
                     } else if (Util.getLanguage(this.activity as MainActivity) == Locale("ru")) {
-                        val toast = Toast.makeText(
-                            activity,
-                            "Вход: " + addViewModel.text + "\n" +
-                                    "Дата: " + dateString,
-                            Toast.LENGTH_SHORT
+                        showToast(
+                            this.activity as MainActivity,
+                            "Вход: ${addViewModel.text}\nДата: $dateString"
                         )
-                        toast.show()
                     }
-                    val toast = Toast.makeText(
-                        activity, "Input: " + addViewModel.text + "\n" +
-                                "Date: " + dateString, Toast.LENGTH_SHORT
-                    )
-                    toast.show()
                     GlobalScope.async {
                         ReminderScheduler.ensureNextReminderScheduled(this@AddFragment.requireContext())
                     }
+                    textView.text = ""
+                    hideKeyboard(this.activity as MainActivity, root)
                 }
             }
-            textView.text = ""
 
-            MainActivity.hideKeyboard(this.activity as MainActivity, root)
         }
         return root
     }
