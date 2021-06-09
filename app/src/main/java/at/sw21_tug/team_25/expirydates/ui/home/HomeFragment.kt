@@ -74,6 +74,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         val button: Button = root.findViewById(R.id.about_us_button)
 
         button.setOnClickListener{
+            AboutUsView.openAboutUs(this.activity as MainActivity)
         }
 
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment

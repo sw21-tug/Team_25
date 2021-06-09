@@ -34,12 +34,20 @@ class AboutUsView(private val view: View)  {
                 activity.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val popupView = inflater.inflate(R.layout.fragment_aboutus, null)
 
-/*            val popupWindow = PopupWindow(
+            val popupWindow = PopupWindow(
                 popupView,
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
-            )*/
+            )
 
+            popupWindow.elevation = 10.0F
+            popupWindow.isFocusable = true
+
+            activity.findViewById<View>(android.R.id.content).post {
+                val view = activity.findViewById<View>(android.R.id.content).rootView
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
+
+            }
 
 /*            val closePopUpButton = popupView.findViewById<Button>(R.id.closePopUp)
 
