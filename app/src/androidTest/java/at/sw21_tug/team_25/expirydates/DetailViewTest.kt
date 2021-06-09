@@ -1,11 +1,8 @@
 package at.sw21_tug.team_25.expirydates
 
 
-import android.content.Context
-import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
@@ -37,8 +34,6 @@ import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.core.Is
 import org.junit.*
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.argThat
-import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
