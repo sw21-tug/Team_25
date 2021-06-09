@@ -2,6 +2,7 @@ package at.sw21_tug.team_25.expirydates
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
@@ -15,6 +16,7 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
 import org.hamcrest.TypeSafeMatcher
+import org.hamcrest.core.IsInstanceOf
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
@@ -139,26 +141,29 @@ class SettingsTest {
         )
         appCompatSpinner.perform(click())
 
-        val appCompatEditText3 = Espresso.onView(
+        val checkedTextView = Espresso.onView(
             Matchers.allOf(
-                ViewMatchers.withClassName(Matchers.`is`("androidx.appcompat.widget.AppCompatEditText")),
-                ViewMatchers.withText("55"),
+                ViewMatchers.withId(android.R.id.text1), ViewMatchers.withText("AM"),
+                ViewMatchers.withParent(ViewMatchers.withParent(IsInstanceOf.instanceOf(FrameLayout::class.java))),
+                ViewMatchers.isDisplayed()
+            )
+        )
+        checkedTextView.perform(click())
+
+        val materialButton = Espresso.onView(
+            Matchers.allOf(
+                ViewMatchers.withId(R.id.saveSettings), ViewMatchers.withText("Save"),
                 childAtPosition(
-                    Matchers.allOf(
-                        ViewMatchers.withClassName(Matchers.`is`("android.widget.RelativeLayout")),
-                        childAtPosition(
-                            ViewMatchers.withClassName(Matchers.`is`("android.widget.TextInputTimePickerView")),
-                            1
-                        )
+                    childAtPosition(
+                        ViewMatchers.withClassName(Matchers.`is`("android.widget.LinearLayout")),
+                        7
                     ),
-                    3
+                    0
                 ),
                 ViewMatchers.isDisplayed()
             )
         )
-        appCompatEditText3.perform(ViewActions.pressImeActionButton())
-
-        Espresso.onView(ViewMatchers.withId(R.id.saveSettings)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
+        materialButton.perform(click())
 
         Assert.assertEquals(15, GlobalSettings.getNotificationDayOffset(mActivityTestRule.activity))
         Assert.assertEquals(1, GlobalSettings.getNotificationHour(mActivityTestRule.activity))
