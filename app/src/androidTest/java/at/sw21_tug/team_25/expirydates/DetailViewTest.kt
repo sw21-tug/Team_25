@@ -1,10 +1,8 @@
 package at.sw21_tug.team_25.expirydates
 
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
@@ -97,7 +95,6 @@ class DetailViewTest {
             .check(matches(withText("Salami")))
         onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
             .check(matches(withText("01.01.2021 01:01:01")))
-            .check(matches(withText("2021-01-01 01:01:01")))
 
         onView(withId(R.id.recipe_name)).inRoot(RootMatchers.isPlatformPopup())
             .check(matches(withText(mActivityTestRule.activity.getString(R.string.no_recipe_found))))
@@ -120,27 +117,27 @@ class DetailViewTest {
         bottomNavigationItemView.perform(click())
 
         val materialTextViewTomato = onView(
-                allOf(
-                        withId(R.id.item_tv), withText("Tomato  2021-01-02 02:02:02"), isDisplayed()
-                )
+            allOf(
+                withId(R.id.item_tv), withText("Tomato  02.02.2021 02:02:02"), isDisplayed()
+            )
         )
         materialTextViewTomato.perform(click())
 
         onView(withId(R.id.detail_view_popup)).inRoot(RootMatchers.isPlatformPopup())
-                .check((matches(isDisplayed())))
+            .check((matches(isDisplayed())))
         onView(withId(R.id.product_name)).inRoot(RootMatchers.isPlatformPopup())
-                .check(matches(withText("Tomato")))
+            .check(matches(withText("Tomato")))
         onView(withId(R.id.exp_date)).inRoot(RootMatchers.isPlatformPopup())
-                .check(matches(withText("2021-01-02 02:02:02")))
+            .check(matches(withText("02.02.2021 02:02:02")))
 
         onView(withId(R.id.recipe_name)).inRoot(RootMatchers.isPlatformPopup())
-                .check(matches(withText("TomatoDummyRecipe")))
+            .check(matches(withText("TomatoDummyRecipe")))
 
         onView(withId(R.id.recipe_image)).inRoot(RootMatchers.isPlatformPopup())
-                .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
 
         onView(withId(R.id.recipe_button)).inRoot(RootMatchers.isPlatformPopup())
-                .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
 
         onView(withId(R.id.recipe_button)).inRoot(RootMatchers.isPlatformPopup()).perform(click())
         val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
@@ -173,7 +170,8 @@ class DetailViewTest {
         assertKeyboardOpen(true)
         onView(withId(R.id.product_name_edit)).check((matches(isDisplayed())))
 
-        val longText = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+        val longText =
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
                     "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
         onView(withId(R.id.product_name_edit)).perform(ViewActions.replaceText(longText))
