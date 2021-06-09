@@ -35,4 +35,9 @@
     <string name="invalidInput">Invalid Input (Must be between 1 and 255 characters long)</string>
     <string name="invalidDate">Invalid Date (Must not be a past date)</string>
     <string name="suggestion">suggestion:</string>
+    <string name="settings_string" translatable="false">settings</string>
+    <string name="header_language_select">Language Selection</string>
+    <string name="header_notification_interval">Notification Interval before Expiration Dates</string>
+    <string name="enter_days">Enter days before Notification, current: %1s</string>
+    <string name="select_time">Select time to be notified, current: %1s:%2s</string>
 </resources>

@@ -112,7 +112,7 @@ class ListSortingTest {
                         withId(R.id.action_bar),
                         1
                     ),
-                    1
+                    0
                 ),
                 isDisplayed()
             )
@@ -150,7 +150,7 @@ class ListSortingTest {
                         withId(R.id.action_bar),
                         1
                     ),
-                    1
+                    0
                 ),
                 isDisplayed()
             )
@@ -188,7 +188,7 @@ class ListSortingTest {
                         withId(R.id.action_bar),
                         1
                     ),
-                    2
+                    1
                 ),
                 isDisplayed()
             )
@@ -226,7 +226,7 @@ class ListSortingTest {
                         withId(R.id.action_bar),
                         1
                     ),
-                    2
+                    1
                 ),
                 isDisplayed()
             )

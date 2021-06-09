@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import at.sw21_tug.team_25.expirydates.MainActivity
 import at.sw21_tug.team_25.expirydates.R
 import at.sw21_tug.team_25.expirydates.data.ExpItemDatabase
-import at.sw21_tug.team_25.expirydates.utils.Util
 import at.sw21_tug.team_25.expirydates.utils.Util.Companion.hideKeyboard
-import java.util.*
+import at.sw21_tug.team_25.expirydates.ui.settings.SettingsView
 
 class ListFragment : Fragment() {
     private lateinit var listViewModel: ListViewModel
@@ -26,9 +25,9 @@ class ListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         // add other menu items in language_choice_menu / choose different menu to show here
-        inflater.inflate(R.menu.language_choice_menu, menu)
         inflater.inflate(R.menu.sort_by_name_menu, menu)
         inflater.inflate(R.menu.sort_by_date_menu, menu)
+        inflater.inflate(R.menu.settings_menu, menu)
     }
 
 
@@ -42,19 +41,10 @@ class ListFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
-            R.id.language_en -> {
-                Util.setLanguage("en", requireActivity())
-                Util.setLocale(requireActivity(), Locale("en"))
-
-                (this.activity as MainActivity).refreshCurrentFragment()
-            }
-
-            R.id.language_ru -> {
-                Util.setLanguage("ru", requireActivity())
-                Util.setLocale(requireActivity(), Locale("ru"))
-
-                (this.activity as MainActivity).refreshCurrentFragment()
+            R.id.settings_menu -> {
+                SettingsView.openSettingsView(this.activity as MainActivity)
             }
 
             R.id.sort_name_asc -> {
