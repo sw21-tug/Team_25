@@ -49,5 +49,11 @@
 |EXPDAT-054   | Adjusted color schemes | -  | Benjamin W  | Benjamin G  |
 |EXPDAT-053   | keyboard closes after save | -  | Matthias  | Florian  |
 |EXPDAT-007/001   | API for food recipies retrievment backend | -  | Stefan  | Florian  |
-
+|EXPDAT-007/002   | reccommandations frontend | -  | Stefan  | Florian  |
+|EXPDAT-065   | label for map | -  | Ester  | Nico  |
+|EXPDAT-066   | share button location | -  | Matthias  | Benjamin G  |
+|EXPDAT-063   | date format | -  | Nico  | Benjamin W  |
+|EXPDAT-015/001   | settings frontend | -  | Ester  | Christopher |
+|EXPDAT-015/002   | settings backend | -  | Stefan  | Matthias  |
+|EXPDAT-072   | about us page | -  | Ester  | -  |
 
