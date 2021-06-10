@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ExpiryDate</string>
     <string name="title_home">Home</string>
@@ -40,4 +41,18 @@
     <string name="header_notification_interval">Notification Interval before Expiration Dates</string>
     <string name="enter_days">Enter days before Notification, current: %1s</string>
     <string name="select_time">Select time to be notified, current: %1s:%2s</string>
+    <string name="about_button">About Us</string>  <!-- Should be international -->
+    <string name="about_description"> The main idea of this app is to help the users stop wasting
+        food/medicine etc., save money, get notifications before expiry dates arrive and find nearby
+        food sharing location to reduce waste. </string>
+    <string name="string_team"> Team 25 </string>
+    <string name="string_po"> Product Owner </string>
+    <string name="string_scrum_master"> Scrum Master </string>
+    <string name="string_devs"> Developers </string>
+    <string name="product_owner" translatable="false"> Fabio Gandolfi </string> <!-- Should be international -->
+    <string name="scrum_master" translatable="false"> Benedikt Bruenner </string> <!-- Should be international -->
+    <string name="developers" translatable="false"> Benjamin Gaal\nBenjamin Wunderling\n
+        Christopher Fartek\n Esther Isimekhai \n Florian Marcher \n Matthias Zojer
+        \n Nico Schmid \n Stefan Schintler </string> <!-- Should be international -->
 </resources>
+

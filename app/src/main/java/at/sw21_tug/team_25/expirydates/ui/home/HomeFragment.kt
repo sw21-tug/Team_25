@@ -9,6 +9,7 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -70,6 +71,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val button: Button = root.findViewById(R.id.about_us_button)
+
+        button.setOnClickListener{
+            AboutUsView.openAboutUs(this.activity as MainActivity)
+        }
 
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 

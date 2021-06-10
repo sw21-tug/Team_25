@@ -32,4 +32,12 @@
     <string name="header_notification_interval">Интервал уведомления до даты истечения срока действия</string>
     <string name="enter_days">Введите количество дней до уведомления, текущее: %1s</string>
     <string name="select_time">Выберите время для получения уведомления, текущее: %1s:%2s</string>
+    <string name="about_button">около</string>
+    <string name="about_description"> Основная идея этого приложения - помочь пользователям
+        перестать тратить впустую еду / лекарства и т. Д., Сэкономить деньги, получать уведомления
+        до истечения срока годности и новые предложения по использованию этих продуктов. </string>
+    <string name="string_team"> Команда 25 </string>
+    <string name="string_po"> Владелец продукта </string>
+    <string name="string_scrum_master"> Скрам Мастер </string>
+    <string name="string_devs"> Разработчики </string>
 </resources>
